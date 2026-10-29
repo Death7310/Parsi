@@ -7,7 +7,11 @@ A Farsi learning app for phone and laptop, built on second-language research: re
 
 ## Get the APK
 
-Push to `main` (or run the workflow by hand under **Actions → Build Android APK → Run workflow**). When it finishes, download **khalij-farsi-debug-apk** from the run's Artifacts, unzip it, copy `app-debug.apk` to your phone and open it. Android will ask you to allow installs from that source. It's a debug build signed with a throwaway key, which is fine for personal use.
+On your Android phone, open **https://github.com/Death7310/Parsi/releases/latest/download/khalij-farsi.apk** and tap the file when it finishes downloading. Android will ask you to allow installs from your browser the first time. It's a debug build signed with a throwaway key, which is fine for personal use.
+
+Every push to `main` rebuilds the app and replaces that file, so the same link always gets the newest version. Install over the old one to update; your progress stays.
+
+Builds from other branches are under **Actions**, in each run's Artifacts (a zip with the APK inside).
 
 ## Audio, best to worst
 
