@@ -1,0 +1,1454 @@
+[
+ {
+  "id": "c01",
+  "fa": "سلام",
+  "tr": "salâm",
+  "en": "Hi / hello"
+ },
+ {
+  "id": "c02",
+  "fa": "سلام، خوبی؟",
+  "tr": "salâm, khubi?",
+  "en": "Hi, are you well? (casual)"
+ },
+ {
+  "id": "c03",
+  "fa": "حالت چطوره؟",
+  "tr": "hâlet chetore?",
+  "en": "How are you? (casual)"
+ },
+ {
+  "id": "c04",
+  "fa": "خوبم، مرسی.",
+  "tr": "khubam, mersi.",
+  "en": "I'm good, thanks."
+ },
+ {
+  "id": "c05",
+  "fa": "تو چطوری؟",
+  "tr": "to chetori?",
+  "en": "And you? How are you?"
+ },
+ {
+  "id": "c06",
+  "fa": "بد نیستم.",
+  "tr": "bad nistam.",
+  "en": "Not bad."
+ },
+ {
+  "id": "c07",
+  "fa": "صبح بخیر",
+  "tr": "sobh bekheyr",
+  "en": "Good morning"
+ },
+ {
+  "id": "c08",
+  "fa": "شب بخیر",
+  "tr": "shab bekheyr",
+  "en": "Good night"
+ },
+ {
+  "id": "c09",
+  "fa": "اسمت چیه؟",
+  "tr": "esmet chiye?",
+  "en": "What's your name? (casual)"
+ },
+ {
+  "id": "c10",
+  "fa": "اسم من.",
+  "tr": "esm-e man ...-e.",
+  "en": "My name is ..."
+ },
+ {
+  "id": "c11",
+  "fa": "خوشبختم.",
+  "tr": "khoshbakhtam.",
+  "en": "Nice to meet you."
+ },
+ {
+  "id": "c12",
+  "fa": "اهل کجایی؟",
+  "tr": "ahl-e kojâyi?",
+  "en": "Where are you from?"
+ },
+ {
+  "id": "c13",
+  "fa": "من اهل آمریکام.",
+  "tr": "man ahl-e âmrikâm.",
+  "en": "I'm from America."
+ },
+ {
+  "id": "c14",
+  "fa": "این چیه؟",
+  "tr": "in chiye?",
+  "en": "What is this?"
+ },
+ {
+  "id": "c15",
+  "fa": "اون چیه؟",
+  "tr": "un chiye?",
+  "en": "What is that?"
+ },
+ {
+  "id": "c16",
+  "fa": "این کتابه.",
+  "tr": "in ketâbe.",
+  "en": "This is a book."
+ },
+ {
+  "id": "c17",
+  "fa": "به فارسی چی میشه؟",
+  "tr": "be fârsi chi mishe?",
+  "en": "How do you say it in Farsi?"
+ },
+ {
+  "id": "c18",
+  "fa": "یعنی چی؟",
+  "tr": "... ya'ni chi?",
+  "en": "What does ... mean?"
+ },
+ {
+  "id": "c19",
+  "fa": "کجاست؟",
+  "tr": "kojâst?",
+  "en": "Where is it?"
+ },
+ {
+  "id": "c20",
+  "fa": "چنده؟",
+  "tr": "chande?",
+  "en": "How much is it?"
+ },
+ {
+  "id": "c21",
+  "fa": "آره، نه",
+  "tr": "âre / na",
+  "en": "Yeah / no"
+ },
+ {
+  "id": "c22",
+  "fa": "بله",
+  "tr": "bale",
+  "en": "Yes (polite)"
+ },
+ {
+  "id": "c23",
+  "fa": "ممنون",
+  "tr": "mamnun",
+  "en": "Thank you"
+ },
+ {
+  "id": "c24",
+  "fa": "خواهش می‌کنم.",
+  "tr": "khâhesh mikonam.",
+  "en": "You're welcome / please"
+ },
+ {
+  "id": "c25",
+  "fa": "ببخشید",
+  "tr": "bebakhshid",
+  "en": "Excuse me / sorry"
+ },
+ {
+  "id": "c26",
+  "fa": "نمی‌فهمم.",
+  "tr": "nemifahmam.",
+  "en": "I don't understand."
+ },
+ {
+  "id": "c27",
+  "fa": "میشه دوباره بگید؟",
+  "tr": "mishe dobâre begid?",
+  "en": "Can you say it again?"
+ },
+ {
+  "id": "c28",
+  "fa": "یواش‌تر لطفاً",
+  "tr": "yavâsh-tar lotfan",
+  "en": "Slower, please"
+ },
+ {
+  "id": "c29",
+  "fa": "یه کم فارسی بلدم.",
+  "tr": "ye kam fârsi baladam.",
+  "en": "I know a little Farsi."
+ },
+ {
+  "id": "c30",
+  "fa": "خداحافظ",
+  "tr": "khodâhâfez",
+  "en": "Goodbye"
+ },
+ {
+  "id": "c31",
+  "fa": "فعلاً",
+  "tr": "fe'lan",
+  "en": "See you (casual)"
+ },
+ {
+  "id": "c32",
+  "fa": "به امید دیدار",
+  "tr": "be omid-e didâr",
+  "en": "Hope to see you again"
+ },
+ {
+  "id": "c33",
+  "fa": "این چه کتابیه؟",
+  "tr": "in che ketâbiye?",
+  "en": "What book is this?"
+ },
+ {
+  "id": "c34",
+  "fa": "این کتاب مال کیه؟",
+  "tr": "in ketâb mâl-e kiye?",
+  "en": "Whose book is this?"
+ },
+ {
+  "id": "c35",
+  "fa": "این کتاب منه.",
+  "tr": "in ketâb-e mane.",
+  "en": "This book is mine."
+ },
+ {
+  "id": "c36",
+  "fa": "این کتابو می‌خوام.",
+  "tr": "in ketâbo mikhâm.",
+  "en": "I want this book."
+ },
+ {
+  "id": "c37",
+  "fa": "دستشویی کجاست؟",
+  "tr": "dastshuyi kojâst?",
+  "en": "Where's the toilet?"
+ },
+ {
+  "id": "c38",
+  "fa": "اینجا کجاست؟",
+  "tr": "injâ kojâst?",
+  "en": "Where are we?"
+ },
+ {
+  "id": "c39",
+  "fa": "گم شدم.",
+  "tr": "gom shodam.",
+  "en": "I'm lost."
+ },
+ {
+  "id": "c40",
+  "fa": "میشه کمکم کنید؟",
+  "tr": "mishe komakam konid?",
+  "en": "Can you help me?"
+ },
+ {
+  "id": "c41",
+  "fa": "چقدر میشه؟",
+  "tr": "cheghadr mishe?",
+  "en": "How much does it come to?"
+ },
+ {
+  "id": "c42",
+  "fa": "یه دقیقه صبر کنید.",
+  "tr": "ye daghighe sabr konid.",
+  "en": "Wait a minute, please."
+ },
+ {
+  "id": "c43",
+  "fa": "باشه.",
+  "tr": "bâshe.",
+  "en": "OK."
+ },
+ {
+  "id": "c44",
+  "fa": "انگلیسی بلدید؟",
+  "tr": "engilisi baladid?",
+  "en": "Do you speak English?"
+ },
+ {
+  "id": "c45",
+  "fa": "عربی بلدید؟",
+  "tr": "arabi baladid?",
+  "en": "Do you speak Arabic?"
+ },
+ {
+  "id": "c46",
+  "fa": "من عربی بلدم.",
+  "tr": "man arabi baladam.",
+  "en": "I speak Arabic."
+ },
+ {
+  "id": "w01",
+  "fa": "کتاب",
+  "tr": "ketâb",
+  "en": "book"
+ },
+ {
+  "id": "w01_s",
+  "fa": "این کتابه",
+  "tr": "in ketâbe",
+  "en": "This is a book."
+ },
+ {
+  "id": "w02",
+  "fa": "آب",
+  "tr": "âb",
+  "en": "water"
+ },
+ {
+  "id": "w02_s",
+  "fa": "این آبه",
+  "tr": "in âbe",
+  "en": "This is a water."
+ },
+ {
+  "id": "w03",
+  "fa": "نون",
+  "tr": "nun",
+  "en": "bread"
+ },
+ {
+  "id": "w03_s",
+  "fa": "این نونه",
+  "tr": "in nune",
+  "en": "This is a bread."
+ },
+ {
+  "id": "w04",
+  "fa": "ماشین",
+  "tr": "mâshin",
+  "en": "car"
+ },
+ {
+  "id": "w04_s",
+  "fa": "این ماشینه",
+  "tr": "in mâshine",
+  "en": "This is a car."
+ },
+ {
+  "id": "w05",
+  "fa": "سگ",
+  "tr": "sag",
+  "en": "dog"
+ },
+ {
+  "id": "w05_s",
+  "fa": "این سگه",
+  "tr": "in sage",
+  "en": "This is a dog."
+ },
+ {
+  "id": "w06",
+  "fa": "در",
+  "tr": "dar",
+  "en": "door"
+ },
+ {
+  "id": "w06_s",
+  "fa": "این دره",
+  "tr": "in dare",
+  "en": "This is a door."
+ },
+ {
+  "id": "w07",
+  "fa": "صندلی",
+  "tr": "sandali",
+  "en": "chair"
+ },
+ {
+  "id": "w07_s",
+  "fa": "این صندلیه",
+  "tr": "in sandaliye",
+  "en": "This is a chair."
+ },
+ {
+  "id": "w08",
+  "fa": "دست",
+  "tr": "dast",
+  "en": "hand"
+ },
+ {
+  "id": "w08_s",
+  "fa": "این دسته",
+  "tr": "in daste",
+  "en": "This is a hand."
+ },
+ {
+  "id": "w09",
+  "fa": "چشم",
+  "tr": "cheshm",
+  "en": "eye"
+ },
+ {
+  "id": "w09_s",
+  "fa": "این چشمه",
+  "tr": "in cheshme",
+  "en": "This is a eye."
+ },
+ {
+  "id": "w10",
+  "fa": "گوشی",
+  "tr": "gushi",
+  "en": "phone"
+ },
+ {
+  "id": "w10_s",
+  "fa": "این گوشیه",
+  "tr": "in gushiye",
+  "en": "This is a phone."
+ },
+ {
+  "id": "w11",
+  "fa": "ماهی",
+  "tr": "mâhi",
+  "en": "fish"
+ },
+ {
+  "id": "w11_s",
+  "fa": "این ماهیه",
+  "tr": "in mâhiye",
+  "en": "This is a fish."
+ },
+ {
+  "id": "w12",
+  "fa": "دریا",
+  "tr": "daryâ",
+  "en": "sea"
+ },
+ {
+  "id": "w12_s",
+  "fa": "این دریاست",
+  "tr": "in daryâst",
+  "en": "This is a sea."
+ },
+ {
+  "id": "w13",
+  "fa": "قایق",
+  "tr": "ghâyegh",
+  "en": "boat"
+ },
+ {
+  "id": "w13_s",
+  "fa": "این قایقه",
+  "tr": "in ghâyeghe",
+  "en": "This is a boat."
+ },
+ {
+  "id": "w14",
+  "fa": "نخل",
+  "tr": "nakhl",
+  "en": "palm tree"
+ },
+ {
+  "id": "w14_s",
+  "fa": "این نخله",
+  "tr": "in nakhle",
+  "en": "This is a palm tree."
+ },
+ {
+  "id": "w15",
+  "fa": "خرما",
+  "tr": "khormâ",
+  "en": "dates (fruit)"
+ },
+ {
+  "id": "w15_s",
+  "fa": "این خرماست",
+  "tr": "in khormâst",
+  "en": "This is a dates (fruit)."
+ },
+ {
+  "id": "w16",
+  "fa": "خورشید",
+  "tr": "khorshid",
+  "en": "sun"
+ },
+ {
+  "id": "w16_s",
+  "fa": "این خورشیده",
+  "tr": "in khorshide",
+  "en": "This is a sun."
+ },
+ {
+  "id": "w17",
+  "fa": "کفش",
+  "tr": "kafsh",
+  "en": "shoe"
+ },
+ {
+  "id": "w17_s",
+  "fa": "این کفشه",
+  "tr": "in kafshe",
+  "en": "This is a shoe."
+ },
+ {
+  "id": "w18",
+  "fa": "خونه",
+  "tr": "khune",
+  "en": "house / home"
+ },
+ {
+  "id": "w18_s",
+  "fa": "این خونه‌ست",
+  "tr": "in khune-st",
+  "en": "This is a house / home."
+ },
+ {
+  "id": "v_peo0",
+  "fa": "من",
+  "tr": "man",
+  "en": "I"
+ },
+ {
+  "id": "v_peo1",
+  "fa": "تو",
+  "tr": "to",
+  "en": "you (casual)"
+ },
+ {
+  "id": "v_peo2",
+  "fa": "اون",
+  "tr": "un",
+  "en": "he / she / it"
+ },
+ {
+  "id": "v_peo3",
+  "fa": "ما",
+  "tr": "mâ",
+  "en": "we"
+ },
+ {
+  "id": "v_peo4",
+  "fa": "شما",
+  "tr": "shomâ",
+  "en": "you (polite or plural)"
+ },
+ {
+  "id": "v_peo5",
+  "fa": "اونا",
+  "tr": "unâ",
+  "en": "they"
+ },
+ {
+  "id": "v_peo6",
+  "fa": "مرد",
+  "tr": "mard",
+  "en": "man"
+ },
+ {
+  "id": "v_peo7",
+  "fa": "زن",
+  "tr": "zan",
+  "en": "woman / wife"
+ },
+ {
+  "id": "v_peo8",
+  "fa": "بچه",
+  "tr": "bachche",
+  "en": "child"
+ },
+ {
+  "id": "v_peo9",
+  "fa": "دوست",
+  "tr": "dust",
+  "en": "friend"
+ },
+ {
+  "id": "v_peo10",
+  "fa": "مامان",
+  "tr": "mâmân",
+  "en": "mom"
+ },
+ {
+  "id": "v_peo11",
+  "fa": "بابا",
+  "tr": "bâbâ",
+  "en": "dad"
+ },
+ {
+  "id": "v_peo12",
+  "fa": "برادر",
+  "tr": "barâdar",
+  "en": "brother"
+ },
+ {
+  "id": "v_peo13",
+  "fa": "خواهر",
+  "tr": "khâhar",
+  "en": "sister"
+ },
+ {
+  "id": "v_peo14",
+  "fa": "آقا",
+  "tr": "âghâ",
+  "en": "sir / Mr."
+ },
+ {
+  "id": "v_peo15",
+  "fa": "خانم",
+  "tr": "khânum",
+  "en": "madam / Mrs."
+ },
+ {
+  "id": "v_peo16",
+  "fa": "مردم",
+  "tr": "mardom",
+  "en": "people"
+ },
+ {
+  "id": "v_que0",
+  "fa": "چی",
+  "tr": "chi",
+  "en": "what"
+ },
+ {
+  "id": "v_que1",
+  "fa": "کی",
+  "tr": "ki",
+  "en": "who"
+ },
+ {
+  "id": "v_que2",
+  "fa": "کی",
+  "tr": "key",
+  "en": "when"
+ },
+ {
+  "id": "v_que3",
+  "fa": "کجا",
+  "tr": "kojâ",
+  "en": "where"
+ },
+ {
+  "id": "v_que4",
+  "fa": "چرا",
+  "tr": "cherâ",
+  "en": "why"
+ },
+ {
+  "id": "v_que5",
+  "fa": "چطور",
+  "tr": "chetor",
+  "en": "how"
+ },
+ {
+  "id": "v_que6",
+  "fa": "چند",
+  "tr": "chand",
+  "en": "how many / how much"
+ },
+ {
+  "id": "v_que7",
+  "fa": "کدوم",
+  "tr": "kodum",
+  "en": "which"
+ },
+ {
+  "id": "v_ver0",
+  "fa": "هستم",
+  "tr": "hastam",
+  "en": "I am"
+ },
+ {
+  "id": "v_ver1",
+  "fa": "دارم",
+  "tr": "dâram",
+  "en": "I have"
+ },
+ {
+  "id": "v_ver2",
+  "fa": "می‌خوام",
+  "tr": "mikhâm",
+  "en": "I want"
+ },
+ {
+  "id": "v_ver3",
+  "fa": "می‌رم",
+  "tr": "miram",
+  "en": "I go / I'm going"
+ },
+ {
+  "id": "v_ver4",
+  "fa": "میام",
+  "tr": "miyâm",
+  "en": "I come / I'm coming"
+ },
+ {
+  "id": "v_ver5",
+  "fa": "می‌کنم",
+  "tr": "mikonam",
+  "en": "I do / I make"
+ },
+ {
+  "id": "v_ver6",
+  "fa": "می‌گم",
+  "tr": "migam",
+  "en": "I say"
+ },
+ {
+  "id": "v_ver7",
+  "fa": "می‌بینم",
+  "tr": "mibinam",
+  "en": "I see"
+ },
+ {
+  "id": "v_ver8",
+  "fa": "می‌دونم",
+  "tr": "midunam",
+  "en": "I know"
+ },
+ {
+  "id": "v_ver9",
+  "fa": "می‌تونم",
+  "tr": "mitunam",
+  "en": "I can"
+ },
+ {
+  "id": "v_ver10",
+  "fa": "می‌خورم",
+  "tr": "mikhoram",
+  "en": "I eat / I drink"
+ },
+ {
+  "id": "v_ver11",
+  "fa": "می‌خرم",
+  "tr": "mikharam",
+  "en": "I buy"
+ },
+ {
+  "id": "v_ver12",
+  "fa": "می‌دم",
+  "tr": "midam",
+  "en": "I give"
+ },
+ {
+  "id": "v_ver13",
+  "fa": "می‌گیرم",
+  "tr": "migiram",
+  "en": "I take / I get"
+ },
+ {
+  "id": "v_ver14",
+  "fa": "کار می‌کنم",
+  "tr": "kâr mikonam",
+  "en": "I work"
+ },
+ {
+  "id": "v_ver15",
+  "fa": "حرف می‌زنم",
+  "tr": "harf mizanam",
+  "en": "I talk"
+ },
+ {
+  "id": "v_num0",
+  "fa": "صفر",
+  "tr": "sefr",
+  "en": "zero (۰)"
+ },
+ {
+  "id": "v_num1",
+  "fa": "یک",
+  "tr": "yek",
+  "en": "one (۱)"
+ },
+ {
+  "id": "v_num2",
+  "fa": "دو",
+  "tr": "do",
+  "en": "two (۲)"
+ },
+ {
+  "id": "v_num3",
+  "fa": "سه",
+  "tr": "se",
+  "en": "three (۳)"
+ },
+ {
+  "id": "v_num4",
+  "fa": "چهار",
+  "tr": "chahâr",
+  "en": "four (۴)"
+ },
+ {
+  "id": "v_num5",
+  "fa": "پنج",
+  "tr": "panj",
+  "en": "five (۵)"
+ },
+ {
+  "id": "v_num6",
+  "fa": "شش",
+  "tr": "shesh",
+  "en": "six (۶)"
+ },
+ {
+  "id": "v_num7",
+  "fa": "هفت",
+  "tr": "haft",
+  "en": "seven (۷)"
+ },
+ {
+  "id": "v_num8",
+  "fa": "هشت",
+  "tr": "hasht",
+  "en": "eight (۸)"
+ },
+ {
+  "id": "v_num9",
+  "fa": "نه",
+  "tr": "noh",
+  "en": "nine (۹)"
+ },
+ {
+  "id": "v_num10",
+  "fa": "ده",
+  "tr": "dah",
+  "en": "ten (۱۰)"
+ },
+ {
+  "id": "v_num11",
+  "fa": "بیست",
+  "tr": "bist",
+  "en": "twenty (۲۰)"
+ },
+ {
+  "id": "v_num12",
+  "fa": "پنجاه",
+  "tr": "panjâh",
+  "en": "fifty (۵۰)"
+ },
+ {
+  "id": "v_num13",
+  "fa": "صد",
+  "tr": "sad",
+  "en": "hundred (۱۰۰)"
+ },
+ {
+  "id": "v_num14",
+  "fa": "هزار",
+  "tr": "hezâr",
+  "en": "thousand (۱۰۰۰)"
+ },
+ {
+  "id": "v_tim0",
+  "fa": "امروز",
+  "tr": "emruz",
+  "en": "today"
+ },
+ {
+  "id": "v_tim1",
+  "fa": "فردا",
+  "tr": "fardâ",
+  "en": "tomorrow"
+ },
+ {
+  "id": "v_tim2",
+  "fa": "دیروز",
+  "tr": "diruz",
+  "en": "yesterday"
+ },
+ {
+  "id": "v_tim3",
+  "fa": "الان",
+  "tr": "alân",
+  "en": "now"
+ },
+ {
+  "id": "v_tim4",
+  "fa": "ساعت",
+  "tr": "sâ'at",
+  "en": "hour / clock / o'clock"
+ },
+ {
+  "id": "v_tim5",
+  "fa": "روز",
+  "tr": "ruz",
+  "en": "day"
+ },
+ {
+  "id": "v_tim6",
+  "fa": "شب",
+  "tr": "shab",
+  "en": "night"
+ },
+ {
+  "id": "v_tim7",
+  "fa": "صبح",
+  "tr": "sobh",
+  "en": "morning"
+ },
+ {
+  "id": "v_tim8",
+  "fa": "ظهر",
+  "tr": "zohr",
+  "en": "noon"
+ },
+ {
+  "id": "v_tim9",
+  "fa": "هفته",
+  "tr": "hafte",
+  "en": "week"
+ },
+ {
+  "id": "v_tim10",
+  "fa": "سال",
+  "tr": "sâl",
+  "en": "year"
+ },
+ {
+  "id": "v_tim11",
+  "fa": "بعداً",
+  "tr": "ba'dan",
+  "en": "later"
+ },
+ {
+  "id": "v_tim12",
+  "fa": "زود",
+  "tr": "zud",
+  "en": "early / quickly"
+ },
+ {
+  "id": "v_tim13",
+  "fa": "دیر",
+  "tr": "dir",
+  "en": "late"
+ },
+ {
+  "id": "v_pla1",
+  "fa": "بازار",
+  "tr": "bâzâr",
+  "en": "market"
+ },
+ {
+  "id": "v_pla2",
+  "fa": "مغازه",
+  "tr": "maghâze",
+  "en": "shop"
+ },
+ {
+  "id": "v_pla3",
+  "fa": "رستوران",
+  "tr": "resturân",
+  "en": "restaurant"
+ },
+ {
+  "id": "v_pla4",
+  "fa": "بیمارستان",
+  "tr": "bimârestân",
+  "en": "hospital"
+ },
+ {
+  "id": "v_pla5",
+  "fa": "داروخونه",
+  "tr": "dârukhune",
+  "en": "pharmacy"
+ },
+ {
+  "id": "v_pla6",
+  "fa": "خیابون",
+  "tr": "khiyâbun",
+  "en": "street"
+ },
+ {
+  "id": "v_pla7",
+  "fa": "مسجد",
+  "tr": "masjed",
+  "en": "mosque"
+ },
+ {
+  "id": "v_pla8",
+  "fa": "مدرسه",
+  "tr": "madrese",
+  "en": "school"
+ },
+ {
+  "id": "v_pla9",
+  "fa": "فرودگاه",
+  "tr": "forudgâh",
+  "en": "airport"
+ },
+ {
+  "id": "v_pla10",
+  "fa": "اسکله",
+  "tr": "eskele",
+  "en": "pier / jetty"
+ },
+ {
+  "id": "v_pla11",
+  "fa": "ساحل",
+  "tr": "sâhel",
+  "en": "beach / coast"
+ },
+ {
+  "id": "v_pla12",
+  "fa": "جزیره",
+  "tr": "jazire",
+  "en": "island"
+ },
+ {
+  "id": "v_pla13",
+  "fa": "دستشویی",
+  "tr": "dastshuyi",
+  "en": "toilet"
+ },
+ {
+  "id": "v_pla14",
+  "fa": "هتل",
+  "tr": "hotel",
+  "en": "hotel"
+ },
+ {
+  "id": "v_pla15",
+  "fa": "بانک",
+  "tr": "bânk",
+  "en": "bank"
+ },
+ {
+  "id": "v_pla16",
+  "fa": "شهر",
+  "tr": "shahr",
+  "en": "city"
+ },
+ {
+  "id": "v_foo1",
+  "fa": "چای",
+  "tr": "chây",
+  "en": "tea"
+ },
+ {
+  "id": "v_foo2",
+  "fa": "قهوه",
+  "tr": "ghahve",
+  "en": "coffee"
+ },
+ {
+  "id": "v_foo3",
+  "fa": "شیر",
+  "tr": "shir",
+  "en": "milk"
+ },
+ {
+  "id": "v_foo5",
+  "fa": "برنج",
+  "tr": "berenj",
+  "en": "rice"
+ },
+ {
+  "id": "v_foo6",
+  "fa": "غذا",
+  "tr": "ghazâ",
+  "en": "food / a meal"
+ },
+ {
+  "id": "v_foo8",
+  "fa": "میگو",
+  "tr": "meygu",
+  "en": "shrimp"
+ },
+ {
+  "id": "v_foo9",
+  "fa": "مرغ",
+  "tr": "morgh",
+  "en": "chicken"
+ },
+ {
+  "id": "v_foo10",
+  "fa": "گوشت",
+  "tr": "gusht",
+  "en": "meat"
+ },
+ {
+  "id": "v_foo11",
+  "fa": "تخم‌مرغ",
+  "tr": "tokhm-e morgh",
+  "en": "egg"
+ },
+ {
+  "id": "v_foo12",
+  "fa": "میوه",
+  "tr": "mive",
+  "en": "fruit"
+ },
+ {
+  "id": "v_foo14",
+  "fa": "سبزی",
+  "tr": "sabzi",
+  "en": "herbs / greens"
+ },
+ {
+  "id": "v_foo15",
+  "fa": "نمک",
+  "tr": "namak",
+  "en": "salt"
+ },
+ {
+  "id": "v_foo16",
+  "fa": "شکر",
+  "tr": "shekar",
+  "en": "sugar"
+ },
+ {
+  "id": "v_thi1",
+  "fa": "قلم",
+  "tr": "ghalam",
+  "en": "pen"
+ },
+ {
+  "id": "v_thi2",
+  "fa": "کاغذ",
+  "tr": "kâghaz",
+  "en": "paper"
+ },
+ {
+  "id": "v_thi4",
+  "fa": "پنجره",
+  "tr": "panjere",
+  "en": "window"
+ },
+ {
+  "id": "v_thi5",
+  "fa": "میز",
+  "tr": "miz",
+  "en": "table"
+ },
+ {
+  "id": "v_thi8",
+  "fa": "کلید",
+  "tr": "kelid",
+  "en": "key"
+ },
+ {
+  "id": "v_thi9",
+  "fa": "پول",
+  "tr": "pul",
+  "en": "money"
+ },
+ {
+  "id": "v_thi10",
+  "fa": "کیف",
+  "tr": "kif",
+  "en": "bag / wallet"
+ },
+ {
+  "id": "v_thi11",
+  "fa": "لباس",
+  "tr": "lebâs",
+  "en": "clothes"
+ },
+ {
+  "id": "v_thi14",
+  "fa": "اتوبوس",
+  "tr": "otobus",
+  "en": "bus"
+ },
+ {
+  "id": "v_thi15",
+  "fa": "تاکسی",
+  "tr": "tâksi",
+  "en": "taxi"
+ },
+ {
+  "id": "v_thi16",
+  "fa": "بلیط",
+  "tr": "belit",
+  "en": "ticket"
+ },
+ {
+  "id": "v_thi17",
+  "fa": "دارو",
+  "tr": "dâru",
+  "en": "medicine"
+ },
+ {
+  "id": "v_bod0",
+  "fa": "سر",
+  "tr": "sar",
+  "en": "head"
+ },
+ {
+  "id": "v_bod2",
+  "fa": "پا",
+  "tr": "pâ",
+  "en": "foot / leg"
+ },
+ {
+  "id": "v_bod4",
+  "fa": "گوش",
+  "tr": "gush",
+  "en": "ear"
+ },
+ {
+  "id": "v_bod5",
+  "fa": "دهن",
+  "tr": "dahan",
+  "en": "mouth"
+ },
+ {
+  "id": "v_bod6",
+  "fa": "دندون",
+  "tr": "dandun",
+  "en": "tooth"
+ },
+ {
+  "id": "v_bod7",
+  "fa": "دل",
+  "tr": "del",
+  "en": "heart / tummy"
+ },
+ {
+  "id": "v_des0",
+  "fa": "خوب",
+  "tr": "khub",
+  "en": "good"
+ },
+ {
+  "id": "v_des1",
+  "fa": "بد",
+  "tr": "bad",
+  "en": "bad"
+ },
+ {
+  "id": "v_des2",
+  "fa": "بزرگ",
+  "tr": "bozorg",
+  "en": "big"
+ },
+ {
+  "id": "v_des3",
+  "fa": "کوچیک",
+  "tr": "kuchik",
+  "en": "small"
+ },
+ {
+  "id": "v_des4",
+  "fa": "گرم",
+  "tr": "garm",
+  "en": "warm / hot"
+ },
+ {
+  "id": "v_des5",
+  "fa": "سرد",
+  "tr": "sard",
+  "en": "cold"
+ },
+ {
+  "id": "v_des6",
+  "fa": "داغ",
+  "tr": "dâgh",
+  "en": "very hot"
+ },
+ {
+  "id": "v_des7",
+  "fa": "گرون",
+  "tr": "gerun",
+  "en": "expensive"
+ },
+ {
+  "id": "v_des8",
+  "fa": "ارزون",
+  "tr": "arzun",
+  "en": "cheap"
+ },
+ {
+  "id": "v_des9",
+  "fa": "زیاد",
+  "tr": "ziyâd",
+  "en": "a lot / too much"
+ },
+ {
+  "id": "v_des10",
+  "fa": "کم",
+  "tr": "kam",
+  "en": "a little"
+ },
+ {
+  "id": "v_des11",
+  "fa": "خوشگل",
+  "tr": "khoshgel",
+  "en": "pretty"
+ },
+ {
+  "id": "v_des12",
+  "fa": "تمیز",
+  "tr": "tamiz",
+  "en": "clean"
+ },
+ {
+  "id": "v_des13",
+  "fa": "کثیف",
+  "tr": "kasif",
+  "en": "dirty"
+ },
+ {
+  "id": "v_des14",
+  "fa": "نزدیک",
+  "tr": "nazdik",
+  "en": "near"
+ },
+ {
+  "id": "v_des15",
+  "fa": "دور",
+  "tr": "dur",
+  "en": "far"
+ },
+ {
+  "id": "v_des16",
+  "fa": "اینجا",
+  "tr": "injâ",
+  "en": "here"
+ },
+ {
+  "id": "v_des17",
+  "fa": "اونجا",
+  "tr": "unjâ",
+  "en": "there"
+ },
+ {
+  "id": "v_des18",
+  "fa": "خسته",
+  "tr": "khaste",
+  "en": "tired"
+ },
+ {
+  "id": "v_des19",
+  "fa": "گرسنه",
+  "tr": "gorosne",
+  "en": "hungry"
+ },
+ {
+  "id": "v_des20",
+  "fa": "تشنه",
+  "tr": "teshne",
+  "en": "thirsty"
+ },
+ {
+  "id": "v_dir0",
+  "fa": "راست",
+  "tr": "râst",
+  "en": "right"
+ },
+ {
+  "id": "v_dir1",
+  "fa": "چپ",
+  "tr": "chap",
+  "en": "left"
+ },
+ {
+  "id": "v_dir2",
+  "fa": "مستقیم",
+  "tr": "mostaghim",
+  "en": "straight on"
+ },
+ {
+  "id": "v_dir3",
+  "fa": "بالا",
+  "tr": "bâlâ",
+  "en": "up"
+ },
+ {
+  "id": "v_dir4",
+  "fa": "پایین",
+  "tr": "pâyin",
+  "en": "down"
+ },
+ {
+  "id": "v_dir5",
+  "fa": "جلو",
+  "tr": "jelo",
+  "en": "in front / ahead"
+ },
+ {
+  "id": "v_dir6",
+  "fa": "پشت",
+  "tr": "posht",
+  "en": "behind"
+ },
+ {
+  "id": "l02",
+  "fa": "پدر",
+  "tr": "pedar",
+  "en": "father"
+ },
+ {
+  "id": "l03",
+  "fa": "توت",
+  "tr": "tut",
+  "en": "mulberry"
+ },
+ {
+  "id": "l04",
+  "fa": "ثانیه",
+  "tr": "sâniye",
+  "en": "second"
+ },
+ {
+  "id": "l05",
+  "fa": "جا",
+  "tr": "jâ",
+  "en": "place"
+ },
+ {
+  "id": "l07",
+  "fa": "حال",
+  "tr": "hâl",
+  "en": "state, mood"
+ },
+ {
+  "id": "l10",
+  "fa": "ذرت",
+  "tr": "zorat",
+  "en": "corn"
+ },
+ {
+  "id": "l13",
+  "fa": "ژاکت",
+  "tr": "zhâket",
+  "en": "jacket"
+ },
+ {
+  "id": "l17",
+  "fa": "ضعیف",
+  "tr": "za'if",
+  "en": "weak"
+ },
+ {
+  "id": "l18",
+  "fa": "طلا",
+  "tr": "talâ",
+  "en": "gold"
+ },
+ {
+  "id": "l20",
+  "fa": "عید",
+  "tr": "eyd",
+  "en": "holiday"
+ },
+ {
+  "id": "l22",
+  "fa": "فارسی",
+  "tr": "fârsi",
+  "en": "Persian"
+ },
+ {
+  "id": "l26",
+  "fa": "لب",
+  "tr": "lab",
+  "en": "lip"
+ },
+ {
+  "id": "l28",
+  "fa": "نان",
+  "tr": "nân",
+  "en": "bread"
+ },
+ {
+  "id": "l29",
+  "fa": "ورزش",
+  "tr": "varzesh",
+  "en": "sport"
+ },
+ {
+  "id": "l30",
+  "fa": "هوا",
+  "tr": "havâ",
+  "en": "air"
+ }
+]

@@ -1,0 +1,794 @@
+<title>Khalij Farsi</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&family=Young+Serif&family=Figtree:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: app shell — side rail on desktop, bottom tab bar on phone; one view at a time, routed by #hash.
+   Palette: Persian Gulf water, henna red and gold from Hormozgan embroidery, over a cool sea-salt ground. */
+:root{
+  --bg:#eef3f1; --surface:#ffffff; --sunk:#e1eae7; --ink:#13221f; --muted:#56706a; --line:#c9d8d3;
+  --accent:#0e7c74; --accent-ink:#ffffff; --henna:#b23a2a; --gold:#a97c12; --good:#1f7a3a; --bad:#b23a2a;
+  --f-display:"Young Serif",Georgia,serif; --f-body:"Figtree",system-ui,sans-serif;
+  --f-fa:"Vazirmatn","Noto Naskh Arabic",Tahoma,sans-serif; --f-mono:"JetBrains Mono",ui-monospace,monospace;
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0c1615; --surface:#13201f; --sunk:#0f1b1a; --ink:#e2ece9; --muted:#8ea8a2; --line:#24403c;
+  --accent:#3dbfb1; --accent-ink:#06201d; --henna:#e0705f; --gold:#e0b44c; --good:#5cc27a; --bad:#e0705f; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0c1615; --surface:#13201f; --sunk:#0f1b1a; --ink:#e2ece9; --muted:#8ea8a2; --line:#24403c;
+  --accent:#3dbfb1; --accent-ink:#06201d; --henna:#e0705f; --gold:#e0b44c; --good:#5cc27a; --bad:#e0705f; color-scheme:dark}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.5}
+.shell{display:grid;grid-template-columns:200px 1fr;min-height:100%}
+nav.rail{position:sticky;top:0;height:100vh;padding:24px 12px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:4px;background:var(--surface)}
+.brand{font-family:var(--f-display);font-size:22px;padding:0 10px 4px}
+.brand-fa{font-family:var(--f-fa);color:var(--accent);font-size:15px;padding:0 10px 18px}
+nav a{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:8px;color:var(--ink);text-decoration:none;font-weight:600;font-size:15px}
+nav a .fa{font-family:var(--f-fa);font-weight:400;color:var(--muted);margin-left:auto;font-size:14px}
+nav a[aria-current="page"]{background:var(--accent);color:var(--accent-ink)}
+nav a[aria-current="page"] .fa{color:var(--accent-ink)}
+nav a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.sync{margin-top:auto;font-size:12px;color:var(--muted);padding:0 10px}
+main{padding-block:28px 120px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));min-width:0}
+.view{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+h1{font-family:var(--f-display);font-weight:400;font-size:32px;line-height:1.15;margin:0;text-wrap:balance}
+h2{font-family:var(--f-display);font-weight:400;font-size:22px;margin:0;text-wrap:balance}
+h3{font-size:15px;margin:0;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+p{margin:0;max-width:65ch}
+.lede{color:var(--muted);font-size:17px}
+.fa{font-family:var(--f-fa)}
+.tr{font-family:var(--f-mono);font-size:.92em;color:var(--accent)}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;display:flex;flex-direction:column;gap:14px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(160px,1fr))}
+button,.btn{font:600 15px var(--f-body);border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:10px 16px;border-radius:8px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;min-height:44px}
+button.primary,.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+button.bad{border-color:var(--bad);color:var(--bad)}
+button.good{border-color:var(--good);color:var(--good)}
+button:disabled{opacity:.45;cursor:default}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:3px 9px;border-radius:999px;background:var(--sunk);color:var(--muted)}
+.chip.ok{color:var(--good)} .chip.warn{color:var(--gold)}
+.stat{display:flex;flex-direction:column;gap:2px}
+.stat b{font-family:var(--f-display);font-weight:400;font-size:30px;font-variant-numeric:tabular-nums}
+.stat span{font-size:13px;color:var(--muted)}
+.strands{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.strand{border-left:4px solid var(--accent);padding:4px 0 4px 12px;display:flex;flex-direction:column;gap:4px}
+.strand:nth-child(2){border-color:var(--henna)} .strand:nth-child(3){border-color:var(--gold)} .strand:nth-child(4){border-color:var(--muted)}
+.strand a{color:var(--ink);font-weight:700}
+/* flashcard */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:28px 20px;min-height:280px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center}
+.card .big-fa{font-family:var(--f-fa);font-size:clamp(30px,8vw,46px);font-weight:600;line-height:1.5}
+.card .pic{font-size:72px;line-height:1}
+.card .en{font-size:20px;font-weight:600}
+.card .note{font-size:14px;color:var(--muted);max-width:46ch}
+.prog{height:6px;background:var(--sunk);border-radius:6px;overflow:hidden}
+.prog i{display:block;height:100%;background:var(--accent);transition:width .3s}
+.grades{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+/* letters */
+.lgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:8px;direction:rtl}
+.lgrid button{font-family:var(--f-fa);font-size:28px;justify-content:center;padding:6px;min-height:64px;flex-direction:column;gap:0}
+.lgrid button small{font-family:var(--f-body);font-size:11px;color:var(--muted);direction:ltr}
+.lgrid button.done{border-color:var(--accent)}
+.forms{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;direction:rtl;text-align:center}
+.forms div{background:var(--sunk);border-radius:8px;padding:8px 4px}
+.forms .g{font-family:var(--f-fa);font-size:34px;line-height:1.6}
+.forms small{display:block;font-size:11px;color:var(--muted);direction:ltr}
+.trace{position:relative;width:100%;max-width:420px;aspect-ratio:1;border:1px dashed var(--line);border-radius:12px;background:var(--sunk);touch-action:none;margin:0 auto}
+.trace canvas{position:absolute;inset:0;width:100%;height:100%}
+/* typing */
+.line{font-family:var(--f-fa);font-size:clamp(26px,6vw,38px);direction:rtl;background:var(--sunk);border-radius:12px;padding:16px;line-height:1.9;letter-spacing:.06em;word-break:break-word;min-height:96px}
+.line span.ok{color:var(--good)} .line span.cur{background:var(--gold);color:#13221f;border-radius:4px} .line span.err{color:var(--bad);text-decoration:underline}
+.kb{display:flex;flex-direction:column;gap:5px;overflow-x:auto;padding-bottom:4px}
+.kr{display:flex;gap:5px}
+.kr:nth-child(2){padding-left:18px} .kr:nth-child(3){padding-left:36px}
+.k{flex:0 0 auto;width:min(46px,calc((100vw - 92px)/12));height:52px;border:1px solid var(--line);border-radius:7px;background:var(--surface);display:flex;flex-direction:column;justify-content:space-between;padding:3px 5px}
+.k .lat{font-family:var(--f-mono);font-size:11px;color:var(--muted)}
+.k .per{font-family:var(--f-fa);font-size:20px;text-align:right;line-height:1}
+.k.hot{background:var(--gold);border-color:var(--gold)} .k.hot .per,.k.hot .lat{color:#13221f}
+.k.home{border-bottom:3px solid var(--accent)}
+.capture{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}
+/* forms */
+label{display:flex;flex-direction:column;gap:4px;font-size:14px;font-weight:600}
+input[type=text],textarea,select{font:16px var(--f-body);padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);width:100%}
+input.fa-in{font-family:var(--f-fa);direction:rtl;font-size:20px}
+.fgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.entry{border-top:1px solid var(--line);padding-top:12px;display:flex;flex-direction:column;gap:4px}
+.entry .fa{font-size:22px;direction:rtl;text-align:right}
+.refs{font-size:14px;color:var(--muted);display:flex;flex-direction:column;gap:6px;padding-left:18px;margin:0}
+.claim{display:grid;grid-template-columns:150px 1fr;gap:6px 16px;border-top:1px solid var(--line);padding-top:12px}
+.claim b{font-size:14px}
+.claim p{font-size:15px}
+.claim cite{font-style:normal;color:var(--muted);font-size:13px;display:block;margin-top:2px}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:8px;font-weight:600;font-size:14px;z-index:20}
+@media (max-width:760px){
+  .shell{grid-template-columns:1fr}
+  nav.rail{position:fixed;top:auto;bottom:0;left:0;right:0;height:auto;flex-direction:row;justify-content:space-around;padding:6px max(6px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(6px,env(safe-area-inset-left,0px));border-right:0;border-top:1px solid var(--line);z-index:10;gap:2px}
+  .brand,.brand-fa,.sync,nav a.desk{display:none}
+  nav a{flex-direction:column;gap:0;font-size:11px;padding:6px 4px;flex:1;justify-content:center;text-align:center}
+  nav a .fa{margin:0;font-size:15px;order:-1}
+  h1{font-size:27px}
+  .strands,.fgrid{grid-template-columns:1fr}
+  .claim{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="shell">
+  <nav class="rail" aria-label="Sections">
+    <div class="brand">Khalij Farsi</div>
+    <div class="brand-fa">فارسیِ خلیج</div>
+    <a href="#today">Today <span class="fa">امروز</span></a>
+    <a href="#talk">Talk <span class="fa">حرف</span></a>
+    <a href="#words">Words <span class="fa">کلمه</span></a>
+    <a href="#letters">Letters <span class="fa">حروف</span></a>
+    <a href="#type">Type <span class="fa">تایپ</span></a>
+    <a href="#south">South <span class="fa">جنوب</span></a>
+    <a href="#why" class="desk">Why it works <span class="fa">چرا</span></a>
+    <div class="sync" id="sync">Saving on this device</div>
+  </nav>
+  <main id="main"></main>
+</div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+/* ---------- content ---------- */
+// Stage 1: formulaic chunks. Colloquial (spoken) standard Persian, which every Bandari speaker also understands.
+const CHUNKS = [
+ {id:"c01",set:"Greet",fa:"سلام",tr:"salâm",en:"Hi / hello",note:"Works with anyone, any time of day."},
+ {id:"c02",set:"Greet",fa:"سلام، خوبی؟",tr:"salâm, khubi?",en:"Hi, are you well? (casual)",note:"Literally 'are you good?'. The usual greeting between friends."},
+ {id:"c03",set:"Greet",fa:"حالت چطوره؟",tr:"hâlet chetore?",en:"How are you? (casual)",note:"hâl = state, -et = your."},
+ {id:"c04",set:"Greet",fa:"خوبم، مرسی.",tr:"khubam, mersi.",en:"I'm good, thanks.",note:"-am = I am. mersi is borrowed from French and very common."},
+ {id:"c05",set:"Greet",fa:"تو چطوری؟",tr:"to chetori?",en:"And you? How are you?",note:"to = you (one person, casual)."},
+ {id:"c06",set:"Greet",fa:"بد نیستم.",tr:"bad nistam.",en:"Not bad.",note:"nistam = I am not."},
+ {id:"c07",set:"Greet",fa:"صبح بخیر",tr:"sobh bekheyr",en:"Good morning",note:""},
+ {id:"c08",set:"Greet",fa:"شب بخیر",tr:"shab bekheyr",en:"Good night",note:""},
+ {id:"c09",set:"Me & you",fa:"اسمت چیه؟",tr:"esmet chiye?",en:"What's your name? (casual)",note:"esm = name, chiye = what is it."},
+ {id:"c10",set:"Me & you",fa:"اسم من ... ـه.",tr:"esm-e man ...-e.",en:"My name is ...",note:"Put your name in the gap; the -e on the end means 'is'."},
+ {id:"c11",set:"Me & you",fa:"خوشبختم.",tr:"khoshbakhtam.",en:"Nice to meet you.",note:"Literally 'I am fortunate'."},
+ {id:"c12",set:"Me & you",fa:"اهل کجایی؟",tr:"ahl-e kojâyi?",en:"Where are you from?",note:"ahl = native of, kojâ = where."},
+ {id:"c13",set:"Me & you",fa:"من اهل آمریکام.",tr:"man ahl-e âmrikâm.",en:"I'm from America.",note:"Swap in your own place."},
+ {id:"c14",set:"Point & ask",fa:"این چیه؟",tr:"in chiye?",en:"What is this?",note:"in = this (near you)."},
+ {id:"c15",set:"Point & ask",fa:"اون چیه؟",tr:"un chiye?",en:"What is that?",note:"un = that (over there). Written آن ân in formal text."},
+ {id:"c16",set:"Point & ask",fa:"این کتابه.",tr:"in ketâbe.",en:"This is a book.",note:"Noun + -e = 'it is a ...'."},
+ {id:"c17",set:"Point & ask",fa:"به فارسی چی میشه؟",tr:"be fârsi chi mishe?",en:"How do you say it in Farsi?",note:"Your most useful question. Point at anything and ask."},
+ {id:"c18",set:"Point & ask",fa:"... یعنی چی؟",tr:"... ya'ni chi?",en:"What does ... mean?",note:"Say the word first, then ya'ni chi?"},
+ {id:"c19",set:"Point & ask",fa:"کجاست؟",tr:"kojâst?",en:"Where is it?",note:"Put a noun in front: âb kojâst? Where is the water?"},
+ {id:"c20",set:"Point & ask",fa:"چنده؟",tr:"chande?",en:"How much is it?",note:""},
+ {id:"c21",set:"Survive",fa:"آره / نه",tr:"âre / na",en:"Yeah / no",note:"Casual. The polite 'yes' is bale."},
+ {id:"c22",set:"Survive",fa:"بله",tr:"bale",en:"Yes (polite)",note:""},
+ {id:"c23",set:"Survive",fa:"ممنون",tr:"mamnun",en:"Thank you",note:""},
+ {id:"c24",set:"Survive",fa:"خواهش می‌کنم.",tr:"khâhesh mikonam.",en:"You're welcome / please",note:"The reply to thanks, and also 'please' when you ask for something."},
+ {id:"c25",set:"Survive",fa:"ببخشید",tr:"bebakhshid",en:"Excuse me / sorry",note:"Use it to get attention and to apologise."},
+ {id:"c26",set:"Survive",fa:"نمی‌فهمم.",tr:"nemifahmam.",en:"I don't understand.",note:"nemi- = don't. The gap after نمی is a half-space."},
+ {id:"c27",set:"Survive",fa:"میشه دوباره بگید؟",tr:"mishe dobâre begid?",en:"Can you say it again?",note:"begid is the polite 'you'. Use it with strangers and elders."},
+ {id:"c28",set:"Survive",fa:"یواش‌تر لطفاً",tr:"yavâsh-tar lotfan",en:"Slower, please",note:""},
+ {id:"c29",set:"Survive",fa:"یه کم فارسی بلدم.",tr:"ye kam fârsi baladam.",en:"I know a little Farsi.",note:"balad = knowing how."},
+ {id:"c30",set:"Bye",fa:"خداحافظ",tr:"khodâhâfez",en:"Goodbye",note:"Literally 'God keep you'."},
+ {id:"c31",set:"Bye",fa:"فعلاً",tr:"fe'lan",en:"See you (casual)",note:"Literally 'for now'."},
+ {id:"c32",set:"Bye",fa:"به امید دیدار",tr:"be omid-e didâr",en:"Hope to see you again",note:"Warmer and a little more formal."},
+ {id:"c33",set:"Getting around",fa:"این چه کتابیه؟",tr:"in che ketâbiye?",en:"What book is this?",note:"che + noun + -iye = 'what kind of ... is this?'. Swap in any noun."},
+ {id:"c34",set:"Getting around",fa:"این کتاب مال کیه؟",tr:"in ketâb mâl-e kiye?",en:"Whose book is this?",note:"mâl comes from Arabic مال. In Persian it means 'belonging to'."},
+ {id:"c35",set:"Getting around",fa:"این کتاب منه.",tr:"in ketâb-e mane.",en:"This book is mine.",note:"-e links words (ketâb-e man = my book). This link is called the ezâfe."},
+ {id:"c36",set:"Getting around",fa:"این کتابو می‌خوام.",tr:"in ketâbo mikhâm.",en:"I want this book.",note:"-o marks a specific object. It is written را râ in formal text."},
+ {id:"c37",set:"Getting around",fa:"دستشویی کجاست؟",tr:"dastshuyi kojâst?",en:"Where's the toilet?",note:""},
+ {id:"c38",set:"Getting around",fa:"اینجا کجاست؟",tr:"injâ kojâst?",en:"Where are we?",note:"Literally 'where is here?'"},
+ {id:"c39",set:"Getting around",fa:"گم شدم.",tr:"gom shodam.",en:"I'm lost.",note:""},
+ {id:"c40",set:"Getting around",fa:"میشه کمکم کنید؟",tr:"mishe komakam konid?",en:"Can you help me?",note:"mishe ... = can you / is it possible."},
+ {id:"c41",set:"Getting around",fa:"چقدر میشه؟",tr:"cheghadr mishe?",en:"How much does it come to?",note:"Ask this at the till."},
+ {id:"c42",set:"Getting around",fa:"یه دقیقه صبر کنید.",tr:"ye daghighe sabr konid.",en:"Wait a minute, please.",note:"daghighe and sabr both come from Arabic: دقيقة, صبر."},
+ {id:"c43",set:"Getting around",fa:"باشه.",tr:"bâshe.",en:"OK.",note:""},
+ {id:"c44",set:"Getting around",fa:"انگلیسی بلدید؟",tr:"engilisi baladid?",en:"Do you speak English?",note:""},
+ {id:"c45",set:"Getting around",fa:"عربی بلدید؟",tr:"arabi baladid?",en:"Do you speak Arabic?",note:"Useful on the coast, where many people know Gulf Arabic."},
+ {id:"c46",set:"Getting around",fa:"من عربی بلدم.",tr:"man arabi baladam.",en:"I speak Arabic.",note:"balad comes from Arabic بلد (town), via 'guide who knows the town'. In Persian it means 'knowing how'."}
+];
+// Functional vocabulary: everyday words for getting around, grouped by use.
+// [fa, tr, en, Arabic source if a loan, note, falseFriend]
+const VOCAB_RAW = {
+ "People":[["من","man","I"],["تو","to","you (casual)"],["اون","un","he / she / it","","Persian has no he/she split. Written او u."],["ما","mâ","we"],["شما","shomâ","you (polite or plural)"],["اونا","unâ","they","","Written آنها ânhâ."],["مرد","mard","man"],["زن","zan","woman / wife"],["بچه","bachche","child"],["دوست","dust","friend"],["مامان","mâmân","mom"],["بابا","bâbâ","dad"],["برادر","barâdar","brother"],["خواهر","khâhar","sister"],["آقا","âghâ","sir / Mr."],["خانم","khânum","madam / Mrs."],["مردم","mardom","people"]],
+ "Questions":[["چی","chi","what"],["کی","ki","who","","Spelled the same as key (when). Context tells them apart."],["کی","key","when"],["کجا","kojâ","where"],["چرا","cherâ","why"],["چطور","chetor","how"],["چند","chand","how many / how much"],["کدوم","kodum","which","","Written کدام kodâm."]],
+ "Verbs":[["هستم","hastam","I am","","Usually shortened to -am on the end: khubam = I'm good."],["دارم","dâram","I have"],["می‌خوام","mikhâm","I want","","Written می‌خواهم."],["می‌رم","miram","I go / I'm going","","Written می‌روم."],["میام","miyâm","I come / I'm coming","","Written می‌آیم."],["می‌کنم","mikonam","I do / I make","","Part of many compound verbs: kâr mikonam = I work."],["می‌گم","migam","I say","","Written می‌گویم."],["می‌بینم","mibinam","I see"],["می‌دونم","midunam","I know","","Written می‌دانم. nemidunam = I don't know."],["می‌تونم","mitunam","I can","","Written می‌توانم."],["می‌خورم","mikhoram","I eat / I drink","","Persian uses one verb for both."],["می‌خرم","mikharam","I buy"],["می‌دم","midam","I give","","Written می‌دهم."],["می‌گیرم","migiram","I take / I get"],["کار می‌کنم","kâr mikonam","I work"],["حرف می‌زنم","harf mizanam","I talk","حرف","In Arabic حرف means 'letter'. In Persian harf means 'talk, words'.",1]],
+ "Numbers":[["صفر","sefr","zero (۰)","صفر"],["یک","yek","one (۱)"],["دو","do","two (۲)"],["سه","se","three (۳)"],["چهار","chahâr","four (۴)","","Said châr."],["پنج","panj","five (۵)"],["شش","shesh","six (۶)","","Said shish."],["هفت","haft","seven (۷)"],["هشت","hasht","eight (۸)"],["نه","noh","nine (۹)","","Spelled like na (no)."],["ده","dah","ten (۱۰)"],["بیست","bist","twenty (۲۰)"],["پنجاه","panjâh","fifty (۵۰)"],["صد","sad","hundred (۱۰۰)"],["هزار","hezâr","thousand (۱۰۰۰)"]],
+ "Time":[["امروز","emruz","today"],["فردا","fardâ","tomorrow"],["دیروز","diruz","yesterday"],["الان","alân","now","الآن"],["ساعت","sâ'at","hour / clock / o'clock","ساعة"],["روز","ruz","day"],["شب","shab","night"],["صبح","sobh","morning","صبح"],["ظهر","zohr","noon","ظهر"],["هفته","hafte","week"],["سال","sâl","year"],["بعداً","ba'dan","later","بعد"],["زود","zud","early / quickly"],["دیر","dir","late"]],
+ "Places":[["خونه","khune","home / house","","Written خانه khâne."],["بازار","bâzâr","market","","Arabic borrowed this word from Persian."],["مغازه","maghâze","shop"],["رستوران","resturân","restaurant"],["بیمارستان","bimârestân","hospital"],["داروخونه","dârukhune","pharmacy","","Written داروخانه."],["خیابون","khiyâbun","street","","Written خیابان."],["مسجد","masjed","mosque","مسجد"],["مدرسه","madrese","school","مدرسة"],["فرودگاه","forudgâh","airport"],["اسکله","eskele","pier / jetty"],["ساحل","sâhel","beach / coast","ساحل"],["جزیره","jazire","island","جزيرة"],["دستشویی","dastshuyi","toilet"],["هتل","hotel","hotel"],["بانک","bânk","bank"],["شهر","shahr","city"]],
+ "Food & drink":[["آب","âb","water"],["چای","chây","tea"],["قهوه","ghahve","coffee","قهوة"],["شیر","shir","milk","","Also means 'lion' and 'tap'."],["نون","nun","bread","","Written نان nân."],["برنج","berenj","rice"],["غذا","ghazâ","food / a meal","غذاء","In Arabic it means 'nourishment'. In Persian it is the everyday word for food."],["ماهی","mâhi","fish"],["میگو","meygu","shrimp"],["مرغ","morgh","chicken"],["گوشت","gusht","meat"],["تخم‌مرغ","tokhm-e morgh","egg"],["میوه","mive","fruit"],["خرما","khormâ","dates"],["سبزی","sabzi","herbs / greens"],["نمک","namak","salt"],["شکر","shekar","sugar"]],
+ "Things":[["کتاب","ketâb","book","كتاب"],["قلم","ghalam","pen","قلم"],["کاغذ","kâghaz","paper"],["در","dar","door"],["پنجره","panjere","window"],["میز","miz","table"],["صندلی","sandali","chair"],["گوشی","gushi","phone"],["کلید","kelid","key"],["پول","pul","money"],["کیف","kif","bag / wallet"],["لباس","lebâs","clothes","لباس"],["کفش","kafsh","shoe"],["ماشین","mâshin","car"],["اتوبوس","otobus","bus"],["تاکسی","tâksi","taxi"],["بلیط","belit","ticket"],["دارو","dâru","medicine"],["قایق","ghâyegh","boat"]],
+ "Body":[["سر","sar","head"],["دست","dast","hand"],["پا","pâ","foot / leg"],["چشم","cheshm","eye"],["گوش","gush","ear"],["دهن","dahan","mouth","","Written دهان dahân."],["دندون","dandun","tooth","","Written دندان."],["دل","del","heart / tummy"]],
+ "Describing":[["خوب","khub","good"],["بد","bad","bad"],["بزرگ","bozorg","big"],["کوچیک","kuchik","small","","Written کوچک kuchak."],["گرم","garm","warm / hot"],["سرد","sard","cold"],["داغ","dâgh","very hot"],["گرون","gerun","expensive","","Written گران."],["ارزون","arzun","cheap","","Written ارزان."],["زیاد","ziyâd","a lot / too much","زياد"],["کم","kam","a little"],["خوشگل","khoshgel","pretty"],["تمیز","tamiz","clean","تمييز","In Arabic تمييز means 'distinguishing'. In Persian tamiz means 'clean'.",1],["کثیف","kasif","dirty","كثيف","In Arabic كثيف means 'dense, thick'. In Persian kasif means 'dirty'.",1],["نزدیک","nazdik","near"],["دور","dur","far"],["اینجا","injâ","here"],["اونجا","unjâ","there","","Written آنجا ânjâ."],["خسته","khaste","tired"],["گرسنه","gorosne","hungry","","Often said goshne."],["تشنه","teshne","thirsty"]],
+ "Directions":[["راست","râst","right","","Also means 'true'."],["چپ","chap","left"],["مستقیم","mostaghim","straight on","مستقيم"],["بالا","bâlâ","up"],["پایین","pâyin","down"],["جلو","jelo","in front / ahead"],["پشت","posht","behind"]]
+};
+// Sentence frames that work with any noun in the category, with no change to the noun.
+const FRAMES = {
+ "Things":[["___ کجاست؟","___ kojâst?","Where is the ___?"],["___ می‌خوام.","___ mikhâm.","I want a ___."],["___ دارید؟","___ dârid?","Do you have a ___?"],["این ___ چنده؟","in ___ chande?","How much is this ___?"],["این ___ مال کیه؟","in ___ mâl-e kiye?","Whose ___ is this?"]],
+ "Food & drink":[["___ می‌خوام.","___ mikhâm.","I want ___."],["___ دارید؟","___ dârid?","Do you have ___?"],["___ چنده؟","___ chande?","How much is the ___?"]],
+ "Places":[["___ کجاست؟","___ kojâst?","Where is the ___?"],["می‌رم ___.","miram ___.","I'm going to the ___."]],
+ "Body":[["___م درد می‌کنه.","___-am dard mikone.","My ___ hurts."]]
+};
+const VOCAB = Object.entries(VOCAB_RAW).flatMap(([cat,list])=>list.map((v,i)=>({id:"v_"+cat.slice(0,3).toLowerCase()+i,cat,fa:v[0],tr:v[1],en:v[2],ar:v[3]||"",note:v[4]||"",ff:!!v[5]})));
+const DEFAULT_CATS = ["People","Questions","Things","Places","Food & drink"];
+// Stage 1 nouns for "what is this?" — picture first, so the word links to the thing, not to English.
+const WORDS = [
+ {id:"w01",pic:"📖",fa:"کتاب",tr:"ketâb",en:"book",s:"این کتابه",st:"in ketâbe"},
+ {id:"w02",pic:"💧",fa:"آب",tr:"âb",en:"water",s:"این آبه",st:"in âbe"},
+ {id:"w03",pic:"🍞",fa:"نون",tr:"nun",en:"bread",s:"این نونه",st:"in nune",n:"Spoken form. Written نان nân."},
+ {id:"w04",pic:"🚗",fa:"ماشین",tr:"mâshin",en:"car",s:"این ماشینه",st:"in mâshine"},
+ {id:"w05",pic:"🐕",fa:"سگ",tr:"sag",en:"dog",s:"این سگه",st:"in sage"},
+ {id:"w06",pic:"🚪",fa:"در",tr:"dar",en:"door",s:"این دره",st:"in dare"},
+ {id:"w07",pic:"🪑",fa:"صندلی",tr:"sandali",en:"chair",s:"این صندلیه",st:"in sandaliye"},
+ {id:"w08",pic:"✋",fa:"دست",tr:"dast",en:"hand",s:"این دسته",st:"in daste"},
+ {id:"w09",pic:"👁️",fa:"چشم",tr:"cheshm",en:"eye",s:"این چشمه",st:"in cheshme"},
+ {id:"w10",pic:"📱",fa:"گوشی",tr:"gushi",en:"phone",s:"این گوشیه",st:"in gushiye"},
+ {id:"w11",pic:"🐟",fa:"ماهی",tr:"mâhi",en:"fish",s:"این ماهیه",st:"in mâhiye"},
+ {id:"w12",pic:"🌊",fa:"دریا",tr:"daryâ",en:"sea",s:"این دریاست",st:"in daryâst",n:"After a long â, 'is' becomes -st."},
+ {id:"w13",pic:"⛵",fa:"قایق",tr:"ghâyegh",en:"boat",s:"این قایقه",st:"in ghâyeghe"},
+ {id:"w14",pic:"🌴",fa:"نخل",tr:"nakhl",en:"palm tree",s:"این نخله",st:"in nakhle"},
+ {id:"w15",pic:"🫘",fa:"خرما",tr:"khormâ",en:"dates (fruit)",s:"این خرماست",st:"in khormâst",n:"Hormozgan is date-palm country."},
+ {id:"w16",pic:"☀️",fa:"خورشید",tr:"khorshid",en:"sun",s:"این خورشیده",st:"in khorshide"},
+ {id:"w17",pic:"👟",fa:"کفش",tr:"kafsh",en:"shoe",s:"این کفشه",st:"in kafshe"},
+ {id:"w18",pic:"🏠",fa:"خونه",tr:"khune",en:"house / home",s:"این خونه‌ست",st:"in khune-st",n:"Spoken form. Written خانه khâne."}
+];
+// [letter, name, sound, joinsLeft, example fa, example tr, example en]
+const LETTERS = [
+ ["ا","alef","â / a",0,"آب","âb","water"],["ب","be","b",1,"بابا","bâbâ","dad"],["پ","pe","p",1,"پدر","pedar","father"],
+ ["ت","te","t",1,"توت","tut","mulberry"],["ث","se","s",1,"ثانیه","sâniye","second"],["ج","jim","j",1,"جا","jâ","place"],
+ ["چ","che","ch",1,"چای","chây","tea"],["ح","he (jimi)","h",1,"حال","hâl","state, mood"],["خ","khe","kh",1,"خوب","khub","good"],
+ ["د","dâl","d",0,"دست","dast","hand"],["ذ","zâl","z",0,"ذرت","zorat","corn"],["ر","re","r",0,"روز","ruz","day"],
+ ["ز","ze","z",0,"زن","zan","woman"],["ژ","zhe","zh",0,"ژاکت","zhâket","jacket"],["س","sin","s",1,"سلام","salâm","hello"],
+ ["ش","shin","sh",1,"شب","shab","night"],["ص","sâd","s",1,"صبح","sobh","morning"],["ض","zâd","z",1,"ضعیف","za'if","weak"],
+ ["ط","tâ","t",1,"طلا","talâ","gold"],["ظ","zâ","z",1,"ظهر","zohr","noon"],["ع","eyn","' (glottal stop)",1,"عید","eyd","holiday"],
+ ["غ","gheyn","gh",1,"غذا","ghazâ","food"],["ف","fe","f",1,"فارسی","fârsi","Persian"],["ق","ghâf","gh",1,"قایق","ghâyegh","boat"],
+ ["ک","kâf","k",1,"کتاب","ketâb","book"],["گ","gâf","g",1,"گوشی","gushi","phone"],["ل","lâm","l",1,"لب","lab","lip"],
+ ["م","mim","m",1,"ماهی","mâhi","fish"],["ن","nun","n",1,"نان","nân","bread"],["و","vâv","v / u / o",0,"ورزش","varzesh","sport"],
+ ["ه","he (do-cheshm)","h / final e",1,"هوا","havâ","air"],["ی","ye","y / i",1,"یک","yek","one"]
+];
+// Windows "Persian (Standard)" layout, ISIRI 9147, keyed by physical key.
+const KEYMAP = {KeyQ:"ض",KeyW:"ص",KeyE:"ث",KeyR:"ق",KeyT:"ف",KeyY:"غ",KeyU:"ع",KeyI:"ه",KeyO:"خ",KeyP:"ح",BracketLeft:"ج",BracketRight:"چ",
+ KeyA:"ش",KeyS:"س",KeyD:"ی",KeyF:"ب",KeyG:"ل",KeyH:"ا",KeyJ:"ت",KeyK:"ن",KeyL:"م",Semicolon:"ک",Quote:"گ",
+ KeyZ:"ظ",KeyX:"ط",KeyC:"ز",KeyV:"ر",KeyB:"ذ",KeyN:"د",KeyM:"پ",Comma:"و",Space:" "};
+const SHIFTMAP = {KeyC:"ژ",KeyH:"آ",Space:"‌"};
+const LATIN = {q:"KeyQ",w:"KeyW",e:"KeyE",r:"KeyR",t:"KeyT",y:"KeyY",u:"KeyU",i:"KeyI",o:"KeyO",p:"KeyP","[":"BracketLeft","]":"BracketRight",
+ a:"KeyA",s:"KeyS",d:"KeyD",f:"KeyF",g:"KeyG",h:"KeyH",j:"KeyJ",k:"KeyK",l:"KeyL",";":"Semicolon","'":"Quote",
+ z:"KeyZ",x:"KeyX",c:"KeyC",v:"KeyV",b:"KeyB",n:"KeyN",m:"KeyM",",":"Comma"};
+const KBROWS = [["KeyQ","KeyW","KeyE","KeyR","KeyT","KeyY","KeyU","KeyI","KeyO","KeyP","BracketLeft","BracketRight"],
+ ["KeyA","KeyS","KeyD","KeyF","KeyG","KeyH","KeyJ","KeyK","KeyL","Semicolon","Quote"],
+ ["KeyZ","KeyX","KeyC","KeyV","KeyB","KeyN","KeyM","Comma"]];
+const LATLABEL = c => ({BracketLeft:"[",BracketRight:"]",Semicolon:";",Quote:"'",Comma:","}[c] || c.replace("Key","").toLowerCase());
+const LEVELS = [
+ {name:"Home row",keys:"ش س ی ب ل ا ت ن م ک گ".split(" ")},
+ {name:"Top row",keys:"ض ص ث ق ف غ ع ه خ ح ج چ".split(" ")},
+ {name:"Bottom row + shift",keys:"ظ ط ز ر ذ د پ و ژ آ".split(" ")},
+ {name:"Real words",keys:null}
+];
+
+/* ---------- state & storage ---------- */
+const INTERVALS = [0,1,3,7,16,35,80,180];
+const today = () => Math.floor((Date.now() - new Date().getTimezoneOffset()*6e4)/864e5);
+const LSKEY = "khalij-farsi-v1";
+let S = {v:1,cards:{},newPerDay:8,intro:{},streak:{last:0,n:0},typing:{},traced:{},input:[],cats:DEFAULT_CATS.slice(),target:"hormozgan",showAr:true};
+let notebook = []; // {id, bandari, standard, en, source, verified, review, audio, created}
+let db=null, uid=null, assets=null, saveTimer=null;
+const syncEl = () => document.getElementById("sync");
+try{ const raw = localStorage.getItem(LSKEY); if(raw) S = Object.assign(S, JSON.parse(raw)); }catch(e){}
+try{ const nb = localStorage.getItem(LSKEY+"-nb"); if(nb) notebook = JSON.parse(nb); }catch(e){}
+
+function save(){
+  try{ localStorage.setItem(LSKEY, JSON.stringify(S)); }catch(e){}
+  if(!db || !uid) return;
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(()=>{ db.doc(`data/users/${uid}/state/progress`).set({json:JSON.stringify(S),at:Date.now()}).catch(()=>{}); },1200);
+}
+function saveNotebookLocal(){ try{ localStorage.setItem(LSKEY+"-nb", JSON.stringify(notebook)); }catch(e){} }
+
+async function connect(){
+  if(!window.claude?.use) return;
+  try{
+    const [d,u] = await Promise.all([claude.use("db"), claude.use("user")]);
+    if(!d || !u) return;
+    const id = await u.id(); if(!id) return;
+    db = d; uid = id;
+    claude.use("assets").then(a=>{ assets=a; if(route()==="south") render(); }).catch(()=>{});
+    const snap = await db.doc(`data/users/${uid}/state/progress`).get();
+    if(snap.exists){
+      const remote = JSON.parse(snap.data().json || "{}");
+      // Keep whichever copy has seen more reviews; merge card-by-card on box.
+      for(const [k,c] of Object.entries(remote.cards||{})){ const l=S.cards[k]; if(!l || (c.s||0)>(l.s||0)) S.cards[k]=c; }
+      for(const key of ["intro","typing","traced"]) S[key] = Object.assign({}, remote[key]||{}, S[key]);
+      if((remote.streak?.last||0) > S.streak.last) S.streak = remote.streak;
+      if((remote.input||[]).length > S.input.length) S.input = remote.input;
+      for(const key of ["cats","target","showAr"]) if(remote[key]!==undefined) S[key]=remote[key];
+    }
+    save();
+    db.collection(`data/users/${uid}/notebook`).onSnapshot(qs=>{
+      notebook = qs.docs.map(d=>Object.assign({id:d.id}, d.data())).sort((a,b)=>(b.created||0)-(a.created||0));
+      saveNotebookLocal();
+      if(route()==="south" || route()==="today") render();
+    },()=>{});
+    syncEl().textContent = "Synced to your account, so phone and computer share progress";
+    render();
+  }catch(e){}
+}
+
+/* ---------- speech ---------- */
+// Recorded audio (tutor recordings first, then synthetic voices) from audio/manifest.json; device speech is the fallback.
+let AUDIO = {}, AUDIO_BY_FA = {};
+const cleanFa = t => t.replace(/\s*\.\.\.\s*/g," ").replace(/\s*\/\s*/g,"، ").replace(/\s*ـه/g,"").trim();
+fetch("audio/manifest.json").then(r=>r.ok?r.json():{}).then(m=>{
+  AUDIO = m || {}; for(const [k,v] of Object.entries(AUDIO)) AUDIO_BY_FA[k.split("|")[0]] ??= v;
+  if(route()==="today") render();
+}).catch(()=>{});
+function clipFor(text, tr){
+  const t = cleanFa(text), e = tr ? AUDIO[t+"|"+tr] : AUDIO_BY_FA[t];   // a known reading must match exactly: کی is ki or key
+  if(!e) return null;
+  const pool = e.tutor.length ? e.tutor : e.tts;   // rotate speakers: hearing several voices trains the ear better than one
+  return pool[Math.floor(Math.random()*pool.length)];
+}
+let nowPlaying = null;
+let faVoice = null;
+function pickVoice(){ const v = speechSynthesis.getVoices(); faVoice = v.find(x=>/^fa/i.test(x.lang)) || null; }
+if("speechSynthesis" in window){ pickVoice(); speechSynthesis.onvoiceschanged = ()=>{ pickVoice(); if(route()==="today") render(); }; }
+const nativeTTS = () => window.Capacitor?.Plugins?.TextToSpeech || null;
+function speak(text, rate=0.8, tr, then){
+  const src = clipFor(text, tr);
+  if(src){
+    nowPlaying?.pause();
+    const a = nowPlaying = new Audio(src); a.playbackRate = rate < 0.7 ? 0.75 : 1;
+    if(then) a.onended = then;
+    a.play().catch(()=>deviceSpeak(text, rate));
+    return;
+  }
+  deviceSpeak(text, rate);
+  if(then) setTimeout(then, 400 + text.length * 90);
+}
+function speakSeq(list, rate){ const [first,...rest] = list; if(first) speak(first[0], rate, first[1], rest.length ? ()=>speakSeq(rest, rate) : null); }
+const canRecord = () => !!(window.Capacitor && navigator.mediaDevices?.getUserMedia && window.MediaRecorder);
+function recorderButtons(){
+  let rec = null, url = null;
+  const mine = h("button",{disabled:true,onclick:()=>url && new Audio(url).play()},"Play mine");
+  const btn = h("button",{onclick:async()=>{
+    if(rec && rec.state==="recording"){ rec.stop(); return; }
+    try{
+      const stream = await navigator.mediaDevices.getUserMedia({audio:true}); const parts = [];
+      rec = new MediaRecorder(stream);
+      rec.ondataavailable = e => parts.push(e.data);
+      rec.onstop = () => { stream.getTracks().forEach(t=>t.stop()); url = URL.createObjectURL(new Blob(parts,{type:rec.mimeType})); mine.disabled = false; btn.textContent = "Record again"; };
+      rec.start(); btn.textContent = "Stop"; setTimeout(()=>rec.state==="recording" && rec.stop(), 8000);
+    }catch(e){ toast("Allow microphone access to record yourself"); }
+  }},"Record me");
+  return [btn, mine];
+}
+function deviceSpeak(text, rate=0.8){
+  const T = nativeTTS();
+  if(T){ T.speak({text:text.replace(/\.\.\./g,"").replace(/___/g,""),lang:"fa-IR",rate}).catch(()=>toast("Install a Persian voice in Android text-to-speech settings")); return; }
+  if(!("speechSynthesis" in window)) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text.replace(/\.\.\./g,"").replace(/___/g,"")); u.lang="fa-IR"; u.rate=rate; if(faVoice) u.voice=faVoice;
+  speechSynthesis.speak(u);
+}
+
+/* ---------- helpers ---------- */
+const $ = (s,el=document)=>el.querySelector(s);
+const h = (tag, attrs={}, ...kids)=>{ const el=document.createElement(tag);
+  for(const [k,v] of Object.entries(attrs)){ if(k==="class") el.className=v; else if(k.startsWith("on")) el.addEventListener(k.slice(2),v); else if(v!==false && v!=null) el.setAttribute(k,v===true?"":v); }
+  for(const kid of kids.flat()){ if(kid==null||kid===false) continue; el.append(kid.nodeType?kid:document.createTextNode(String(kid))); }
+  return el; };
+const put = (el,...kids) => el.append(...kids.filter(k=>k!=null&&k!==false));
+const fa = (t,cls="") => h("span",{class:"fa "+cls,lang:"fa",dir:"rtl"},t);
+function toast(msg){ const t=$("#toast"); t.textContent=msg; t.hidden=false; clearTimeout(toast.t); toast.t=setTimeout(()=>t.hidden=true,1800); }
+const shuffle = a => { a=a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
+function bumpStreak(){ const d=today(); if(S.streak.last===d) return; S.streak.n = (S.streak.last===d-1) ? S.streak.n+1 : 1; S.streak.last=d; }
+
+function allCards(){
+  const c = CHUNKS.map(x=>({...x,kind:"chunk"}));
+  const w = WORDS.map(x=>({...x,kind:"word",ex:{fa:x.s,tr:x.st,en:`This is a ${x.en}.`}}));
+  const v = VOCAB.filter(x=>(S.cats||DEFAULT_CATS).includes(x.cat)).map(x=>({...x,kind:"vocab",ex:frameFor(x)}));
+  const n = notebook.filter(x=>x.review && x.bandari).map(x=>({id:"n_"+x.id,kind:"south",fa:x.bandari,tr:x.standard||"",en:x.en||"",note:(x.verified?"Checked with a native speaker":"Not yet checked")+(x.source?" · "+x.source:""),audio:x.audio}));
+  return [...c,...n,...w,...v];
+}
+const groupOf = c => (c.kind==="chunk"||c.kind==="south") ? "talk" : "words";
+function frameFor(x, k){
+  const fr = FRAMES[x.cat]; if(!fr) return null;
+  const f = fr[(k ?? x.id.length + x.fa.length) % fr.length];
+  const tr = /[aeiouâ]$/.test(x.tr) ? f[1].replace("___-am","___m") : f[1];
+  return {fa:f[0].replace("___",x.fa), tr:tr.replace("___",x.tr), en:f[2].replace("___",x.en.split(" / ")[0])};
+}
+function dueQueue(filter, group){
+  const d=today(), cards=allCards().filter(filter||(()=>true));
+  const due = cards.filter(c=>S.cards[c.id] && S.cards[c.id].d<=d);
+  const introduced = S.intro[d+"|"+group]||0;
+  const fresh = cards.filter(c=>!S.cards[c.id]).slice(0, Math.max(0,S.newPerDay-introduced));
+  return [...due,...fresh];
+}
+function grade(card, g){
+  const d=today(), key=d+"|"+groupOf(card); const c = S.cards[card.id] || (S.intro[key]=(S.intro[key]||0)+1, {b:0,d:d,s:0});
+  c.s=(c.s||0)+1;
+  if(g===0){ c.b=0; c.d=d; } else if(g===1){ c.d=d+1; } else { c.b=Math.min(c.b+1,INTERVALS.length-1); c.d=d+INTERVALS[c.b]; }
+  S.cards[card.id]=c; bumpStreak(); save();
+}
+
+/* ---------- router ---------- */
+const VIEWS = {today:viewToday,talk:viewTalk,words:viewWords,letters:viewLetters,type:viewType,south:viewSouth,why:viewWhy};
+const route = () => { const r=location.hash.slice(1); return VIEWS[r]?r:"today"; };
+let cleanup = null;
+function render(){
+  if(cleanup){ cleanup(); cleanup=null; }
+  const r=route();
+  document.querySelectorAll("nav a").forEach(a=>{ if(a.getAttribute("href")==="#"+r) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current"); });
+  const main=$("#main"); main.replaceChildren(VIEWS[r]());
+}
+window.addEventListener("hashchange",()=>{ render(); window.scrollTo(0,0); });
+
+/* ---------- Today ---------- */
+function viewToday(){
+  const d=today(); const due=[...dueQueue(c=>groupOf(c)==="talk","talk"),...dueQueue(c=>groupOf(c)==="words","words")];
+  const learned = Object.values(S.cards).filter(c=>c.b>=3).length;
+  const minutes = S.input.filter(x=>x.day>=d-6).reduce((a,x)=>a+x.min,0);
+  const v=h("div",{class:"view"},
+    h("div",{},h("h3",{},"Stage 1 · building like a child does"),h("h1",{},"Learn to say ",fa("سلام، خوبی؟")," before anything else")),
+    h("p",{class:"lede"},"Short daily sessions spread across four kinds of practice: hearing, speaking, studying the form, and building fluency. The order below is a sensible default. The page ",h("a",{href:"#why"},"Why it works")," shows the research behind each part."),
+    h("div",{class:"row"},
+      Object.keys(AUDIO).length ? h("span",{class:"chip ok"},`Recorded audio for ${Object.keys(AUDIO).length} items`) : null,
+      nativeTTS() ? h("span",{class:"chip ok"},"Using Android text-to-speech") : faVoice ? h("span",{class:"chip ok"},"Persian voice found on this device") : h("span",{class:"chip warn"},"No Persian voice found. Audio may not play"),
+      h("span",{class:"chip"},"Spoken standard Persian + your Bandari notebook")),
+    h("div",{class:"panel"},
+      h("div",{class:"grid"},
+        h("div",{class:"stat"},h("b",{},due.length),h("span",{},"cards ready today")),
+        h("div",{class:"stat"},h("b",{},learned),h("span",{},"phrases you hold well")),
+        h("div",{class:"stat"},h("b",{},S.streak.last>=d-1?S.streak.n:0),h("span",{},"day streak")),
+        h("div",{class:"stat"},h("b",{},minutes),h("span",{},"minutes of real Persian heard, last 7 days"))),
+      h("div",{class:"row"},h("a",{class:"btn primary",href:"#talk"},"Start today's review"),h("a",{class:"btn",href:"#words"},"Point and name things"))),
+    h("h2",{},"Today's session, about 25 minutes"),
+    h("div",{class:"strands"},
+      h("div",{class:"strand"},h("a",{href:"#talk"},"1 · Talk review, 8 min"),h("p",{},"Say each phrase out loud before you reveal it. Recalling it yourself is what builds memory.")),
+      h("div",{class:"strand"},h("a",{href:"#words"},"2 · What is this?, 5 min"),h("p",{},"Picture to word, then the full sentence ",fa("این ... ـه"),".")),
+      h("div",{class:"strand"},h("a",{href:"#letters"},"3 · Letters, 5 min"),h("p",{},"Trace two letters by hand. Handwriting helps you recognise a new script better than typing does.")),
+      h("div",{class:"strand"},h("a",{href:"#today"},"4 · Real listening, 10 min"),h("p",{},"Children's shows or Bandari music. Log it below. Your accent comes from what you hear."))),
+    inputLog(), transferPanel());
+  return v;
+}
+function transferPanel(){
+  const box=h("textarea",{id:"xfer",rows:3,placeholder:"Paste a progress code here to load it on this device"});
+  return h("details",{class:"panel"},h("summary",{},h("b",{},"Move progress between devices")),
+    h("p",{},db?"Signed in on the web, progress syncs automatically. Use this to move it into the Android app, which keeps progress on the phone only.":"This copy keeps progress on this device. Copy the code here and paste it into your other device."),
+    box,
+    h("div",{class:"row"},
+      h("button",{onclick:()=>{ const code=btoa(unescape(encodeURIComponent(JSON.stringify({S,notebook})))); box.value=code;
+        navigator.clipboard?.writeText(code).then(()=>toast("Progress code copied"),()=>{box.select();toast("Select and copy the code");}); }},"Copy my progress code"),
+      h("button",{class:"primary",onclick:()=>{ try{ const o=JSON.parse(decodeURIComponent(escape(atob(box.value.trim()))));
+        if(!o.S||!o.S.cards) throw 0; S=Object.assign(S,o.S); if(!db && Array.isArray(o.notebook)){ notebook=o.notebook; saveNotebookLocal(); } save(); toast("Progress loaded"); render(); }catch(e){ toast("That code isn't valid. Copy it again in full."); } }},"Load a pasted code")));
+}
+function inputLog(){
+  const what=h("input",{type:"text",id:"in-what",placeholder:"e.g. Persian cartoon, Bandari song, call with tutor"});
+  const min=h("select",{id:"in-min"},...[5,10,15,20,30,45,60].map(m=>h("option",{value:m},m+" min")));
+  const list=h("div",{});
+  S.input.slice(-5).reverse().forEach(x=>list.append(h("div",{class:"entry"},h("b",{},x.what||"Listening"),h("span",{class:"tr"},`${x.min} min · ${today()-x.day===0?"today":(today()-x.day)+" days ago"}`))));
+  return h("div",{class:"panel"},h("h2",{},"Listening log"),
+    h("p",{},"Listen to real speech every day, even when you only catch a few words. Southern speakers matter most here: Hormozgan regional radio and TV, Bandari music, and above all a tutor from Bandar Abbas or Qeshm."),
+    h("div",{class:"fgrid"},h("label",{for:"in-what"},"What you listened to",what),h("label",{for:"in-min"},"How long",min)),
+    h("div",{class:"row"},h("button",{class:"primary",onclick:()=>{ S.input.push({day:today(),min:+min.value,what:what.value.trim()}); bumpStreak(); save(); toast("Logged"); render(); }},"Log listening")),
+    list);
+}
+
+/* ---------- flashcard session (shared by Talk & Words) ---------- */
+function session(queue, opts){
+  const box=h("div",{style:"display:flex;flex-direction:column;gap:14px"});
+  let i=0, revealed=false; const total=queue.length; const retried=new Set();
+  function draw(){
+    box.replaceChildren();
+    if(i>=queue.length){
+      box.append(h("div",{class:"card"},h("div",{class:"big-fa",lang:"fa",dir:"rtl"},"آفرین!"),h("div",{class:"tr"},"âfarin!"),h("div",{class:"en"},"Well done. Today's cards are finished."),h("div",{class:"note"},"Stopping here is fine: spreading reviews over days works better than cramming. If you have time left, do a fluency round or go and listen to something real.")),
+        h("div",{class:"row"},h("button",{onclick:()=>{ fluency(box, opts.pool()); }},"Fluency round: 60 seconds"),h("a",{class:"btn",href:"#today"},"Back to Today")));
+      return;
+    }
+    const c=queue[i]; const st=S.cards[c.id]; const produce = st && st.b>=2; // early: recognise; later: produce
+    box.append(h("div",{class:"prog"},h("i",{style:`width:${Math.round(i/Math.max(queue.length,1)*100)}%`})));
+    const card=h("div",{class:"card"});
+    const play=()=> c.audio ? new Audio("/_blob/"+c.audio).play().catch(()=>speak(c.fa)) : speak(c.fa,0.8,c.tr);
+    const pic = c.pic?h("div",{class:"pic","aria-hidden":"true"},c.pic):null;
+    if(!revealed){
+      if(produce){
+        put(card,h("h3",{},"Say it in Farsi, out loud"), pic, h("div",{class:"en"},c.pic?`What is this? It's a ${c.en}.`:c.en), c.pic?fa("این چیه؟","note"):null);
+      } else {
+        put(card,h("h3",{},st?"What does it mean?":"New "+(c.kind==="chunk"?"phrase":"word")), pic, h("div",{class:"big-fa",lang:"fa",dir:"rtl"},c.fa), h("div",{class:"tr"},c.tr));
+        setTimeout(play,150);
+      }
+      box.append(card, h("div",{class:"row"},h("button",{class:"primary",onclick:()=>{revealed=true;draw();}},produce?"Reveal answer":"Reveal meaning"), !produce?h("button",{onclick:play},"Play again"):null));
+    } else {
+      const ex=c.ex;
+      put(card,pic, h("div",{class:"big-fa",lang:"fa",dir:"rtl"},c.fa), h("div",{class:"tr"},c.tr), h("div",{class:"en"},c.en),
+        ex?h("div",{class:"note"},fa(ex.fa)," ",h("span",{class:"tr"},ex.tr)," = ",ex.en):null,
+        (c.ar && S.showAr)?h("div",{class:"note"},"From Arabic ",fa(c.ar),c.ff?". Careful, the meaning shifted.":""):null,
+        (c.note||c.n)?h("div",{class:"note"},c.note||c.n):null);
+      const sayAll = r => ex ? speakSeq([[c.fa,c.tr],[ex.fa,ex.tr]], r) : speak(c.fa, r, c.tr);
+      box.append(card, h("div",{class:"row"},h("button",{onclick:()=>sayAll()},"Play"),h("button",{onclick:()=>sayAll(0.55)},"Play slowly"),...(canRecord()?recorderButtons():[]),h("span",{class:"note",style:"color:var(--muted);font-size:14px"},"Repeat it aloud straight after the audio (shadowing).")),
+        h("div",{class:"grades"},
+          h("button",{class:"bad",onclick:()=>next(0)},"Missed"),
+          h("button",{onclick:()=>next(1)},"Shaky"),
+          h("button",{class:"good",onclick:()=>next(2)},"Got it")));
+    }
+  }
+  function next(g){ const c=queue[i]; grade(c,g); if(g===0 && !retried.has(c.id)){ retried.add(c.id); queue.push(c); } i++; revealed=false; draw(); }
+  draw(); return box;
+}
+function fluency(box, pool){
+  // Fluency strand: fast recall of known material under light time pressure.
+  const known = shuffle(pool.filter(c=>S.cards[c.id] && S.cards[c.id].b>=1));
+  box.replaceChildren();
+  if(known.length<3){ box.append(h("div",{class:"card"},h("div",{class:"en"},"You need a few reviewed cards first."),h("div",{class:"note"},"Fluency practice uses only phrases you already know, so come back after a couple of sessions."))); return; }
+  let n=0, left=60, k=0; const show=h("div",{class:"card"}); const timer=h("span",{class:"chip"},"60 s");
+  const say=()=>{ const c=known[k%known.length]; show.replaceChildren(); put(show,h("h3",{},"Say it as fast as you can, then tap Next"), c.pic?h("div",{class:"pic"},c.pic):null, h("div",{class:"en"},c.en), h("details",{},h("summary",{},"Check"),fa(c.fa,"big-fa"))); };
+  const nx=h("button",{class:"primary",onclick:()=>{n++;k++;say();}},"Next");
+  box.append(h("div",{class:"row"},timer,h("span",{class:"chip"},"Known material only")),show,h("div",{class:"row"},nx));
+  say();
+  const iv=setInterval(()=>{ left--; timer.textContent=left+" s"; if(left<=0){ clearInterval(iv); show.replaceChildren(h("div",{class:"stat"},h("b",{},n),h("span",{},"phrases in 60 seconds")),h("div",{class:"note"},"Try to beat it next time. Fluency comes from running material you already know quickly, not from new material.")); nx.disabled=true; } },1000);
+  cleanup=()=>clearInterval(iv);
+}
+
+/* ---------- Talk ---------- */
+function viewTalk(){
+  const pool=()=>allCards().filter(c=>groupOf(c)==="talk");
+  const q=dueQueue(c=>groupOf(c)==="talk","talk");
+  const sets=[...new Set(CHUNKS.map(c=>c.set))];
+  return h("div",{class:"view"},
+    h("div",{},h("h3",{},"Talk · ready-made phrases"),h("h1",{},"Phrases first, grammar later")),
+    h("p",{class:"lede"},"New phrases start as listen-and-understand. Once you know a phrase, the card flips: you see the English and must say the Farsi yourself. Grade yourself honestly. A missed card comes back sooner."),
+    h("div",{class:"row"},h("span",{class:"chip"},q.length+" cards today"),h("span",{class:"chip"},`${S.newPerDay} new per day`),
+      h("label",{for:"npd",style:"flex-direction:row;align-items:center;gap:8px;font-weight:400"},"New per day",h("select",{id:"npd",onchange:e=>{S.newPerDay=+e.target.value;save();render();}},...[4,8,12,16].map(n=>h("option",{value:n,selected:S.newPerDay===n},n))))),
+    session(q,{pool}),
+    h("div",{class:"panel"},h("h2",{},"All Stage 1 phrases"),
+      ...sets.map(s=>h("div",{},h("h3",{},s),...CHUNKS.filter(c=>c.set===s).map(c=>h("div",{class:"entry"},
+        h("div",{class:"row",style:"justify-content:space-between"},h("span",{},c.en),h("button",{onclick:()=>speak(c.fa),"aria-label":"Play "+c.tr},"Play"),fa(c.fa)),
+        h("span",{class:"tr"},c.tr)))))));
+}
+
+/* ---------- Words ---------- */
+let builder={cat:"Things",word:0,frame:0};
+function viewWords(){
+  const q=dueQueue(c=>groupOf(c)==="words","words");
+  const pool=()=>allCards().filter(c=>groupOf(c)==="words");
+  const cats=Object.keys(VOCAB_RAW);
+  const catRow=h("div",{class:"row"},...cats.map(cat=>{ const on=(S.cats||[]).includes(cat);
+    return h("button",{class:on?"primary":"","aria-pressed":on?"true":"false",onclick:()=>{ S.cats = on ? S.cats.filter(x=>x!==cat) : [...S.cats,cat]; save(); render(); }},`${cat} (${VOCAB_RAW[cat].length})`); }));
+  // listen-and-pick with pictures
+  const quiz=h("div",{class:"panel"});
+  function listenQuiz(){
+    const target=WORDS[Math.floor(Math.random()*WORDS.length)];
+    const opts=shuffle([target,...shuffle(WORDS.filter(w=>w!==target)).slice(0,3)]);
+    quiz.replaceChildren(h("h2",{},"Listen and pick"),h("p",{},"Press play, then tap the picture you heard. No English needed."),
+      h("div",{class:"row"},h("button",{class:"primary",onclick:()=>speak(target.fa)},"Play the word")),
+      h("div",{class:"grid"},...opts.map(o=>h("button",{style:"font-size:48px;justify-content:center;min-height:96px","aria-label":o.en,onclick:e=>{
+        if(o===target){ e.currentTarget.style.borderColor="var(--good)"; toast(`${target.tr}: correct`); setTimeout(listenQuiz,900);} else { e.currentTarget.style.borderColor="var(--bad)"; e.currentTarget.disabled=true; }
+      }},o.pic))));
+  }
+  listenQuiz();
+  // sentence builder: one frame, many nouns
+  const bcats=Object.keys(FRAMES); if(!bcats.includes(builder.cat)) builder.cat=bcats[0];
+  const bwords=VOCAB.filter(v=>v.cat===builder.cat); builder.word=Math.min(builder.word,bwords.length-1); builder.frame=Math.min(builder.frame,FRAMES[builder.cat].length-1);
+  const out=frameFor(bwords[builder.word], builder.frame);
+  const sel=(id,label,opts,val,fn)=>h("label",{for:id},label,h("select",{id,onchange:e=>{fn(e.target.value);render();}},...opts.map(([v,t])=>h("option",{value:v,selected:String(v)===String(val)},t))));
+  const builderPanel=h("div",{class:"panel"},h("h2",{},"Sentence builder"),
+    h("p",{},"One pattern, many words. Change the word and say the new sentence out loud before you press play. Small swaps like this make patterns automatic."),
+    h("div",{class:"fgrid"},
+      sel("b-cat","Topic",bcats.map(c=>[c,c]),builder.cat,v=>{builder.cat=v;builder.word=0;builder.frame=0;}),
+      sel("b-frame","Pattern",FRAMES[builder.cat].map((f,i)=>[i,f[2].replace("___","…")]),builder.frame,v=>builder.frame=+v)),
+    sel("b-word","Word",bwords.map((w,i)=>[i,`${w.en} · ${w.tr}`]),builder.word,v=>builder.word=+v),
+    h("div",{class:"card",style:"min-height:0"},h("div",{class:"big-fa",lang:"fa",dir:"rtl"},out.fa),h("div",{class:"tr"},out.tr),h("div",{class:"en"},out.en)),
+    h("div",{class:"row"},h("button",{class:"primary",onclick:()=>speak(out.fa)},"Play"),h("button",{onclick:()=>{builder.word=(builder.word+1)%bwords.length;render();}},"Next word")));
+  // Arabic speaker's head start
+  const arWords=VOCAB.filter(v=>v.ar), ffs=VOCAB.filter(v=>v.ff);
+  const arPanel=h("div",{class:"panel"},h("h2",{},"Your Arabic head start"),
+    h("p",{},`Arabic loanwords make up a large share of Persian vocabulary: roughly 40% of everyday written vocabulary by one dictionary count, though fewer in basic speech. ${arWords.length} of the ${VOCAB.length} words here come from Arabic. Two cautions: the pronunciation is Persian (ق is gh, ض ظ ذ are all z, ث is s, و is v), and some meanings shifted.`),
+    h("h3",{},"False friends: same root, different meaning"),
+    ...ffs.map(v=>h("div",{class:"entry"},h("div",{class:"row",style:"justify-content:space-between"},h("b",{},`${v.tr} = ${v.en}`),fa(v.fa)),h("span",{style:"font-size:14px;color:var(--muted)"},v.note))),
+    h("label",{for:"show-ar",style:"flex-direction:row;gap:8px;font-weight:400"},h("input",{type:"checkbox",id:"show-ar",checked:S.showAr!==false,onchange:e=>{S.showAr=e.target.checked;save();}}),"Show the Arabic source on flashcards"));
+  const browse=h("div",{class:"panel"},h("h2",{},"Browse your active words"),
+    ...cats.filter(c=>(S.cats||[]).includes(c)).map(cat=>h("div",{},h("h3",{},cat),...VOCAB.filter(v=>v.cat===cat).map(v=>h("div",{class:"entry"},
+      h("div",{class:"row",style:"justify-content:space-between"},h("span",{},v.en),h("button",{onclick:()=>speak(v.fa),"aria-label":"Play "+v.tr},"Play"),fa(v.fa)),
+      h("span",{class:"tr"},v.tr+(v.ar?"  ·  Arabic "+v.ar:"")))))));
+  return h("div",{class:"view"},
+    h("div",{},h("h3",{},"Words · ",fa("این چیه؟")," what is this?"),h("h1",{},"Name the world around you")),
+    h("p",{class:"lede"},"The words you need first: people, questions, things, places, food, numbers, directions. Pick the topics you want in your daily reviews. Each new word comes with a sentence you can use on the street, then point at real things and name them."),
+    h("h3",{},"Topics in your reviews"), catRow,
+    h("div",{class:"row"},h("span",{class:"chip"},q.length+" cards today"),h("span",{class:"chip"},`${S.newPerDay} new per day`)),
+    session(q,{pool}),
+    builderPanel, quiz, arPanel, browse);
+}
+
+/* ---------- Letters ---------- */
+let selLetter=0;
+function viewLetters(){
+  const L=LETTERS[selLetter]; const [ch,name,sound,joins,ex,extr,exen]=L;
+  const forms = joins ? [[ch,"alone"],[ch+"‍","start"],["‍"+ch+"‍","middle"],["‍"+ch,"end"]]
+                      : [[ch,"alone"],[ch,"start"],["‍"+ch,"middle"],["‍"+ch,"end"]];
+  const wrap=h("div",{class:"trace"}); const guide=h("canvas",{}); const ink=h("canvas",{}); wrap.append(guide,ink);
+  requestAnimationFrame(()=>setupTrace(wrap,guide,ink,ch));
+  const grid=h("div",{class:"lgrid"},...LETTERS.map((l,i)=>h("button",{class:S.traced[l[0]]?"done":"",title:"پچژگ".includes(l[0])?"Not in Arabic":"","aria-pressed":i===selLetter?"true":"false",style:(i===selLetter?"background:var(--accent);color:var(--accent-ink);":"")+("پچژگ".includes(l[0])?"border:2px solid var(--gold)":""),onclick:()=>{selLetter=i;render();}},l[0],h("small",{},l[2]))));
+  const quiz=h("div",{class:"panel"});
+  function letterQuiz(){
+    const t=LETTERS[Math.floor(Math.random()*LETTERS.length)];
+    const pos=t[3]?[t[0],t[0]+"‍","‍"+t[0]+"‍","‍"+t[0]][Math.floor(Math.random()*4)]:t[0];
+    const opts=shuffle([t,...shuffle(LETTERS.filter(x=>x[2]!==t[2])).slice(0,3)]);
+    quiz.replaceChildren(h("h2",{},"Which sound is this?"),h("div",{class:"big-fa",style:"font-size:64px;text-align:center",lang:"fa"},fa(pos)),
+      h("div",{class:"grades",style:"grid-template-columns:repeat(2,1fr)"},...opts.map(o=>h("button",{onclick:e=>{ if(o===t){toast(`${t[1]}: ${t[2]}`); setTimeout(letterQuiz,700);} else {e.currentTarget.disabled=true;} }},o[2]))));
+  }
+  letterQuiz();
+  return h("div",{class:"view"},
+    h("div",{},h("h3",{},"Letters · 32 letters, written right to left"),h("h1",{},"Learn the script by hand")),
+    h("p",{class:"lede"},"Most letters change shape depending on where they sit in a word. Seven letters never join to the letter after them: ",fa("ا د ذ ر ز ژ و"),". Trace each letter, saying its sound out loud. There is no automatic grading here. The point is the movement."),
+    h("details",{class:"panel",open:true},h("summary",{},h("b",{},"Fast track for Arabic readers")),
+      h("p",{},"You can already read most of this script. What's different:"),
+      h("ul",{class:"refs",style:"color:var(--ink)"},
+        h("li",{},"Four new letters: ",fa("پ")," p, ",fa("چ")," ch, ",fa("ژ")," zh (the s in 'measure'), ",fa("گ")," g. They are outlined in gold below."),
+        h("li",{},"Persian ",fa("ی")," has no dots at the end of a word, and Persian ",fa("ک")," replaces Arabic ",fa("ك"),"."),
+        h("li",{},"Sounds merge: ",fa("ث س ص")," = s, ",fa("ذ ز ض ظ")," = z, ",fa("ت ط")," = t, ",fa("ح ه")," = h, ",fa("غ ق")," = gh. ",fa("ع")," is a light catch in the throat or nothing at all. ",fa("و")," is v, not w."),
+        h("li",{},"Long ",fa("ا")," â is rounded, close to the vowel in British 'law'. This is one of the clearest markers of a foreign accent, so practise it early."),
+        h("li",{},"Digits 4, 5 and 6 differ: Persian ",fa("۴ ۵ ۶")," against Arabic ",fa("٤ ٥ ٦"),"."),
+        h("li",{},"Short vowels are almost never written, as in Arabic, but there are no case endings to read."))),
+    grid,
+    h("div",{class:"panel"},
+      h("div",{class:"row",style:"justify-content:space-between"},h("h2",{},`${name}: “${sound}”`),h("button",{onclick:()=>speak(ex)},"Hear the example")),
+      h("div",{class:"forms"},...forms.map(([g,lab])=>h("div",{},h("div",{class:"g",lang:"fa"},g),h("small",{},lab)))),
+      h("p",{},"Example: ",fa(ex)," ",h("span",{class:"tr"},extr)," = ",exen,". Write the main stroke first and add the dots last, right to left."),
+      wrap,
+      h("div",{class:"row"},h("button",{onclick:()=>setupTrace(wrap,guide,ink,ch)},"Clear"),
+        h("button",{class:"primary",onclick:()=>{S.traced[ch]=(S.traced[ch]||0)+1;save();selLetter=(selLetter+1)%LETTERS.length;render();}},"Traced it, next letter"))),
+    quiz,
+    h("p",{style:"color:var(--muted);font-size:14px"},"Several letters share a sound in Persian: ",fa("ت ط")," = t, ",fa("ث س ص")," = s, ",fa("ذ ز ض ظ")," = z, ",fa("ح ه")," = h, ",fa("غ ق")," = gh. These are spelling differences inherited from Arabic. You will learn them word by word."));
+}
+function setupTrace(wrap,guide,ink,ch){
+  const r=wrap.getBoundingClientRect(), dpr=window.devicePixelRatio||1, W=r.width, H=r.height;
+  for(const c of [guide,ink]){ c.width=W*dpr; c.height=H*dpr; c.getContext("2d").setTransform(dpr,0,0,dpr,0,0); }
+  const g=guide.getContext("2d"); const css=getComputedStyle(document.documentElement);
+  g.clearRect(0,0,W,H); g.fillStyle=css.getPropertyValue("--line").trim(); g.font=`400 ${W*0.62}px Vazirmatn, Tahoma, sans-serif`; g.textAlign="center"; g.textBaseline="middle"; g.direction="rtl"; g.fillText(ch,W/2,H*0.48);
+  const x=ink.getContext("2d"); x.clearRect(0,0,W,H); x.lineCap="round"; x.lineJoin="round"; x.lineWidth=Math.max(6,W/38); x.strokeStyle=css.getPropertyValue("--accent").trim();
+  let down=false;
+  const pt=e=>{const b=ink.getBoundingClientRect(); return [e.clientX-b.left,e.clientY-b.top];};
+  ink.onpointerdown=e=>{down=true; ink.setPointerCapture(e.pointerId); const [a,b]=pt(e); x.beginPath(); x.moveTo(a,b);};
+  ink.onpointermove=e=>{ if(!down) return; const [a,b]=pt(e); x.lineTo(a,b); x.stroke(); };
+  ink.onpointerup=ink.onpointercancel=()=>{down=false;};
+}
+
+/* ---------- Type ---------- */
+let typeLevel=0;
+function viewType(){
+  const lv=LEVELS[typeLevel];
+  const words = [...new Set([...CHUNKS,...WORDS].flatMap(c=>c.fa.replace(/[.،؟?…!/]/g," ").split(/\s+/)).filter(w=>w && !w.includes("‌") && !w.includes("ـ")))];
+  const make=()=> lv.keys ? Array.from({length:8},()=>Array.from({length:3},()=>lv.keys[Math.floor(Math.random()*lv.keys.length)]).join("")).join(" ")
+                          : shuffle(words).slice(0,8).join(" ");
+  let target=[...make()], pos=0, errs=0, start=0, errAt=new Set();
+  const line=h("div",{class:"line",lang:"fa","aria-live":"polite"}); const stats=h("div",{class:"row"});
+  const kb=h("div",{class:"kb","aria-hidden":"true"},...KBROWS.map(row=>h("div",{class:"kr"},...row.map(code=>h("div",{class:"k"+(["KeyA","KeyS","KeyD","KeyF","KeyJ","KeyK","KeyL","Semicolon"].includes(code)?" home":""),"data-code":code},h("span",{class:"lat"},LATLABEL(code)),h("span",{class:"per"},KEYMAP[code]+(SHIFTMAP[code]?" "+SHIFTMAP[code]:"")))))));
+  const cap=h("input",{class:"capture",id:"type-cap",type:"text",autocomplete:"off",autocapitalize:"off",spellcheck:"false","aria-label":"Typing input"});
+  function paint(){
+    line.replaceChildren(...target.map((c,i)=>h("span",{class:i<pos?(errAt.has(i)?"err":"ok"):i===pos?"cur":""},c===" "?" ":c)));
+    const want=target[pos];
+    kb.querySelectorAll(".k").forEach(k=>{ const code=k.dataset.code; k.classList.toggle("hot", want && (KEYMAP[code]===want || SHIFTMAP[code]===want)); });
+    const mins=start?(Date.now()-start)/6e4:0; const cpm=mins>0?Math.round(pos/mins):0; const acc=pos?Math.round((1-errs/(pos+errs))*100):100;
+    stats.replaceChildren(h("div",{class:"stat"},h("b",{},cpm),h("span",{},"characters / min")),h("div",{class:"stat"},h("b",{},acc+"%"),h("span",{},"accuracy")),h("div",{class:"stat"},h("b",{},S.typing[typeLevel]||"–"),h("span",{},"your best here")));
+    if(want===undefined){ const best=S.typing[typeLevel]||0; if(acc>=90 && cpm>best){ S.typing[typeLevel]=cpm; save(); toast("New best"); } line.append(h("div",{style:"font-family:var(--f-body);font-size:16px;letter-spacing:0;margin-top:8px"},acc>=90?"Line done. Press Enter for another.":"Line done. Get accuracy over 90% to count a best. Press Enter.")); }
+  }
+  function press(ch){
+    if(target[pos]===undefined) return;
+    if(!start) start=Date.now();
+    if(ch===target[pos] || (target[pos]==="ی" && ch==="ي") || (target[pos]==="ک" && ch==="ك")){ pos++; } else { errs++; errAt.add(pos); }
+    paint();
+  }
+  const reset=()=>{ target=[...make()]; pos=0; errs=0; start=0; errAt=new Set(); paint(); };
+  function onKey(e){
+    if(document.activeElement && document.activeElement!==cap && /INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) return;
+    if(e.ctrlKey||e.metaKey||e.altKey) return;
+    if(e.key==="Enter"){ e.preventDefault(); reset(); return; }
+    const m = e.shiftKey ? (SHIFTMAP[e.code]||null) : KEYMAP[e.code];
+    if(e.key && /[؀-ۿ‌]/.test(e.key)){ e.preventDefault(); press(e.key); return; }   // OS already set to Persian
+    if(m){ e.preventDefault(); press(m); }                                                          // physical key → standard layout
+  }
+  cap.addEventListener("input",()=>{ // phones: keydown is often "Unidentified"; read what the keyboard inserted
+    for(const ch of cap.value){ const code=LATIN[ch.toLowerCase()]; press(/[؀-ۿ‌ ]/.test(ch)?ch:(code?KEYMAP[code]:ch)); }
+    cap.value="";
+  });
+  document.addEventListener("keydown",onKey); cleanup=()=>document.removeEventListener("keydown",onKey);
+  paint();
+  return h("div",{class:"view"},
+    h("div",{},h("h3",{},"Type · Persian standard keyboard"),h("h1",{},"Touch-type Persian on your normal keyboard")),
+    h("p",{class:"lede"},"No settings to change. Each key you press is mapped to the Windows Persian (Standard) layout, ISIRI 9147, shown below. Keep your fingers on the home row, the keys with the teal underline. On a phone, switch to a Persian keyboard and tap the line to type."),
+    h("div",{class:"row"},...LEVELS.map((l,i)=>h("button",{class:i===typeLevel?"primary":"",onclick:()=>{typeLevel=i;render();}},`${i+1}. ${l.name}`))),
+    h("div",{onclick:()=>cap.focus()},line,cap), stats, kb,
+    h("div",{class:"row"},h("button",{onclick:reset},"New line (Enter)")),
+    h("p",{style:"color:var(--muted);font-size:14px"},"Shift + C gives ",fa("ژ"),", Shift + H gives ",fa("آ"),", and Shift + Space gives the half-space used in words like ",fa("می‌فهمم"),". Mac and Android Persian layouts differ slightly from this one, so check yours before you rely on muscle memory."));
+}
+
+/* ---------- South (Bandari notebook) ---------- */
+function viewSouth(){
+  const f={b:h("input",{type:"text",id:"nb-b",class:"fa-in",placeholder:"as you heard it, in Persian letters or Latin"}),
+    s:h("input",{type:"text",id:"nb-s",placeholder:"standard Persian equivalent"}),
+    e:h("input",{type:"text",id:"nb-e",placeholder:"English"}),
+    src:h("input",{type:"text",id:"nb-src",placeholder:"e.g. tutor from Bandar Abbas, 2026-11"}),
+    v:h("input",{type:"checkbox",id:"nb-v"}), r:h("input",{type:"checkbox",id:"nb-r",checked:true}),
+    a:h("input",{type:"file",id:"nb-a",accept:"audio/*",capture:"user"})};
+  const prompts=h("select",{id:"nb-prompt",onchange:e=>{ const c=CHUNKS.find(x=>x.id===e.target.value); if(c){ f.s.value=c.fa+"  ("+c.tr+")"; f.e.value=c.en; } }},
+    h("option",{value:""},"Choose a Stage 1 phrase to ask about…"),...CHUNKS.map(c=>h("option",{value:c.id},`${c.en} · ${c.tr}`)));
+  const status=h("span",{class:"chip"},db?"Saved to your account":"Saved on this device only");
+  async function add(){
+    const entry={bandari:f.b.value.trim(),standard:f.s.value.trim(),en:f.e.value.trim(),source:f.src.value.trim(),verified:f.v.checked,review:f.r.checked,created:Date.now()};
+    if(!entry.bandari){ toast("Add the Bandari phrase first"); f.b.focus(); return; }
+    const file=f.a.files[0];
+    if(file && assets){ try{ const up=await assets.upload(file); entry.audio=up.id; }catch(e){ toast("Audio upload failed. The text is saved without it."); } }
+    if(db&&uid){ await db.collection(`data/users/${uid}/notebook`).add(entry).catch(()=>toast("Could not save. Check your connection.")); }
+    else { notebook.unshift({id:String(Date.now()),...entry}); saveNotebookLocal(); render(); }
+    toast("Added to your notebook");
+  }
+  async function del(x){ if(db&&uid){ await db.doc(`data/users/${uid}/notebook/${x.id}`).delete().catch(()=>{}); } else { notebook=notebook.filter(n=>n!==x); saveNotebookLocal(); render(); } }
+  const list=h("div",{});
+  if(!notebook.length) list.append(h("p",{style:"color:var(--muted)"},"No entries yet. Your first one will appear here. Start with greetings: ask a native speaker how they say ",fa("حالت چطوره؟")," at home."));
+  notebook.forEach(x=>list.append(h("div",{class:"entry"},
+    h("div",{class:"row",style:"justify-content:space-between"},h("span",{class:"chip "+(x.verified?"ok":"warn")},x.verified?"Checked":"Not yet checked"),h("button",{onclick:()=>del(x),"aria-label":"Delete entry"},"Delete")),
+    h("div",{class:"fa",lang:"fa",dir:"rtl"},x.bandari), x.standard?h("span",{class:"tr"},"Standard: "+x.standard):null, x.en?h("span",{},x.en):null,
+    x.source?h("span",{style:"color:var(--muted);font-size:13px"},x.source):null,
+    x.audio?h("audio",{controls:true,src:"/_blob/"+x.audio,preload:"none"}):null)));
+  return h("div",{class:"view"},
+    h("div",{},h("h3",{},"South · the Gulf coast of Hormozgan"),h("h1",{},"Your Bandari notebook")),
+    h("p",{class:"lede"},"Afro-Iranian communities live along the Persian Gulf and the Gulf of Oman: Hormozgan (Bandar Abbas, Qeshm, Hormuz, Minab), Bushehr, Sistan-Baluchestan, Khuzestan and southern Fars. In each place they speak the local language of that place. There is no single Afro-Iranian dialect. So choosing how you sound means choosing a place."),
+    targetPanel(),
+    h("div",{class:"panel"},h("h2",{},"Why there is no Bandari course in this app"),
+      h("p",{},"Bandari has no standard spelling, no verified textbook, and almost no published learner material. Inventing phrases would teach you mistakes that are hard to unlearn. So the app teaches spoken standard Persian, which every Bandari speaker understands and which is what everyone in the region reads and writes. Bandari comes in as a layer on top, from real speakers, recorded here."),
+      h("p",{},"How to fill it: find a tutor who grew up in Bandar Abbas or Qeshm, pick a Stage 1 phrase below, and ask ",fa("اینو بندری چطوری میگید؟")," ",h("span",{class:"tr"},"ino bandari chetori migid?")," (how do you say this in Bandari?). Record their answer. Tick Checked only after a second native speaker confirms it.")),
+    h("div",{class:"panel"},
+      h("div",{class:"row",style:"justify-content:space-between"},h("h2",{},"Add an entry"),status),
+      h("label",{for:"nb-prompt"},"Ask about a phrase",prompts),
+      h("label",{for:"nb-b"},"Bandari, as the speaker said it",f.b),
+      h("div",{class:"fgrid"},h("label",{for:"nb-s"},"Standard Persian",f.s),h("label",{for:"nb-e"},"English",f.e)),
+      h("label",{for:"nb-src"},"Who said it",f.src),
+      assets?h("label",{for:"nb-a"},"Recording (record on your phone, or attach a file)",f.a):h("p",{style:"color:var(--muted);font-size:14px"},"Audio recordings can be attached in the web version when you are signed in."),
+      h("div",{class:"row"},h("label",{for:"nb-v",style:"flex-direction:row;gap:8px;font-weight:400"},f.v,"Checked by a second native speaker"),h("label",{for:"nb-r",style:"flex-direction:row;gap:8px;font-weight:400"},f.r,"Add to my Talk reviews")),
+      h("div",{class:"row"},h("button",{class:"primary",onclick:add},"Add to notebook"))),
+    h("div",{class:"panel"},h("h2",{},`Notebook (${notebook.length})`),list));
+}
+
+const TARGETS = [
+ {id:"hormozgan",name:"Hormozgan coast",sub:"Bandar Abbas, Qeshm, Hormuz",lang:"Persian + Bandari / Keshmi",fit:"Recommended",why:"The largest and best-known Afro-Iranian community. Bandari music is famous across Iran, and tutors are easier to find. Bandari and Keshmi are close to Persian, so they build on what you learn here."},
+ {id:"bushehr",name:"Bushehr",sub:"Bushehr port and coast",lang:"Persian + Bushehri",fit:"Good fit",why:"Also a Southwestern Iranian variety on top of Persian, with a long Afro-Iranian presence through Indian Ocean trade. Fewer learning resources than Hormozgan."},
+ {id:"khuzestan",name:"Khuzestan",sub:"Ahvaz, Abadan, Khorramshahr",lang:"Khuzestani Arabic + Persian",fit:"Separate track",why:"Here Afro-Iranians often identify with the Arab population. Khuzestani Arabic is a Mesopotamian (gilit) dialect close to southern Iraqi Arabic. It builds on your Arabic, but it isn't Farsi, so it would be a second track, not a replacement."},
+ {id:"baluch",name:"Sistan-Baluchestan",sub:"Chabahar, coast of the Gulf of Oman",lang:"Balochi + Persian",fit:"Separate language",why:"Balochi is a different Iranian language, not a dialect of Farsi. Learning it is a separate project."}
+];
+function targetPanel(){
+  return h("div",{class:"panel"},h("h2",{},"Choose the place you want to sound like"),
+    h("p",{},"People will judge where you're from by how you speak, not by how you look. Your face may make 'southerner' a natural guess, but a learner's accent will be noticed at first anyway. The realistic goal is clear Persian with consistent features from one place. Mixing several regions sounds like no one."),
+    ...TARGETS.map(t=>h("label",{for:"tg-"+t.id,class:"entry",style:"flex-direction:row;gap:12px;align-items:flex-start;font-weight:400;cursor:pointer"},
+      h("input",{type:"radio",name:"target",id:"tg-"+t.id,checked:S.target===t.id,onchange:()=>{S.target=t.id;save();render();},style:"margin-top:6px"}),
+      h("div",{style:"display:flex;flex-direction:column;gap:2px;min-width:0"},
+        h("div",{class:"row"},h("b",{},t.name),h("span",{class:"chip"+(t.fit==="Recommended"?" ok":"")},t.fit)),
+        h("span",{style:"font-size:14px;color:var(--muted)"},t.sub+" · "+t.lang),
+        h("span",{style:"font-size:15px"},t.why)))));
+}
+
+/* ---------- Why ---------- */
+function viewWhy(){
+  const C=(t,p,c)=>h("div",{class:"claim"},h("b",{},t),h("div",{},h("p",{},p),h("cite",{},c)));
+  return h("div",{class:"view"},
+    h("div",{},h("h3",{},"The research behind each screen"),h("h1",{},"Why it works")),
+    h("p",{class:"lede"},"Each design choice in the app traces back to research on second-language learning. Where the evidence is weaker, or where an app cannot do the job, this page says so."),
+    h("div",{class:"panel"},
+      C("Four strands","A balanced course splits time roughly evenly between meaning-focused input, meaning-focused output, deliberate study of the language, and fluency practice. Today's session is built on this.","Nation, I.S.P. (2007). The four strands. Innovation in Language Learning and Teaching, 1(1), 2–13."),
+      C("Chunks first","Fluent speech relies heavily on ready-made, memorised phrases. Learning whole chunks early gives you real conversation before you know the grammar, and the chunks are later broken down into patterns.","Wray, A. (2002). Formulaic Language and the Lexicon. Cambridge UP; Myles, Hooper & Mitchell (1998), Language Learning 48(3)."),
+      C("Recall, spaced out","Retrieving an answer beats rereading it, and spacing reviews over days beats massing them, especially on delayed tests. Hence say-it-first cards and growing intervals.","Karpicke & Roediger (2008), Science 319; Kim & Webb (2022), Language Learning 72(1), meta-analysis of spaced practice in L2 learning."),
+      C("Frequent words first","In spoken English, about 2,000 word families cover roughly 95% of the words in everyday conversation. A small, well-chosen core gets you a long way. This app's list is hand-picked for getting around. The next step is checking it against a Persian frequency dictionary.","Adolphs & Schmitt (2003), Applied Linguistics 24(4); Nation (2006), Canadian Modern Language Review 63(1); Miller & Aghajanian-Stewart (2017), A Frequency Dictionary of Persian, Routledge."),
+      C("Cognates","Words shared with a language you already know are learned faster and forgotten less. For an Arabic speaker, Arabic loanwords in Persian are a real shortcut, as long as you watch for meaning shifts.","de Groot & Keijzer (2000), Language Learning 50(1); Perry, 'Arabic elements in Persian', Encyclopaedia Iranica."),
+      C("Explicit study helps","Directly studying form (letters, endings like -e for 'is') produces large, lasting gains alongside exposure.","Norris & Ortega (2000), Language Learning 50(3); Spada & Tomita (2010), Language Learning 60(2)."),
+      C("Speaking with people","Conversation with feedback drives acquisition: you notice gaps when you are corrected. An app can't supply this, so a tutor session is part of the plan.","Mackey & Goo (2007), meta-analysis in Conversational Interaction in SLA (Oxford UP); Lyster & Saito (2010), SSLA 32(2), corrective feedback."),
+      C("Accent, realistically","Pronunciation instruction works. Perception training with many different voices improves both hearing and producing new sounds. Adults rarely reach a fully native accent, but accent, intelligibility and ease of understanding are separate things, so you can sound clearly southern and be easy to follow.","Lee, Jang & Plonsky (2015), Applied Linguistics 36(3); Uchihara, Karas & Thomson (2024), Applied Psycholinguistics, HVPT meta-analysis; Munro & Derwing (1995), Language Learning 45(1); Flege & Bohn (2021), SLM-r."),
+      C("Handwriting","Adults learning new characters recognised them better after handwriting them than after typing them. That is why Letters comes before Type.","Longcamp et al. (2008), Journal of Cognitive Neuroscience 20(5)."),
+      C("Time","The US Foreign Service Institute rates Persian at about 44 weeks, roughly 1,100 class hours, to professional working proficiency for English speakers. Daily practice over months matters more than intense bursts.","FSI language difficulty rankings, U.S. Department of State.")),
+    h("div",{class:"panel"},h("h2",{},"What the app cannot do"),
+      h("p",{},"The built-in voice is synthetic Tehran-style speech, at best. It is a scaffold for reading, not a model for your accent. Your accent will come from the people you listen to and talk with, so the most valuable hour of your week is a conversation with a speaker from the coast.")),
+    h("div",{class:"panel"},h("h2",{},"On Afro-Iranians and Bandari"),
+      h("ul",{class:"refs"},
+        h("li",{},"Encyclopaedia Iranica, “Bandari: the dialect spoken by the native population of Bandar Abbas.”"),
+        h("li",{},"Mirzai, B. A. (2017). A History of Slavery and Emancipation in Iran, 1800–1929. University of Texas Press."),
+        h("li",{},"Keshmi (Qeshm Island) dialect study, Journal of Language and Linguistic Inquiry, Shiraz University: about 92% lexical overlap with Bandari, 88% with Persian."),
+        h("li",{},"Leitner, B. (2022). Grammar of Khuzestani Arabic, Brill. Places the dialect in the Mesopotamian gilit group."),
+        h("li",{},"University of Graz project on the Arabic of southern Iran's Gulf coast: south-iranian-arabic.uni-graz.at"))));
+}
+
+render();
+connect();
+</script>

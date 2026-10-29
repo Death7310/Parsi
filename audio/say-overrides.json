@@ -1,0 +1,42 @@
+{
+ "_about": "say: vowel-marked spellings the voice reads instead of the plain text (item id -> text). skip: items the engine cannot read correctly; they need a human recording. accepted: flags reviewed by hand and found to be checker noise (t+sh read as ch, y/i glides, transliteration format).",
+ "say": {
+  "c03": "حالِت چطوره؟",
+  "c09": "اِسمِت چیه؟",
+  "c10": "اِسمِ من",
+  "c12": "اَهلِ کجایی؟",
+  "c13": "من اَهلِ آمریکام.",
+  "c32": "به امیدِ دیدار",
+  "c34": "این کِتاب مالِ کیه؟",
+  "c35": "این کِتابِ منه.",
+  "c36": "این کِتابُ می‌خوام.",
+  "c44": "اِنگیلیسی بلدید؟",
+  "w18_s": "این خونَست",
+  "v_peo15": "خانوم",
+  "v_ver6": "می‌گَم",
+  "v_ver11": "می‌خَرَم",
+  "v_num4": "چار",
+  "v_num9": "نُه",
+  "v_foo11": "تخمِ مرغ",
+  "l13": "ژاکِت"
+ },
+ "skip": [
+  "v_que1",
+  "v_thi10",
+  "v_thi4",
+  "v_dir5"
+ ],
+ "accepted": [
+  "c37",
+  "v_pla13",
+  "w12",
+  "w12_s",
+  "v_ver4",
+  "v_pla6",
+  "v_des9",
+  "c10",
+  "c12",
+  "w18_s",
+  "v_num4"
+ ]
+}
