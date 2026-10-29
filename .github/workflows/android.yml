@@ -6,6 +6,8 @@ on:
 jobs:
   apk:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -50,3 +52,13 @@ jobs:
           path: |
             audio/tts
             audio/manifest.json
+      - name: Publish the APK as the latest release (main only)
+        if: github.ref == 'refs/heads/main'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cp android/app/build/outputs/apk/debug/app-debug.apk khalij-farsi.apk
+          gh release delete latest --yes --cleanup-tag || true
+          gh release create latest khalij-farsi.apk --target "$GITHUB_SHA" --latest \
+            --title "Khalij Farsi (latest build)" \
+            --notes "Built from ${GITHUB_SHA::7}. On an Android phone: download khalij-farsi.apk and open it."
