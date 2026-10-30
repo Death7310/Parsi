@@ -35,8 +35,8 @@ jobs:
             .voices
             audio/tts
             audio/ipa
-          key: tts-v2-${{ hashFiles('audio/items.json', 'audio/say-overrides.json') }}
-          restore-keys: tts-v2-
+          key: tts-v3-${{ hashFiles('audio/items.json', 'audio/say-overrides.json') }}
+          restore-keys: tts-v3-
       - name: Generate synthetic audio
         run: |
           sudo apt-get update && sudo apt-get install -y ffmpeg

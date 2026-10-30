@@ -5,7 +5,7 @@ go into audio/ipa/index.json, which the app shows as a credit. A title that does
 and reported; the app then simply offers no "Hear it alone" button for that sound. Never fails the build.
 Usage: python scripts/fetch_ipa_audio.py
 """
-import json, pathlib, re, subprocess, tempfile, urllib.parse, urllib.request
+import json, pathlib, re, subprocess, tempfile, time, urllib.error, urllib.parse, urllib.request
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 OUT = ROOT / "audio/ipa"
@@ -33,11 +33,22 @@ SOUNDS = {
     "r": ["Alveolar trill.ogg"], "ɾ": ["Alveolar tap.ogg"], "j": ["Palatal approximant.ogg"],
 }
 
+def get(url):
+    """GET with Wikimedia's etiquette: one request at a time, and back off when told to (HTTP 429/503)."""
+    for attempt in range(5):
+        try:
+            with urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=60) as r:
+                return r.read()
+        except urllib.error.HTTPError as e:
+            if e.code not in (429, 503) or attempt == 4:
+                raise
+            wait = int(e.headers.get("Retry-After") or 0) or 5 * 2 ** attempt
+            print(f"  rate limited, waiting {wait}s"); time.sleep(min(wait, 60))
+
 def info(title):
     q = urllib.parse.urlencode({"action": "query", "titles": "File:" + title, "prop": "imageinfo",
                                 "iiprop": "url|extmetadata", "format": "json"})
-    with urllib.request.urlopen(urllib.request.Request(f"{API}?{q}", headers=UA), timeout=30) as r:
-        page = next(iter(json.load(r)["query"]["pages"].values()))
+    page = next(iter(json.loads(get(f"{API}?{q}"))["query"]["pages"].values()))
     if "imageinfo" not in page:
         return None
     ii = page["imageinfo"][0]; meta = ii.get("extmetadata", {})
@@ -51,6 +62,7 @@ for sym, titles in SOUNDS.items():
     if sym in index and (ROOT / index[sym]["file"]).exists():
         continue
     for title in titles:
+        time.sleep(1.5)   # space requests out; Commons rate-limits bursts
         try:
             meta = info(title)
         except Exception as e:
@@ -63,8 +75,7 @@ for sym, titles in SOUNDS.items():
         mp3 = OUT / f"{slug}.mp3"
         try:
             with tempfile.NamedTemporaryFile(suffix=".ogg") as tmp:
-                with urllib.request.urlopen(urllib.request.Request(meta["url"], headers=UA), timeout=60) as r:
-                    tmp.write(r.read()); tmp.flush()
+                tmp.write(get(meta["url"])); tmp.flush()
                 subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-i", tmp.name, "-ac", "1", "-b:a", "64k", str(mp3)], check=True)
         except Exception as e:
             print(f"{sym}: download failed for {title}: {e}"); continue
