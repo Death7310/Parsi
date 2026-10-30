@@ -26,6 +26,7 @@ jobs:
         run: |
           pip install piper-tts==1.8.0
           node scripts/export-items.mjs
+          node scripts/check-ipa.mjs
           python scripts/check_pronunciation.py
       - name: Cache voices and generated audio
         uses: actions/cache@v4
@@ -33,12 +34,14 @@ jobs:
           path: |
             .voices
             audio/tts
-          key: tts-${{ hashFiles('audio/items.json', 'audio/say-overrides.json') }}
-          restore-keys: tts-
+            audio/ipa
+          key: tts-v2-${{ hashFiles('audio/items.json', 'audio/say-overrides.json') }}
+          restore-keys: tts-v2-
       - name: Generate synthetic audio
         run: |
           sudo apt-get update && sudo apt-get install -y ffmpeg
           python scripts/make_tts.py
+          python scripts/fetch_ipa_audio.py
       - run: npm run android
       - run: ./gradlew assembleDebug
         working-directory: android
@@ -51,6 +54,7 @@ jobs:
           name: generated-audio
           path: |
             audio/tts
+            audio/ipa
             audio/manifest.json
       - name: Publish the APK as the latest release (main only)
         if: github.ref == 'refs/heads/main'

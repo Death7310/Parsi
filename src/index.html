@@ -1,7 +1,7 @@
 <title>Khalij Farsi</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&family=Young+Serif&family=Figtree:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&family=Young+Serif&family=Figtree:wght@400;600;700&family=JetBrains+Mono:wght@400;600&family=Charis+SIL:wght@400;700&display=swap">
 <style>
 /* Layout: app shell — side rail on desktop, bottom tab bar on phone; one view at a time, routed by #hash.
    Palette: Persian Gulf water, henna red and gold from Hormozgan embroidery, over a cool sea-salt ground. */
@@ -63,6 +63,31 @@ button:disabled{opacity:.45;cursor:default}
 .card .pic{font-size:72px;line-height:1}
 .card .en{font-size:20px;font-weight:600}
 .card .note{font-size:14px;color:var(--muted);max-width:46ch}
+/* IPA side of a card: Persian letters on top, their sounds underneath; unwritten sounds in henna */
+.card{position:relative}
+.ipa-btn{position:absolute;top:10px;right:10px;min-height:36px;padding:4px 12px;font:600 13px var(--f-mono);letter-spacing:.04em;z-index:1}
+.ipa-btn[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.ipa{width:100%;display:flex;flex-direction:column;align-items:center;gap:12px;padding-top:18px}
+.ipa-mode{display:flex;gap:6px}
+.ipa-mode button{min-height:36px;padding:4px 12px;font-size:13px}
+.ipa-mode button.on{background:var(--sunk);border-color:var(--accent);color:var(--accent)}
+.ipa-fa{font-size:clamp(24px,6vw,34px);font-weight:600;line-height:1.5}
+.ipa-str{font-family:"Charis SIL","Doulos SIL","Noto Sans",var(--f-body);font-size:20px;color:var(--accent)}
+.ipa-row{display:flex;flex-wrap:wrap;justify-content:center;gap:14px 18px;max-width:100%}
+.ipa-word{display:flex;gap:4px}
+.ipa-tile{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:40px;padding:6px 4px;border-radius:8px;background:var(--sunk)}
+.ipa-letter{font-family:var(--f-fa);font-size:26px;line-height:1.3}
+.ipa-sounds{display:flex;gap:2px}
+.ipa-snd{min-height:36px;min-width:30px;padding:2px 6px;font:500 17px "Charis SIL","Doulos SIL","Noto Sans",var(--f-body);justify-content:center}
+.ipa-snd.unw,.ipa-key.unw{color:var(--henna);border-style:dashed;border-color:var(--henna)}
+.ipa-snd.sel{outline:3px solid var(--gold);outline-offset:1px}
+.ipa-silent{min-height:36px;display:flex;align-items:center;color:var(--muted)}
+.ipa-legend{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;justify-content:center;font-size:13px;color:var(--muted)}
+.ipa-key{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border:1px solid var(--line);border-radius:6px;color:var(--ink);font-size:13px}
+.ipa-info{width:100%;max-width:46ch;text-align:left;display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--line);padding-top:12px;font-size:15px}
+.ipa-info-head{display:flex;align-items:baseline;gap:10px}
+.ipa-big{font:500 30px "Charis SIL","Doulos SIL","Noto Sans",var(--f-body);color:var(--accent)}
+.ipa-info .credit{font-size:12px;color:var(--muted)}
 .prog{height:6px;background:var(--sunk);border-radius:6px;overflow:hidden}
 .prog i{display:block;height:100%;background:var(--accent);transition:width .3s}
 .grades{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
@@ -265,7 +290,7 @@ const LEVELS = [
 const INTERVALS = [0,1,3,7,16,35,80,180];
 const today = () => Math.floor((Date.now() - new Date().getTimezoneOffset()*6e4)/864e5);
 const LSKEY = "khalij-farsi-v1";
-let S = {v:1,cards:{},newPerDay:8,intro:{},streak:{last:0,n:0},typing:{},traced:{},input:[],cats:DEFAULT_CATS.slice(),target:"hormozgan",showAr:true};
+let S = {v:1,cards:{},newPerDay:8,intro:{},streak:{last:0,n:0},typing:{},traced:{},input:[],cats:DEFAULT_CATS.slice(),target:"hormozgan",showAr:true,ipaNarrow:false};
 let notebook = []; // {id, bandari, standard, en, source, verified, review, audio, created}
 let db=null, uid=null, assets=null, saveTimer=null;
 const syncEl = () => document.getElementById("sync");
@@ -296,7 +321,7 @@ async function connect(){
       for(const key of ["intro","typing","traced"]) S[key] = Object.assign({}, remote[key]||{}, S[key]);
       if((remote.streak?.last||0) > S.streak.last) S.streak = remote.streak;
       if((remote.input||[]).length > S.input.length) S.input = remote.input;
-      for(const key of ["cats","target","showAr"]) if(remote[key]!==undefined) S[key]=remote[key];
+      for(const key of ["cats","target","showAr","ipaNarrow"]) if(remote[key]!==undefined) S[key]=remote[key];
     }
     save();
     db.collection(`data/users/${uid}/notebook`).onSnapshot(qs=>{
@@ -366,6 +391,106 @@ function deviceSpeak(text, rate=0.8){
   speechSynthesis.speak(u);
 }
 
+/* ---------- ipa ---------- */
+// Pure functions (no page access), so scripts/check-ipa.mjs can test every card.
+// The app's transliteration is the source of truth for sounds; each sound is then matched to the
+// Persian letter that writes it. Short vowels and glides Persian leaves unwritten attach to the letter before them.
+const IPA_TR = [["kh","x"],["gh","ɢ"],["sh","ʃ"],["ch","tʃ"],["zh","ʒ"],["â","ɒ"],["a","æ"],["j","dʒ"],["y","j"],["'","ʔ"],["g","ɡ"]];
+const IPA_VOWELS = new Set(["ɒ","æ","e","o","i","u"]);
+const IPA_UNWRITTEN = {æ:1, e:1, o:1, j:1.2, ʔ:1.5, i:1.6, u:1.6};   // cost of a spoken sound with no letter
+const IPA_LETTER = {"ب":"b","پ":"p","ت":"t","ث":"s","ج":"dʒ","چ":"tʃ","ح":"h","خ":"x","د":"d","ذ":"z","ر":"r","ز":"z","ژ":"ʒ","س":"s","ش":"ʃ","ص":"s","ض":"z","ط":"t","ظ":"z","غ":"ɢ","ف":"f","ق":"ɢ","ک":"k","ك":"k","گ":"ɡ","ل":"l","م":"m","ن":"n","ء":"ʔ","ئ":"ʔ"};
+function trToPhones(tr){
+  const s = tr.toLowerCase().replace(/\.\.\.(-e)?/g," ").replace(/\(.*?\)/g,"").replace(/[^a-zâ']/g,"");
+  const out = [];
+  for(let i=0; i<s.length;){
+    const hit = IPA_TR.find(([a])=>s.startsWith(a,i));
+    if(hit){ out.push(hit[1]); i+=hit[0].length; } else { out.push(s[i]); i++; }
+  }
+  return out;
+}
+function faLetters(fa){
+  const t = fa.replace(/\s*\.\.\.\s*/g," ").replace(/\s*ـه/g,"");
+  const out = []; let w = 0, start = true;
+  for(const ch of t){
+    if(/\s/.test(ch)){ if(!start){ w++; start = true; } continue; }
+    if(ch==="ً"){ if(out.length && out[out.length-1].ch==="ا") out[out.length-1].tanvin = true; continue; }
+    if(/[ٌ-ْـ‌‍]/.test(ch)) continue;   // vowel marks, tatweel, half-space
+    if(!/[ء-يپچژکگیآ]/.test(ch)) continue;   // punctuation
+    out.push({ch, w, start}); start = false;
+  }
+  return out;
+}
+function letterOptions(L, prev){
+  const c = IPA_LETTER[L.ch];
+  if(c) return [[[c],0],[[c,c],0.1]];   // a doubled consonant is written once
+  switch(L.ch){
+    case "ا": return L.tanvin ? [[["æ","n"],0]] : [[["ɒ"],0], ...(L.start ? [[["æ"],0.1],[["e"],0.1],[["o"],0.1],[[],0.2]] : [])];
+    case "آ": return [[["ɒ"],0],[["ʔ","ɒ"],0.1]];
+    case "ع": return [[["ʔ"],0],[[],0.3],[["æ"],0.2],[["e"],0.2],[["o"],0.2]];
+    case "و": return [[["v"],0],[["u"],0],[["o"],0], ...(prev==="خ" ? [[[],0.2]] : [])];   // silent و in خوا
+    case "ی": case "ي": case "ى": return [[["j"],0],[["i"],0]];
+    case "ه": return [[["h"],0],[["e"],0],[["æ"],0.3]];
+  }
+  return [];
+}
+// → [{ch, w, sounds:[{p, written, gem}]}] or null when the reading can't be matched to the letters
+function alignIpa(fa, tr){
+  const L = faLetters(fa), P = trToPhones(tr), n = L.length, m = P.length;
+  if(!n || !m) return null;
+  const INF = 1e9, cost = Array.from({length:n+1},()=>new Float64Array(m+1).fill(INF)), back = Array.from({length:n+1},()=>new Array(m+1));
+  cost[0][0] = 0;
+  for(let i=0;i<=n;i++) for(let j=0;j<=m;j++){
+    const c0 = cost[i][j]; if(c0>=INF) continue;
+    const u = IPA_UNWRITTEN[P[j]];
+    if(j<m && u!==undefined && (i>0 || u<=1)){ const c = c0 + u + (i===0?2:0); if(c<cost[i][j+1]){ cost[i][j+1]=c; back[i][j+1]={i,j,un:true}; } }
+    if(i<n) for(const [seq,k] of letterOptions(L[i], L[i-1]?.ch)){
+      if(seq.every((p,x)=>P[j+x]===p)){ const c = c0 + k, jj = j+seq.length; if(c<cost[i+1][jj]){ cost[i+1][jj]=c; back[i+1][jj]={i,j,seq}; } }
+    }
+  }
+  if(cost[n][m]>=INF) return null;
+  const res = L.map(l=>({ch:l.ch + (l.tanvin?"ً":""), w:l.w, sounds:[]}));
+  const steps = []; for(let i=n,j=m; i||j;){ const b = back[i][j]; steps.push(b); i=b.i; j=b.j; }
+  steps.reverse();
+  let last = -1; const lead = [];
+  for(const s of steps){
+    if(s.un){ const snd = {p:P[s.j], written:false}; last<0 ? lead.push(snd) : res[last].sounds.push(snd); continue; }
+    last = s.i;
+    if(s.seq.length===2 && s.seq[0]===s.seq[1] && !IPA_VOWELS.has(s.seq[0])) res[last].sounds.push({p:s.seq[0], written:true, gem:true});
+    else s.seq.forEach(p=>res[last].sounds.push({p, written:true}));
+    if(lead.length){ res[last].sounds.unshift(...lead.splice(0)); }
+  }
+  return res;
+}
+// Narrow transcription: the main allophones of standard (Tehran) Persian. Southern speakers differ in places.
+function ipaNarrowSeq(flat){
+  return flat.map((s,k)=>{
+    const p = s.p, next = flat[k+1], prev = flat[k-1];
+    const front = next && !s.wordEnd && ["i","e","æ"].includes(next.p);
+    const nextV = next && !s.wordEnd && IPA_VOWELS.has(next.p);
+    let q = {ɒ:"ɒː", i:"iː", u:"uː", r:"ɾ"}[p] || p;
+    if(p==="k" && (front || s.wordEnd)) q = "c";
+    if(p==="ɡ" && (front || s.wordEnd)) q = "ɟ";
+    if(p==="ɢ" && prev && IPA_VOWELS.has(prev.p) && nextV) q = "ɣ";
+    if(["p","t","k"].includes(p) && (nextV || s.wordEnd) && !(prev && ["s","ʃ","f","x"].includes(prev.p))) q += "ʰ";
+    return s.gem ? q.replace(/ʰ$/,"") + "ː" : q;
+  });
+}
+function ipaFlat(al){
+  const flat = [];
+  al.forEach((l,li)=>l.sounds.forEach((s,si)=>flat.push(Object.assign({}, s, {li, si, wordEnd: si===l.sounds.length-1 && (li===al.length-1 || al[li+1].w!==l.w)}))));
+  return flat;
+}
+function ipaSymbols(al, narrow){
+  const flat = ipaFlat(al), nar = narrow ? ipaNarrowSeq(flat) : null;
+  return flat.map((s,k)=>Object.assign(s, {sym: narrow ? nar[k] : s.p + (s.gem?"ː":"")}));
+}
+function ipaString(al, narrow){
+  const syms = ipaSymbols(al, narrow); let out = "";
+  syms.forEach((s,k)=>{ out += s.sym; if(s.wordEnd && k<syms.length-1) out += " "; });
+  return narrow ? `[${out}]` : `/${out}/`;
+}
+/* ---------- ipa end ---------- */
+
 /* ---------- helpers ---------- */
 const $ = (s,el=document)=>el.querySelector(s);
 const h = (tag, attrs={}, ...kids)=>{ const el=document.createElement(tag);
@@ -376,6 +501,114 @@ const put = (el,...kids) => el.append(...kids.filter(k=>k!=null&&k!==false));
 const fa = (t,cls="") => h("span",{class:"fa "+cls,lang:"fa",dir:"rtl"},t);
 function toast(msg){ const t=$("#toast"); t.textContent=msg; t.hidden=false; clearTimeout(toast.t); toast.t=setTimeout(()=>t.hidden=true,1800); }
 const shuffle = a => { a=a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
+/* ---------- ipa view ---------- */
+const SOUND_INFO = {
+ ɒ:{name:"open back rounded vowel",how:"Open your mouth wide, pull the tongue low and back, and round the lips a little. Close to the vowel in British English 'lot'. For Arabic speakers: this isn't Arabic ā. Round the lips."},
+ æ:{name:"near-open front unrounded vowel",how:"Tongue low and forward, lips spread, like the a in American English 'cat'. Persian usually doesn't write it."},
+ e:{name:"close-mid front unrounded vowel",how:"Like the e in 'bed', a little tenser, close to Spanish e. Usually unwritten; at the end of a word it's written with ه."},
+ o:{name:"close-mid back rounded vowel",how:"Lips rounded, like Spanish o. Don't glide into a w as in English 'go'. Usually unwritten; sometimes written with و."},
+ i:{name:"close front unrounded vowel",how:"Like ee in 'see', with no glide at the end. Written with ی."},
+ u:{name:"close back rounded vowel",how:"Like oo in 'food', lips well rounded. Written with و."},
+ p:{name:"voiceless bilabial stop",how:"Close the lips, then open them with a small puff of air, as in English 'pin'. Written پ."},
+ b:{name:"voiced bilabial stop",how:"Like p, but with the voice on, as in 'bed'. Written ب."},
+ t:{name:"voiceless dental stop",how:"Tongue tip just behind the upper front teeth, released with a small puff of air. ت and ط are the same sound."},
+ d:{name:"voiced dental stop",how:"Like t, with the voice on and no puff of air. Written د."},
+ k:{name:"voiceless velar stop",how:"Back of the tongue against the soft palate, as in English 'kit'. Written ک."},
+ ɡ:{name:"voiced velar stop",how:"Like k, with the voice on, as in 'go'. Written گ, one of the four letters Arabic doesn't have."},
+ ɢ:{name:"voiced uvular stop",how:"The very back of the tongue closes against the uvula, deeper in the throat than g. In standard Persian ق and غ both sound like this. Speakers from the south and elsewhere may keep them apart, so copy your tutor."},
+ x:{name:"voiceless velar fricative",how:"Air rubbing between the back of the tongue and the soft palate, like Arabic خ or ch in Scottish 'loch'."},
+ h:{name:"voiceless glottal fricative",how:"A plain h, as in 'house'. Persian ح and ه are both this sound. For Arabic speakers: don't use the deep, tight ḥ of Arabic ح."},
+ ʔ:{name:"glottal stop",how:"The catch in the middle of 'uh-oh'. Written ع or ء, and in casual speech it often disappears."},
+ f:{name:"voiceless labiodental fricative",how:"Upper teeth on the lower lip, blow air, as in 'fan'. Written ف."},
+ v:{name:"voiced labiodental fricative",how:"Like f with the voice on, as in 'van'. Written و. At the start of a syllable و is v, never w."},
+ s:{name:"voiceless alveolar sibilant",how:"As in 'see'. Written س, ص or ث, all the same sound."},
+ z:{name:"voiced alveolar sibilant",how:"As in 'zoo'. Written ز, ذ, ض or ظ, all the same sound."},
+ ʃ:{name:"voiceless postalveolar sibilant",how:"As in 'she'. Written ش."},
+ ʒ:{name:"voiced postalveolar sibilant",how:"The s in 'measure'. Written ژ, one of the four letters Arabic doesn't have."},
+ tʃ:{name:"voiceless postalveolar affricate",how:"As in 'church'. Written چ, one of the four letters Arabic doesn't have."},
+ dʒ:{name:"voiced postalveolar affricate",how:"As in 'jam'. Written ج."},
+ m:{name:"bilabial nasal",how:"As in 'map'. Written م."},
+ n:{name:"alveolar nasal",how:"As in 'no'. Written ن."},
+ l:{name:"alveolar lateral",how:"A light l, as in 'leaf', never the dark l of 'full'. Written ل."},
+ r:{name:"alveolar tap or trill",how:"A quick tap of the tongue tip, like the r in Spanish 'pero'. It can roll at the start of a word or when doubled. Written ر."},
+ j:{name:"palatal approximant",how:"Like y in 'yes'. Written ی, but often spoken between vowels with no letter at all (chiye)."}
+};
+const NARROW_INFO = {
+ c:{name:"voiceless palatal stop",how:"A k made with the middle of the tongue, close to 'ky'. Persian k sounds like this before i, e, a and at the end of a word."},
+ ɟ:{name:"voiced palatal stop",how:"A g made with the middle of the tongue, close to 'gy'. Persian g sounds like this before i, e, a and at the end of a word."},
+ ɣ:{name:"voiced velar fricative",how:"Like Arabic غ: the back of the tongue nearly touches the soft palate and the air rubs through. Between vowels, the ق/غ sound usually softens to this."},
+ ɾ:{name:"alveolar tap",how:"One quick tap of the tongue tip behind the teeth, like the r in Spanish 'pero'."}
+};
+function describeSound(sym){
+  const notes = []; let b = sym;
+  if(b.endsWith("ː")){ b = b.slice(0,-1); notes.push(IPA_VOWELS.has(b) ? "ː marks a long vowel. In everyday Persian these vowels differ from the short ones mostly in quality, less in length." : "ː means the sound is held longer (a doubled consonant). Persian writes it with one letter."); }
+  if(b.endsWith("ʰ")){ b = b.slice(0,-1); notes.push("ʰ means a small puff of air after the sound, as with the p in English 'pin'."); }
+  return Object.assign({name:"", how:""}, NARROW_INFO[b] || SOUND_INFO[b], {notes});
+}
+let IPA_REC = {}, ipaExamples = null;   // isolated recordings (from audio/ipa/index.json, Android app build) and example words
+fetch("audio/ipa/index.json").then(r=>r.ok?r.json():{}).then(m=>{ IPA_REC = m || {}; }).catch(()=>{});
+function exampleFor(p){
+  if(!ipaExamples){
+    ipaExamples = {};
+    for(const w of [...WORDS, ...VOCAB]){
+      if(/\s/.test(w.fa)) continue;
+      const al = alignIpa(w.fa, w.tr); if(!al) continue;
+      for(const l of al) for(const s of l.sounds){ const cur = ipaExamples[s.p]; if(!cur || w.fa.length < cur.fa.length) ipaExamples[s.p] = w; }
+    }
+  }
+  return ipaExamples[p];
+}
+function ipaView(entries){
+  const wrap = h("div",{class:"ipa"});
+  const info = h("div",{class:"ipa-info","aria-live":"polite"},h("p",{class:"note"},"Tap a sound to see how to make it."));
+  function showInfo(s, l, btn){
+    wrap.querySelectorAll(".ipa-snd.sel").forEach(x=>x.classList.remove("sel")); btn.classList.add("sel");
+    const d = describeSound(s.sym), ex = exampleFor(s.p), rec = IPA_REC[s.sym.replace(/[ʰː]/g,"")] || IPA_REC[s.p];
+    info.replaceChildren();
+    put(info, h("div",{class:"ipa-info-head"},h("span",{class:"ipa-big"},s.sym),h("b",{},d.name)),
+      h("p",{},d.how), ...d.notes.map(n=>h("p",{class:"note"},n)),
+      s.written ? h("p",{class:"note"},"Written here by ",fa(l.ch),".") : h("p",{class:"note",style:"color:var(--henna)"},"Spoken but not written. Persian leaves this sound out, so you have to know it's there. Here it follows ",fa(l.ch),"."),
+      h("div",{class:"row"}, rec ? h("button",{onclick:()=>{ nowPlaying?.pause(); nowPlaying = new Audio(rec.file); nowPlaying.play().catch(()=>{}); }},"Hear it alone") : null,
+        ex ? h("button",{onclick:()=>speak(ex.fa,0.8,ex.tr)},"Example: ",fa(ex.fa)," ",h("span",{class:"tr"},ex.tr)) : null),
+      rec ? h("p",{class:"credit"},`Recording: ${rec.artist || "Wikimedia Commons"} (${rec.license}), Wikimedia Commons`) : null);
+  }
+  function draw(){
+    const narrow = !!S.ipaNarrow;
+    wrap.replaceChildren();
+    wrap.append(h("div",{class:"ipa-mode",role:"group","aria-label":"How detailed"},
+      h("button",{class:narrow?"":"on","aria-pressed":String(!narrow),onclick:()=>{ S.ipaNarrow=false; save(); draw(); }},"Broad /…/"),
+      h("button",{class:narrow?"on":"","aria-pressed":String(narrow),onclick:()=>{ S.ipaNarrow=true; save(); draw(); }},"Narrow […]")));
+    for(const e of entries){
+      const al = alignIpa(e.fa, e.tr);
+      wrap.append(fa(cleanFa(e.fa),"ipa-fa"));
+      if(!al){ wrap.append(h("p",{class:"note"},"The letter-by-letter view isn't available for this line.")); continue; }
+      const syms = ipaSymbols(al, narrow);
+      wrap.append(h("div",{class:"ipa-str",dir:"ltr"},ipaString(al, narrow)));
+      const row = h("div",{class:"ipa-row",dir:"rtl"}); let group = null, gw = -1;
+      al.forEach((l,li)=>{
+        if(l.w!==gw){ group = h("div",{class:"ipa-word"}); row.append(group); gw = l.w; }
+        const mine = syms.filter(x=>x.li===li);
+        group.append(h("div",{class:"ipa-tile"}, h("div",{class:"ipa-letter",lang:"fa"},l.ch),
+          h("div",{class:"ipa-sounds",dir:"ltr"}, ...(mine.length
+            ? mine.map(x=>{ const b = h("button",{class:"ipa-snd"+(x.written?"":" unw"),"aria-label":`${x.sym}${x.written?"":", not written"}`},x.sym); b.onclick=()=>showInfo(x,l,b); return b; })
+            : [h("span",{class:"ipa-silent",title:"Silent letter"},"–")]))));
+      });
+      wrap.append(row);
+    }
+    wrap.append(h("div",{class:"ipa-legend"},h("span",{class:"ipa-key"},"a"),"written",h("span",{class:"ipa-key unw"},"a"),"spoken, no letter",h("span",{},"– silent letter")), info);
+  }
+  draw(); return wrap;
+}
+// Puts an IPA button in the card's top-right corner that flips the card to its letter-by-letter IPA view and back.
+function addIpa(card, entries){
+  let saved = null;
+  const btn = h("button",{class:"ipa-btn","aria-pressed":"false",title:"Show the sounds in IPA"},"IPA");
+  btn.onclick = ()=>{
+    if(saved){ card.replaceChildren(...saved); saved = null; btn.textContent = "IPA"; btn.setAttribute("aria-pressed","false"); }
+    else { saved = [...card.childNodes]; card.replaceChildren(ipaView(entries), btn); btn.textContent = "Card"; btn.setAttribute("aria-pressed","true"); }
+  };
+  card.append(btn);
+}
 function bumpStreak(){ const d=today(); if(S.streak.last===d) return; S.streak.n = (S.streak.last===d-1) ? S.streak.n+1 : 1; S.streak.last=d; }
 
 function allCards(){
@@ -490,6 +723,7 @@ function session(queue, opts){
         put(card,h("h3",{},"Say it in Farsi, out loud"), pic, h("div",{class:"en"},c.pic?`What is this? It's a ${c.en}.`:c.en), c.pic?fa("این چیه؟","note"):null);
       } else {
         put(card,h("h3",{},st?"What does it mean?":"New "+(c.kind==="chunk"?"phrase":"word")), pic, h("div",{class:"big-fa",lang:"fa",dir:"rtl"},c.fa), h("div",{class:"tr"},c.tr));
+        if(c.kind!=="south") addIpa(card,[{fa:c.fa,tr:c.tr}]);
         setTimeout(play,150);
       }
       box.append(card, h("div",{class:"row"},h("button",{class:"primary",onclick:()=>{revealed=true;draw();}},produce?"Reveal answer":"Reveal meaning"), !produce?h("button",{onclick:play},"Play again"):null));
@@ -499,6 +733,7 @@ function session(queue, opts){
         ex?h("div",{class:"note"},fa(ex.fa)," ",h("span",{class:"tr"},ex.tr)," = ",ex.en):null,
         (c.ar && S.showAr)?h("div",{class:"note"},"From Arabic ",fa(c.ar),c.ff?". Careful, the meaning shifted.":""):null,
         (c.note||c.n)?h("div",{class:"note"},c.note||c.n):null);
+      if(c.kind!=="south") addIpa(card,[{fa:c.fa,tr:c.tr}, ...(ex?[ex]:[])]);
       const sayAll = r => ex ? speakSeq([[c.fa,c.tr],[ex.fa,ex.tr]], r) : speak(c.fa, r, c.tr);
       box.append(card, h("div",{class:"row"},h("button",{onclick:()=>sayAll()},"Play"),h("button",{onclick:()=>sayAll(0.55)},"Play slowly"),...(canRecord()?recorderButtons():[]),h("span",{class:"note",style:"color:var(--muted);font-size:14px"},"Repeat it aloud straight after the audio (shadowing).")),
         h("div",{class:"grades"},
@@ -572,7 +807,7 @@ function viewWords(){
       sel("b-cat","Topic",bcats.map(c=>[c,c]),builder.cat,v=>{builder.cat=v;builder.word=0;builder.frame=0;}),
       sel("b-frame","Pattern",FRAMES[builder.cat].map((f,i)=>[i,f[2].replace("___","…")]),builder.frame,v=>builder.frame=+v)),
     sel("b-word","Word",bwords.map((w,i)=>[i,`${w.en} · ${w.tr}`]),builder.word,v=>builder.word=+v),
-    h("div",{class:"card",style:"min-height:0"},h("div",{class:"big-fa",lang:"fa",dir:"rtl"},out.fa),h("div",{class:"tr"},out.tr),h("div",{class:"en"},out.en)),
+    (()=>{ const c = h("div",{class:"card",style:"min-height:0"},h("div",{class:"big-fa",lang:"fa",dir:"rtl"},out.fa),h("div",{class:"tr"},out.tr),h("div",{class:"en"},out.en)); addIpa(c,[out]); return c; })(),
     h("div",{class:"row"},h("button",{class:"primary",onclick:()=>speak(out.fa)},"Play"),h("button",{onclick:()=>{builder.word=(builder.word+1)%bwords.length;render();}},"Next word")));
   // Arabic speaker's head start
   const arWords=VOCAB.filter(v=>v.ar), ffs=VOCAB.filter(v=>v.ff);
@@ -780,6 +1015,10 @@ function viewWhy(){
       C("Time","The US Foreign Service Institute rates Persian at about 44 weeks, roughly 1,100 class hours, to professional working proficiency for English speakers. Daily practice over months matters more than intense bursts.","FSI language difficulty rankings, U.S. Department of State.")),
     h("div",{class:"panel"},h("h2",{},"What the app cannot do"),
       h("p",{},"The built-in voice is synthetic Tehran-style speech, at best. It is a scaffold for reading, not a model for your accent. Your accent will come from the people you listen to and talk with, so the most valuable hour of your week is a conversation with a speaker from the coast.")),
+    h("div",{class:"panel"},h("h2",{},"The IPA view"),
+      h("p",{},"Tap IPA in the corner of any card to see each Persian letter above the sounds it stands for. Sounds shown in henna with a dashed border are spoken but not written. Persian leaves out most short vowels, and learning where they go is the hardest part of reading it. Broad transcription shows the distinct sounds of the language. Narrow adds the main details of standard (Tehran) pronunciation, such as the puff of air after p, t and k. Southern speakers differ on some of these details, so use your tutor as the final reference."),
+      Object.keys(IPA_REC).length ? h("details",{},h("summary",{},`Sound recordings (${Object.keys(IPA_REC).length}), from Wikimedia Commons`),
+        h("ul",{class:"refs"},...Object.entries(IPA_REC).map(([sym,r])=>h("li",{},`${sym}: ${r.title}, ${r.artist || "unknown author"}, ${r.license}`)))) : null),
     h("div",{class:"panel"},h("h2",{},"On Afro-Iranians and Bandari"),
       h("ul",{class:"refs"},
         h("li",{},"Encyclopaedia Iranica, “Bandari: the dialect spoken by the native population of Bandar Abbas.”"),
