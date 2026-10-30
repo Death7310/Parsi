@@ -8,7 +8,7 @@ const doc = `<!doctype html><html lang="en"><head><meta charset="utf-8">
 mkdirSync(new URL("../www", import.meta.url), { recursive: true });
 writeFileSync(new URL("../www/index.html", import.meta.url), doc);
 // bundle recorded audio so it plays offline
-for (const part of ["manifest.json", "tts", "tutor"]) {
+for (const part of ["manifest.json", "tts", "tutor", "ipa"]) {
   const from = new URL(`../audio/${part}`, import.meta.url);
   if (existsSync(from)) cpSync(from, new URL(`../www/audio/${part}`, import.meta.url), { recursive: true });
 }

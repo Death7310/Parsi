@@ -34,6 +34,13 @@ Persian script leaves out short vowels, so a voice can read حالت as *hâlat*
 
 Needs Python 3 and ffmpeg.
 
+## IPA view
+
+Every flashcard has an **IPA** button in its top-right corner. It flips the card to show each Persian letter above the IPA sounds it writes, with unwritten vowels and glides (Persian leaves most short vowels out) in a different color. Tapping a sound explains how to make it, plays a Persian example word, and, in the Android app, plays an isolated recording of the sound when one is available. A switch picks broad /…/ or narrow […] transcription.
+
+- The sounds come from each card's transliteration, matched letter by letter to the Persian spelling (`alignIpa` in `src/index.html`). `node scripts/check-ipa.mjs` checks that every card and every sentence-builder combination matches; CI fails if one doesn't. Add `--show` to print them all for review.
+- Isolated recordings come from Wikimedia Commons (`scripts/fetch_ipa_audio.py`, run in CI). Only reusable licences are kept, and the credits appear in the app under *Why it works*. The web version can't fetch them, so it shows the explanation and the example word only.
+
 ## Editing content
 
 All lessons live in `src/index.html` (`CHUNKS`, `WORDS`, `VOCAB_RAW`, `LETTERS`). After changing them, run `node scripts/export-items.mjs` and `node scripts/make-recording-sheet.mjs` so audio and the recording sheet stay in step.
