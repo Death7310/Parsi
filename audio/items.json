@@ -1450,5 +1450,2237 @@
   "fa": "هوا",
   "tr": "havâ",
   "en": "air"
+ },
+ {
+  "id": "v_pla0_f0",
+  "fa": "خونه کجاست؟",
+  "tr": "khune kojâst?",
+  "en": "Where is the home?",
+  "frame": {
+   "word": "خونه",
+   "wid": "v_pla0",
+   "cat": "Places",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_pla0_f1",
+  "fa": "می‌رم خونه.",
+  "tr": "miram khune.",
+  "en": "I'm going to the home.",
+  "frame": {
+   "word": "خونه",
+   "wid": "v_pla0",
+   "cat": "Places",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_pla1_f0",
+  "fa": "بازار کجاست؟",
+  "tr": "bâzâr kojâst?",
+  "en": "Where is the market?",
+  "frame": {
+   "word": "بازار",
+   "wid": "v_pla1",
+   "cat": "Places",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_pla1_f1",
+  "fa": "می‌رم بازار.",
+  "tr": "miram bâzâr.",
+  "en": "I'm going to the market.",
+  "frame": {
+   "word": "بازار",
+   "wid": "v_pla1",
+   "cat": "Places",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_pla2_f0",
+  "fa": "مغازه کجاست؟",
+  "tr": "maghâze kojâst?",
+  "en": "Where is the shop?",
+  "frame": {
+   "word": "مغازه",
+   "wid": "v_pla2",
+   "cat": "Places",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_pla2_f1",
+  "fa": "می‌رم مغازه.",
+  "tr": "miram maghâze.",
+  "en": "I'm going to the shop.",
+  "frame": {
+   "word": "مغازه",
+   "wid": "v_pla2",
+   "cat": "Places",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_pla3_f0",
+  "fa": "رستوران کجاست؟",
+  "tr": "resturân kojâst?",
+  "en": "Where is the restaurant?",
+  "frame": {
+   "word": "رستوران",
+   "wid": "v_pla3",
+   "cat": "Places",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_pla3_f1",
+  "fa": "می‌رم رستوران.",
+  "tr": "miram resturân.",
+  "en": "I'm going to the restaurant.",
+  "frame": {
+   "word": "رستوران",
+   "wid": "v_pla3",
+   "cat": "Places",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_pla4_f0",
+  "fa": "بیمارستان کجاست؟",
+  "tr": "bimârestân kojâst?",
+  "en": "Where is the hospital?",
+  "frame": {
+   "word": "بیمارستان",
+   "wid": "v_pla4",
+   "cat": "Places",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_pla4_f1",
+  "fa": "می‌رم بیمارستان.",
+  "tr": "miram bimârestân.",
+  "en": "I'm going to the hospital.",
+  "frame": {
+   "word": "بیمارستان",
+   "wid": "v_pla4",
+   "cat": "Places",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_pla5_f0",
+  "fa": "داروخونه کجاست؟",
+  "tr": "dârukhune kojâst?",
+  "en": "Where is the pharmacy?",
+  "frame": {
+   "word": "داروخونه",
+   "wid": "v_pla5",
+   "cat": "Places",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_pla5_f1",
+  "fa": "می‌رم داروخونه.",
+  "tr": "miram dârukhune.",
+  "en": "I'm going to the pharmacy.",
+  "frame": {
+   "word": "داروخونه",
+   "wid": "v_pla5",
+   "cat": "Places",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_pla6_f0",
+  "fa": "خیابون کجاست؟",
+  "tr": "khiyâbun kojâst?",
+  "en": "Where is the street?",
+  "frame": {
+   "word": "خیابون",
+   "wid": "v_pla6",
+   "cat": "Places",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_pla6_f1",
+  "fa": "می‌رم خیابون.",
+  "tr": "miram khiyâbun.",
+  "en": "I'm going to the street.",
+  "frame": {
+   "word": "خیابون",
+   "wid": "v_pla6",
+   "cat": "Places",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_pla7_f0",
+  "fa": "مسجد کجاست؟",
+  "tr": "masjed kojâst?",
+  "en": "Where is the mosque?",
+  "frame": {
+   "word": "مسجد",
+   "wid": "v_pla7",
+   "cat": "Places",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_pla7_f1",
+  "fa": "می‌رم مسجد.",
+  "tr": "miram masjed.",
+  "en": "I'm going to the mosque.",
+  "frame": {
+   "word": "مسجد",
+   "wid": "v_pla7",
+   "cat": "Places",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_pla8_f0",
+  "fa": "مدرسه کجاست؟",
+  "tr": "madrese kojâst?",
+  "en": "Where is the school?",
+  "frame": {
+   "word": "مدرسه",
+   "wid": "v_pla8",
+   "cat": "Places",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_pla8_f1",
+  "fa": "می‌رم مدرسه.",
+  "tr": "miram madrese.",
+  "en": "I'm going to the school.",
+  "frame": {
+   "word": "مدرسه",
+   "wid": "v_pla8",
+   "cat": "Places",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_pla9_f0",
+  "fa": "فرودگاه کجاست؟",
+  "tr": "forudgâh kojâst?",
+  "en": "Where is the airport?",
+  "frame": {
+   "word": "فرودگاه",
+   "wid": "v_pla9",
+   "cat": "Places",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_pla9_f1",
+  "fa": "می‌رم فرودگاه.",
+  "tr": "miram forudgâh.",
+  "en": "I'm going to the airport.",
+  "frame": {
+   "word": "فرودگاه",
+   "wid": "v_pla9",
+   "cat": "Places",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_pla10_f0",
+  "fa": "اسکله کجاست؟",
+  "tr": "eskele kojâst?",
+  "en": "Where is the pier?",
+  "frame": {
+   "word": "اسکله",
+   "wid": "v_pla10",
+   "cat": "Places",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_pla10_f1",
+  "fa": "می‌رم اسکله.",
+  "tr": "miram eskele.",
+  "en": "I'm going to the pier.",
+  "frame": {
+   "word": "اسکله",
+   "wid": "v_pla10",
+   "cat": "Places",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_pla11_f0",
+  "fa": "ساحل کجاست؟",
+  "tr": "sâhel kojâst?",
+  "en": "Where is the beach?",
+  "frame": {
+   "word": "ساحل",
+   "wid": "v_pla11",
+   "cat": "Places",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_pla11_f1",
+  "fa": "می‌رم ساحل.",
+  "tr": "miram sâhel.",
+  "en": "I'm going to the beach.",
+  "frame": {
+   "word": "ساحل",
+   "wid": "v_pla11",
+   "cat": "Places",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_pla12_f0",
+  "fa": "جزیره کجاست؟",
+  "tr": "jazire kojâst?",
+  "en": "Where is the island?",
+  "frame": {
+   "word": "جزیره",
+   "wid": "v_pla12",
+   "cat": "Places",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_pla12_f1",
+  "fa": "می‌رم جزیره.",
+  "tr": "miram jazire.",
+  "en": "I'm going to the island.",
+  "frame": {
+   "word": "جزیره",
+   "wid": "v_pla12",
+   "cat": "Places",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_pla13_f1",
+  "fa": "می‌رم دستشویی.",
+  "tr": "miram dastshuyi.",
+  "en": "I'm going to the toilet.",
+  "frame": {
+   "word": "دستشویی",
+   "wid": "v_pla13",
+   "cat": "Places",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_pla14_f0",
+  "fa": "هتل کجاست؟",
+  "tr": "hotel kojâst?",
+  "en": "Where is the hotel?",
+  "frame": {
+   "word": "هتل",
+   "wid": "v_pla14",
+   "cat": "Places",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_pla14_f1",
+  "fa": "می‌رم هتل.",
+  "tr": "miram hotel.",
+  "en": "I'm going to the hotel.",
+  "frame": {
+   "word": "هتل",
+   "wid": "v_pla14",
+   "cat": "Places",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_pla15_f0",
+  "fa": "بانک کجاست؟",
+  "tr": "bânk kojâst?",
+  "en": "Where is the bank?",
+  "frame": {
+   "word": "بانک",
+   "wid": "v_pla15",
+   "cat": "Places",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_pla15_f1",
+  "fa": "می‌رم بانک.",
+  "tr": "miram bânk.",
+  "en": "I'm going to the bank.",
+  "frame": {
+   "word": "بانک",
+   "wid": "v_pla15",
+   "cat": "Places",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_pla16_f0",
+  "fa": "شهر کجاست؟",
+  "tr": "shahr kojâst?",
+  "en": "Where is the city?",
+  "frame": {
+   "word": "شهر",
+   "wid": "v_pla16",
+   "cat": "Places",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_pla16_f1",
+  "fa": "می‌رم شهر.",
+  "tr": "miram shahr.",
+  "en": "I'm going to the city.",
+  "frame": {
+   "word": "شهر",
+   "wid": "v_pla16",
+   "cat": "Places",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_foo0_f0",
+  "fa": "آب می‌خوام.",
+  "tr": "âb mikhâm.",
+  "en": "I want water.",
+  "frame": {
+   "word": "آب",
+   "wid": "v_foo0",
+   "cat": "Food & drink",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_foo0_f1",
+  "fa": "آب دارید؟",
+  "tr": "âb dârid?",
+  "en": "Do you have water?",
+  "frame": {
+   "word": "آب",
+   "wid": "v_foo0",
+   "cat": "Food & drink",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_foo0_f2",
+  "fa": "آب چنده؟",
+  "tr": "âb chande?",
+  "en": "How much is the water?",
+  "frame": {
+   "word": "آب",
+   "wid": "v_foo0",
+   "cat": "Food & drink",
+   "k": 2
+  }
+ },
+ {
+  "id": "v_foo1_f0",
+  "fa": "چای می‌خوام.",
+  "tr": "chây mikhâm.",
+  "en": "I want tea.",
+  "frame": {
+   "word": "چای",
+   "wid": "v_foo1",
+   "cat": "Food & drink",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_foo1_f1",
+  "fa": "چای دارید؟",
+  "tr": "chây dârid?",
+  "en": "Do you have tea?",
+  "frame": {
+   "word": "چای",
+   "wid": "v_foo1",
+   "cat": "Food & drink",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_foo1_f2",
+  "fa": "چای چنده؟",
+  "tr": "chây chande?",
+  "en": "How much is the tea?",
+  "frame": {
+   "word": "چای",
+   "wid": "v_foo1",
+   "cat": "Food & drink",
+   "k": 2
+  }
+ },
+ {
+  "id": "v_foo2_f0",
+  "fa": "قهوه می‌خوام.",
+  "tr": "ghahve mikhâm.",
+  "en": "I want coffee.",
+  "frame": {
+   "word": "قهوه",
+   "wid": "v_foo2",
+   "cat": "Food & drink",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_foo2_f1",
+  "fa": "قهوه دارید؟",
+  "tr": "ghahve dârid?",
+  "en": "Do you have coffee?",
+  "frame": {
+   "word": "قهوه",
+   "wid": "v_foo2",
+   "cat": "Food & drink",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_foo2_f2",
+  "fa": "قهوه چنده؟",
+  "tr": "ghahve chande?",
+  "en": "How much is the coffee?",
+  "frame": {
+   "word": "قهوه",
+   "wid": "v_foo2",
+   "cat": "Food & drink",
+   "k": 2
+  }
+ },
+ {
+  "id": "v_foo3_f0",
+  "fa": "شیر می‌خوام.",
+  "tr": "shir mikhâm.",
+  "en": "I want milk.",
+  "frame": {
+   "word": "شیر",
+   "wid": "v_foo3",
+   "cat": "Food & drink",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_foo3_f1",
+  "fa": "شیر دارید؟",
+  "tr": "shir dârid?",
+  "en": "Do you have milk?",
+  "frame": {
+   "word": "شیر",
+   "wid": "v_foo3",
+   "cat": "Food & drink",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_foo3_f2",
+  "fa": "شیر چنده؟",
+  "tr": "shir chande?",
+  "en": "How much is the milk?",
+  "frame": {
+   "word": "شیر",
+   "wid": "v_foo3",
+   "cat": "Food & drink",
+   "k": 2
+  }
+ },
+ {
+  "id": "v_foo4_f0",
+  "fa": "نون می‌خوام.",
+  "tr": "nun mikhâm.",
+  "en": "I want bread.",
+  "frame": {
+   "word": "نون",
+   "wid": "v_foo4",
+   "cat": "Food & drink",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_foo4_f1",
+  "fa": "نون دارید؟",
+  "tr": "nun dârid?",
+  "en": "Do you have bread?",
+  "frame": {
+   "word": "نون",
+   "wid": "v_foo4",
+   "cat": "Food & drink",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_foo4_f2",
+  "fa": "نون چنده؟",
+  "tr": "nun chande?",
+  "en": "How much is the bread?",
+  "frame": {
+   "word": "نون",
+   "wid": "v_foo4",
+   "cat": "Food & drink",
+   "k": 2
+  }
+ },
+ {
+  "id": "v_foo5_f0",
+  "fa": "برنج می‌خوام.",
+  "tr": "berenj mikhâm.",
+  "en": "I want rice.",
+  "frame": {
+   "word": "برنج",
+   "wid": "v_foo5",
+   "cat": "Food & drink",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_foo5_f1",
+  "fa": "برنج دارید؟",
+  "tr": "berenj dârid?",
+  "en": "Do you have rice?",
+  "frame": {
+   "word": "برنج",
+   "wid": "v_foo5",
+   "cat": "Food & drink",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_foo5_f2",
+  "fa": "برنج چنده؟",
+  "tr": "berenj chande?",
+  "en": "How much is the rice?",
+  "frame": {
+   "word": "برنج",
+   "wid": "v_foo5",
+   "cat": "Food & drink",
+   "k": 2
+  }
+ },
+ {
+  "id": "v_foo6_f0",
+  "fa": "غذا می‌خوام.",
+  "tr": "ghazâ mikhâm.",
+  "en": "I want food.",
+  "frame": {
+   "word": "غذا",
+   "wid": "v_foo6",
+   "cat": "Food & drink",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_foo6_f1",
+  "fa": "غذا دارید؟",
+  "tr": "ghazâ dârid?",
+  "en": "Do you have food?",
+  "frame": {
+   "word": "غذا",
+   "wid": "v_foo6",
+   "cat": "Food & drink",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_foo6_f2",
+  "fa": "غذا چنده؟",
+  "tr": "ghazâ chande?",
+  "en": "How much is the food?",
+  "frame": {
+   "word": "غذا",
+   "wid": "v_foo6",
+   "cat": "Food & drink",
+   "k": 2
+  }
+ },
+ {
+  "id": "v_foo7_f0",
+  "fa": "ماهی می‌خوام.",
+  "tr": "mâhi mikhâm.",
+  "en": "I want fish.",
+  "frame": {
+   "word": "ماهی",
+   "wid": "v_foo7",
+   "cat": "Food & drink",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_foo7_f1",
+  "fa": "ماهی دارید؟",
+  "tr": "mâhi dârid?",
+  "en": "Do you have fish?",
+  "frame": {
+   "word": "ماهی",
+   "wid": "v_foo7",
+   "cat": "Food & drink",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_foo7_f2",
+  "fa": "ماهی چنده؟",
+  "tr": "mâhi chande?",
+  "en": "How much is the fish?",
+  "frame": {
+   "word": "ماهی",
+   "wid": "v_foo7",
+   "cat": "Food & drink",
+   "k": 2
+  }
+ },
+ {
+  "id": "v_foo8_f0",
+  "fa": "میگو می‌خوام.",
+  "tr": "meygu mikhâm.",
+  "en": "I want shrimp.",
+  "frame": {
+   "word": "میگو",
+   "wid": "v_foo8",
+   "cat": "Food & drink",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_foo8_f1",
+  "fa": "میگو دارید؟",
+  "tr": "meygu dârid?",
+  "en": "Do you have shrimp?",
+  "frame": {
+   "word": "میگو",
+   "wid": "v_foo8",
+   "cat": "Food & drink",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_foo8_f2",
+  "fa": "میگو چنده؟",
+  "tr": "meygu chande?",
+  "en": "How much is the shrimp?",
+  "frame": {
+   "word": "میگو",
+   "wid": "v_foo8",
+   "cat": "Food & drink",
+   "k": 2
+  }
+ },
+ {
+  "id": "v_foo9_f0",
+  "fa": "مرغ می‌خوام.",
+  "tr": "morgh mikhâm.",
+  "en": "I want chicken.",
+  "frame": {
+   "word": "مرغ",
+   "wid": "v_foo9",
+   "cat": "Food & drink",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_foo9_f1",
+  "fa": "مرغ دارید؟",
+  "tr": "morgh dârid?",
+  "en": "Do you have chicken?",
+  "frame": {
+   "word": "مرغ",
+   "wid": "v_foo9",
+   "cat": "Food & drink",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_foo9_f2",
+  "fa": "مرغ چنده؟",
+  "tr": "morgh chande?",
+  "en": "How much is the chicken?",
+  "frame": {
+   "word": "مرغ",
+   "wid": "v_foo9",
+   "cat": "Food & drink",
+   "k": 2
+  }
+ },
+ {
+  "id": "v_foo10_f0",
+  "fa": "گوشت می‌خوام.",
+  "tr": "gusht mikhâm.",
+  "en": "I want meat.",
+  "frame": {
+   "word": "گوشت",
+   "wid": "v_foo10",
+   "cat": "Food & drink",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_foo10_f1",
+  "fa": "گوشت دارید؟",
+  "tr": "gusht dârid?",
+  "en": "Do you have meat?",
+  "frame": {
+   "word": "گوشت",
+   "wid": "v_foo10",
+   "cat": "Food & drink",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_foo10_f2",
+  "fa": "گوشت چنده؟",
+  "tr": "gusht chande?",
+  "en": "How much is the meat?",
+  "frame": {
+   "word": "گوشت",
+   "wid": "v_foo10",
+   "cat": "Food & drink",
+   "k": 2
+  }
+ },
+ {
+  "id": "v_foo11_f0",
+  "fa": "تخم‌مرغ می‌خوام.",
+  "tr": "tokhm-e morgh mikhâm.",
+  "en": "I want egg.",
+  "frame": {
+   "word": "تخم‌مرغ",
+   "wid": "v_foo11",
+   "cat": "Food & drink",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_foo11_f1",
+  "fa": "تخم‌مرغ دارید؟",
+  "tr": "tokhm-e morgh dârid?",
+  "en": "Do you have egg?",
+  "frame": {
+   "word": "تخم‌مرغ",
+   "wid": "v_foo11",
+   "cat": "Food & drink",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_foo11_f2",
+  "fa": "تخم‌مرغ چنده؟",
+  "tr": "tokhm-e morgh chande?",
+  "en": "How much is the egg?",
+  "frame": {
+   "word": "تخم‌مرغ",
+   "wid": "v_foo11",
+   "cat": "Food & drink",
+   "k": 2
+  }
+ },
+ {
+  "id": "v_foo12_f0",
+  "fa": "میوه می‌خوام.",
+  "tr": "mive mikhâm.",
+  "en": "I want fruit.",
+  "frame": {
+   "word": "میوه",
+   "wid": "v_foo12",
+   "cat": "Food & drink",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_foo12_f1",
+  "fa": "میوه دارید؟",
+  "tr": "mive dârid?",
+  "en": "Do you have fruit?",
+  "frame": {
+   "word": "میوه",
+   "wid": "v_foo12",
+   "cat": "Food & drink",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_foo12_f2",
+  "fa": "میوه چنده؟",
+  "tr": "mive chande?",
+  "en": "How much is the fruit?",
+  "frame": {
+   "word": "میوه",
+   "wid": "v_foo12",
+   "cat": "Food & drink",
+   "k": 2
+  }
+ },
+ {
+  "id": "v_foo13_f0",
+  "fa": "خرما می‌خوام.",
+  "tr": "khormâ mikhâm.",
+  "en": "I want dates.",
+  "frame": {
+   "word": "خرما",
+   "wid": "v_foo13",
+   "cat": "Food & drink",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_foo13_f1",
+  "fa": "خرما دارید؟",
+  "tr": "khormâ dârid?",
+  "en": "Do you have dates?",
+  "frame": {
+   "word": "خرما",
+   "wid": "v_foo13",
+   "cat": "Food & drink",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_foo13_f2",
+  "fa": "خرما چنده؟",
+  "tr": "khormâ chande?",
+  "en": "How much is the dates?",
+  "frame": {
+   "word": "خرما",
+   "wid": "v_foo13",
+   "cat": "Food & drink",
+   "k": 2
+  }
+ },
+ {
+  "id": "v_foo14_f0",
+  "fa": "سبزی می‌خوام.",
+  "tr": "sabzi mikhâm.",
+  "en": "I want herbs.",
+  "frame": {
+   "word": "سبزی",
+   "wid": "v_foo14",
+   "cat": "Food & drink",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_foo14_f1",
+  "fa": "سبزی دارید؟",
+  "tr": "sabzi dârid?",
+  "en": "Do you have herbs?",
+  "frame": {
+   "word": "سبزی",
+   "wid": "v_foo14",
+   "cat": "Food & drink",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_foo14_f2",
+  "fa": "سبزی چنده؟",
+  "tr": "sabzi chande?",
+  "en": "How much is the herbs?",
+  "frame": {
+   "word": "سبزی",
+   "wid": "v_foo14",
+   "cat": "Food & drink",
+   "k": 2
+  }
+ },
+ {
+  "id": "v_foo15_f0",
+  "fa": "نمک می‌خوام.",
+  "tr": "namak mikhâm.",
+  "en": "I want salt.",
+  "frame": {
+   "word": "نمک",
+   "wid": "v_foo15",
+   "cat": "Food & drink",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_foo15_f1",
+  "fa": "نمک دارید؟",
+  "tr": "namak dârid?",
+  "en": "Do you have salt?",
+  "frame": {
+   "word": "نمک",
+   "wid": "v_foo15",
+   "cat": "Food & drink",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_foo15_f2",
+  "fa": "نمک چنده؟",
+  "tr": "namak chande?",
+  "en": "How much is the salt?",
+  "frame": {
+   "word": "نمک",
+   "wid": "v_foo15",
+   "cat": "Food & drink",
+   "k": 2
+  }
+ },
+ {
+  "id": "v_foo16_f0",
+  "fa": "شکر می‌خوام.",
+  "tr": "shekar mikhâm.",
+  "en": "I want sugar.",
+  "frame": {
+   "word": "شکر",
+   "wid": "v_foo16",
+   "cat": "Food & drink",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_foo16_f1",
+  "fa": "شکر دارید؟",
+  "tr": "shekar dârid?",
+  "en": "Do you have sugar?",
+  "frame": {
+   "word": "شکر",
+   "wid": "v_foo16",
+   "cat": "Food & drink",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_foo16_f2",
+  "fa": "شکر چنده؟",
+  "tr": "shekar chande?",
+  "en": "How much is the sugar?",
+  "frame": {
+   "word": "شکر",
+   "wid": "v_foo16",
+   "cat": "Food & drink",
+   "k": 2
+  }
+ },
+ {
+  "id": "v_thi0_f0",
+  "fa": "کتاب کجاست؟",
+  "tr": "ketâb kojâst?",
+  "en": "Where is the book?",
+  "frame": {
+   "word": "کتاب",
+   "wid": "v_thi0",
+   "cat": "Things",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_thi0_f1",
+  "fa": "کتاب می‌خوام.",
+  "tr": "ketâb mikhâm.",
+  "en": "I want a book.",
+  "frame": {
+   "word": "کتاب",
+   "wid": "v_thi0",
+   "cat": "Things",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_thi0_f2",
+  "fa": "کتاب دارید؟",
+  "tr": "ketâb dârid?",
+  "en": "Do you have a book?",
+  "frame": {
+   "word": "کتاب",
+   "wid": "v_thi0",
+   "cat": "Things",
+   "k": 2
+  }
+ },
+ {
+  "id": "v_thi0_f3",
+  "fa": "این کتاب چنده؟",
+  "tr": "in ketâb chande?",
+  "en": "How much is this book?",
+  "frame": {
+   "word": "کتاب",
+   "wid": "v_thi0",
+   "cat": "Things",
+   "k": 3
+  }
+ },
+ {
+  "id": "v_thi1_f0",
+  "fa": "قلم کجاست؟",
+  "tr": "ghalam kojâst?",
+  "en": "Where is the pen?",
+  "frame": {
+   "word": "قلم",
+   "wid": "v_thi1",
+   "cat": "Things",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_thi1_f1",
+  "fa": "قلم می‌خوام.",
+  "tr": "ghalam mikhâm.",
+  "en": "I want a pen.",
+  "frame": {
+   "word": "قلم",
+   "wid": "v_thi1",
+   "cat": "Things",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_thi1_f2",
+  "fa": "قلم دارید؟",
+  "tr": "ghalam dârid?",
+  "en": "Do you have a pen?",
+  "frame": {
+   "word": "قلم",
+   "wid": "v_thi1",
+   "cat": "Things",
+   "k": 2
+  }
+ },
+ {
+  "id": "v_thi1_f3",
+  "fa": "این قلم چنده؟",
+  "tr": "in ghalam chande?",
+  "en": "How much is this pen?",
+  "frame": {
+   "word": "قلم",
+   "wid": "v_thi1",
+   "cat": "Things",
+   "k": 3
+  }
+ },
+ {
+  "id": "v_thi1_f4",
+  "fa": "این قلم مال کیه؟",
+  "tr": "in ghalam mâl-e kiye?",
+  "en": "Whose pen is this?",
+  "frame": {
+   "word": "قلم",
+   "wid": "v_thi1",
+   "cat": "Things",
+   "k": 4
+  }
+ },
+ {
+  "id": "v_thi2_f0",
+  "fa": "کاغذ کجاست؟",
+  "tr": "kâghaz kojâst?",
+  "en": "Where is the paper?",
+  "frame": {
+   "word": "کاغذ",
+   "wid": "v_thi2",
+   "cat": "Things",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_thi2_f1",
+  "fa": "کاغذ می‌خوام.",
+  "tr": "kâghaz mikhâm.",
+  "en": "I want a paper.",
+  "frame": {
+   "word": "کاغذ",
+   "wid": "v_thi2",
+   "cat": "Things",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_thi2_f2",
+  "fa": "کاغذ دارید؟",
+  "tr": "kâghaz dârid?",
+  "en": "Do you have a paper?",
+  "frame": {
+   "word": "کاغذ",
+   "wid": "v_thi2",
+   "cat": "Things",
+   "k": 2
+  }
+ },
+ {
+  "id": "v_thi2_f3",
+  "fa": "این کاغذ چنده؟",
+  "tr": "in kâghaz chande?",
+  "en": "How much is this paper?",
+  "frame": {
+   "word": "کاغذ",
+   "wid": "v_thi2",
+   "cat": "Things",
+   "k": 3
+  }
+ },
+ {
+  "id": "v_thi2_f4",
+  "fa": "این کاغذ مال کیه؟",
+  "tr": "in kâghaz mâl-e kiye?",
+  "en": "Whose paper is this?",
+  "frame": {
+   "word": "کاغذ",
+   "wid": "v_thi2",
+   "cat": "Things",
+   "k": 4
+  }
+ },
+ {
+  "id": "v_thi3_f0",
+  "fa": "در کجاست؟",
+  "tr": "dar kojâst?",
+  "en": "Where is the door?",
+  "frame": {
+   "word": "در",
+   "wid": "v_thi3",
+   "cat": "Things",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_thi3_f1",
+  "fa": "در می‌خوام.",
+  "tr": "dar mikhâm.",
+  "en": "I want a door.",
+  "frame": {
+   "word": "در",
+   "wid": "v_thi3",
+   "cat": "Things",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_thi3_f2",
+  "fa": "در دارید؟",
+  "tr": "dar dârid?",
+  "en": "Do you have a door?",
+  "frame": {
+   "word": "در",
+   "wid": "v_thi3",
+   "cat": "Things",
+   "k": 2
+  }
+ },
+ {
+  "id": "v_thi3_f3",
+  "fa": "این در چنده؟",
+  "tr": "in dar chande?",
+  "en": "How much is this door?",
+  "frame": {
+   "word": "در",
+   "wid": "v_thi3",
+   "cat": "Things",
+   "k": 3
+  }
+ },
+ {
+  "id": "v_thi3_f4",
+  "fa": "این در مال کیه؟",
+  "tr": "in dar mâl-e kiye?",
+  "en": "Whose door is this?",
+  "frame": {
+   "word": "در",
+   "wid": "v_thi3",
+   "cat": "Things",
+   "k": 4
+  }
+ },
+ {
+  "id": "v_thi4_f0",
+  "fa": "پنجره کجاست؟",
+  "tr": "panjere kojâst?",
+  "en": "Where is the window?",
+  "frame": {
+   "word": "پنجره",
+   "wid": "v_thi4",
+   "cat": "Things",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_thi4_f1",
+  "fa": "پنجره می‌خوام.",
+  "tr": "panjere mikhâm.",
+  "en": "I want a window.",
+  "frame": {
+   "word": "پنجره",
+   "wid": "v_thi4",
+   "cat": "Things",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_thi4_f2",
+  "fa": "پنجره دارید؟",
+  "tr": "panjere dârid?",
+  "en": "Do you have a window?",
+  "frame": {
+   "word": "پنجره",
+   "wid": "v_thi4",
+   "cat": "Things",
+   "k": 2
+  }
+ },
+ {
+  "id": "v_thi4_f3",
+  "fa": "این پنجره چنده؟",
+  "tr": "in panjere chande?",
+  "en": "How much is this window?",
+  "frame": {
+   "word": "پنجره",
+   "wid": "v_thi4",
+   "cat": "Things",
+   "k": 3
+  }
+ },
+ {
+  "id": "v_thi4_f4",
+  "fa": "این پنجره مال کیه؟",
+  "tr": "in panjere mâl-e kiye?",
+  "en": "Whose window is this?",
+  "frame": {
+   "word": "پنجره",
+   "wid": "v_thi4",
+   "cat": "Things",
+   "k": 4
+  }
+ },
+ {
+  "id": "v_thi5_f0",
+  "fa": "میز کجاست؟",
+  "tr": "miz kojâst?",
+  "en": "Where is the table?",
+  "frame": {
+   "word": "میز",
+   "wid": "v_thi5",
+   "cat": "Things",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_thi5_f1",
+  "fa": "میز می‌خوام.",
+  "tr": "miz mikhâm.",
+  "en": "I want a table.",
+  "frame": {
+   "word": "میز",
+   "wid": "v_thi5",
+   "cat": "Things",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_thi5_f2",
+  "fa": "میز دارید؟",
+  "tr": "miz dârid?",
+  "en": "Do you have a table?",
+  "frame": {
+   "word": "میز",
+   "wid": "v_thi5",
+   "cat": "Things",
+   "k": 2
+  }
+ },
+ {
+  "id": "v_thi5_f3",
+  "fa": "این میز چنده؟",
+  "tr": "in miz chande?",
+  "en": "How much is this table?",
+  "frame": {
+   "word": "میز",
+   "wid": "v_thi5",
+   "cat": "Things",
+   "k": 3
+  }
+ },
+ {
+  "id": "v_thi5_f4",
+  "fa": "این میز مال کیه؟",
+  "tr": "in miz mâl-e kiye?",
+  "en": "Whose table is this?",
+  "frame": {
+   "word": "میز",
+   "wid": "v_thi5",
+   "cat": "Things",
+   "k": 4
+  }
+ },
+ {
+  "id": "v_thi6_f0",
+  "fa": "صندلی کجاست؟",
+  "tr": "sandali kojâst?",
+  "en": "Where is the chair?",
+  "frame": {
+   "word": "صندلی",
+   "wid": "v_thi6",
+   "cat": "Things",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_thi6_f1",
+  "fa": "صندلی می‌خوام.",
+  "tr": "sandali mikhâm.",
+  "en": "I want a chair.",
+  "frame": {
+   "word": "صندلی",
+   "wid": "v_thi6",
+   "cat": "Things",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_thi6_f2",
+  "fa": "صندلی دارید؟",
+  "tr": "sandali dârid?",
+  "en": "Do you have a chair?",
+  "frame": {
+   "word": "صندلی",
+   "wid": "v_thi6",
+   "cat": "Things",
+   "k": 2
+  }
+ },
+ {
+  "id": "v_thi6_f3",
+  "fa": "این صندلی چنده؟",
+  "tr": "in sandali chande?",
+  "en": "How much is this chair?",
+  "frame": {
+   "word": "صندلی",
+   "wid": "v_thi6",
+   "cat": "Things",
+   "k": 3
+  }
+ },
+ {
+  "id": "v_thi6_f4",
+  "fa": "این صندلی مال کیه؟",
+  "tr": "in sandali mâl-e kiye?",
+  "en": "Whose chair is this?",
+  "frame": {
+   "word": "صندلی",
+   "wid": "v_thi6",
+   "cat": "Things",
+   "k": 4
+  }
+ },
+ {
+  "id": "v_thi7_f0",
+  "fa": "گوشی کجاست؟",
+  "tr": "gushi kojâst?",
+  "en": "Where is the phone?",
+  "frame": {
+   "word": "گوشی",
+   "wid": "v_thi7",
+   "cat": "Things",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_thi7_f1",
+  "fa": "گوشی می‌خوام.",
+  "tr": "gushi mikhâm.",
+  "en": "I want a phone.",
+  "frame": {
+   "word": "گوشی",
+   "wid": "v_thi7",
+   "cat": "Things",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_thi7_f2",
+  "fa": "گوشی دارید؟",
+  "tr": "gushi dârid?",
+  "en": "Do you have a phone?",
+  "frame": {
+   "word": "گوشی",
+   "wid": "v_thi7",
+   "cat": "Things",
+   "k": 2
+  }
+ },
+ {
+  "id": "v_thi7_f3",
+  "fa": "این گوشی چنده؟",
+  "tr": "in gushi chande?",
+  "en": "How much is this phone?",
+  "frame": {
+   "word": "گوشی",
+   "wid": "v_thi7",
+   "cat": "Things",
+   "k": 3
+  }
+ },
+ {
+  "id": "v_thi7_f4",
+  "fa": "این گوشی مال کیه؟",
+  "tr": "in gushi mâl-e kiye?",
+  "en": "Whose phone is this?",
+  "frame": {
+   "word": "گوشی",
+   "wid": "v_thi7",
+   "cat": "Things",
+   "k": 4
+  }
+ },
+ {
+  "id": "v_thi8_f0",
+  "fa": "کلید کجاست؟",
+  "tr": "kelid kojâst?",
+  "en": "Where is the key?",
+  "frame": {
+   "word": "کلید",
+   "wid": "v_thi8",
+   "cat": "Things",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_thi8_f1",
+  "fa": "کلید می‌خوام.",
+  "tr": "kelid mikhâm.",
+  "en": "I want a key.",
+  "frame": {
+   "word": "کلید",
+   "wid": "v_thi8",
+   "cat": "Things",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_thi8_f2",
+  "fa": "کلید دارید؟",
+  "tr": "kelid dârid?",
+  "en": "Do you have a key?",
+  "frame": {
+   "word": "کلید",
+   "wid": "v_thi8",
+   "cat": "Things",
+   "k": 2
+  }
+ },
+ {
+  "id": "v_thi8_f3",
+  "fa": "این کلید چنده؟",
+  "tr": "in kelid chande?",
+  "en": "How much is this key?",
+  "frame": {
+   "word": "کلید",
+   "wid": "v_thi8",
+   "cat": "Things",
+   "k": 3
+  }
+ },
+ {
+  "id": "v_thi8_f4",
+  "fa": "این کلید مال کیه؟",
+  "tr": "in kelid mâl-e kiye?",
+  "en": "Whose key is this?",
+  "frame": {
+   "word": "کلید",
+   "wid": "v_thi8",
+   "cat": "Things",
+   "k": 4
+  }
+ },
+ {
+  "id": "v_thi9_f0",
+  "fa": "پول کجاست؟",
+  "tr": "pul kojâst?",
+  "en": "Where is the money?",
+  "frame": {
+   "word": "پول",
+   "wid": "v_thi9",
+   "cat": "Things",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_thi9_f1",
+  "fa": "پول می‌خوام.",
+  "tr": "pul mikhâm.",
+  "en": "I want a money.",
+  "frame": {
+   "word": "پول",
+   "wid": "v_thi9",
+   "cat": "Things",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_thi9_f2",
+  "fa": "پول دارید؟",
+  "tr": "pul dârid?",
+  "en": "Do you have a money?",
+  "frame": {
+   "word": "پول",
+   "wid": "v_thi9",
+   "cat": "Things",
+   "k": 2
+  }
+ },
+ {
+  "id": "v_thi9_f3",
+  "fa": "این پول چنده؟",
+  "tr": "in pul chande?",
+  "en": "How much is this money?",
+  "frame": {
+   "word": "پول",
+   "wid": "v_thi9",
+   "cat": "Things",
+   "k": 3
+  }
+ },
+ {
+  "id": "v_thi9_f4",
+  "fa": "این پول مال کیه؟",
+  "tr": "in pul mâl-e kiye?",
+  "en": "Whose money is this?",
+  "frame": {
+   "word": "پول",
+   "wid": "v_thi9",
+   "cat": "Things",
+   "k": 4
+  }
+ },
+ {
+  "id": "v_thi10_f0",
+  "fa": "کیف کجاست؟",
+  "tr": "kif kojâst?",
+  "en": "Where is the bag?",
+  "frame": {
+   "word": "کیف",
+   "wid": "v_thi10",
+   "cat": "Things",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_thi10_f1",
+  "fa": "کیف می‌خوام.",
+  "tr": "kif mikhâm.",
+  "en": "I want a bag.",
+  "frame": {
+   "word": "کیف",
+   "wid": "v_thi10",
+   "cat": "Things",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_thi10_f2",
+  "fa": "کیف دارید؟",
+  "tr": "kif dârid?",
+  "en": "Do you have a bag?",
+  "frame": {
+   "word": "کیف",
+   "wid": "v_thi10",
+   "cat": "Things",
+   "k": 2
+  }
+ },
+ {
+  "id": "v_thi10_f3",
+  "fa": "این کیف چنده؟",
+  "tr": "in kif chande?",
+  "en": "How much is this bag?",
+  "frame": {
+   "word": "کیف",
+   "wid": "v_thi10",
+   "cat": "Things",
+   "k": 3
+  }
+ },
+ {
+  "id": "v_thi10_f4",
+  "fa": "این کیف مال کیه؟",
+  "tr": "in kif mâl-e kiye?",
+  "en": "Whose bag is this?",
+  "frame": {
+   "word": "کیف",
+   "wid": "v_thi10",
+   "cat": "Things",
+   "k": 4
+  }
+ },
+ {
+  "id": "v_thi11_f0",
+  "fa": "لباس کجاست؟",
+  "tr": "lebâs kojâst?",
+  "en": "Where is the clothes?",
+  "frame": {
+   "word": "لباس",
+   "wid": "v_thi11",
+   "cat": "Things",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_thi11_f1",
+  "fa": "لباس می‌خوام.",
+  "tr": "lebâs mikhâm.",
+  "en": "I want a clothes.",
+  "frame": {
+   "word": "لباس",
+   "wid": "v_thi11",
+   "cat": "Things",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_thi11_f2",
+  "fa": "لباس دارید؟",
+  "tr": "lebâs dârid?",
+  "en": "Do you have a clothes?",
+  "frame": {
+   "word": "لباس",
+   "wid": "v_thi11",
+   "cat": "Things",
+   "k": 2
+  }
+ },
+ {
+  "id": "v_thi11_f3",
+  "fa": "این لباس چنده؟",
+  "tr": "in lebâs chande?",
+  "en": "How much is this clothes?",
+  "frame": {
+   "word": "لباس",
+   "wid": "v_thi11",
+   "cat": "Things",
+   "k": 3
+  }
+ },
+ {
+  "id": "v_thi11_f4",
+  "fa": "این لباس مال کیه؟",
+  "tr": "in lebâs mâl-e kiye?",
+  "en": "Whose clothes is this?",
+  "frame": {
+   "word": "لباس",
+   "wid": "v_thi11",
+   "cat": "Things",
+   "k": 4
+  }
+ },
+ {
+  "id": "v_thi12_f0",
+  "fa": "کفش کجاست؟",
+  "tr": "kafsh kojâst?",
+  "en": "Where is the shoe?",
+  "frame": {
+   "word": "کفش",
+   "wid": "v_thi12",
+   "cat": "Things",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_thi12_f1",
+  "fa": "کفش می‌خوام.",
+  "tr": "kafsh mikhâm.",
+  "en": "I want a shoe.",
+  "frame": {
+   "word": "کفش",
+   "wid": "v_thi12",
+   "cat": "Things",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_thi12_f2",
+  "fa": "کفش دارید؟",
+  "tr": "kafsh dârid?",
+  "en": "Do you have a shoe?",
+  "frame": {
+   "word": "کفش",
+   "wid": "v_thi12",
+   "cat": "Things",
+   "k": 2
+  }
+ },
+ {
+  "id": "v_thi12_f3",
+  "fa": "این کفش چنده؟",
+  "tr": "in kafsh chande?",
+  "en": "How much is this shoe?",
+  "frame": {
+   "word": "کفش",
+   "wid": "v_thi12",
+   "cat": "Things",
+   "k": 3
+  }
+ },
+ {
+  "id": "v_thi12_f4",
+  "fa": "این کفش مال کیه؟",
+  "tr": "in kafsh mâl-e kiye?",
+  "en": "Whose shoe is this?",
+  "frame": {
+   "word": "کفش",
+   "wid": "v_thi12",
+   "cat": "Things",
+   "k": 4
+  }
+ },
+ {
+  "id": "v_thi13_f0",
+  "fa": "ماشین کجاست؟",
+  "tr": "mâshin kojâst?",
+  "en": "Where is the car?",
+  "frame": {
+   "word": "ماشین",
+   "wid": "v_thi13",
+   "cat": "Things",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_thi13_f1",
+  "fa": "ماشین می‌خوام.",
+  "tr": "mâshin mikhâm.",
+  "en": "I want a car.",
+  "frame": {
+   "word": "ماشین",
+   "wid": "v_thi13",
+   "cat": "Things",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_thi13_f2",
+  "fa": "ماشین دارید؟",
+  "tr": "mâshin dârid?",
+  "en": "Do you have a car?",
+  "frame": {
+   "word": "ماشین",
+   "wid": "v_thi13",
+   "cat": "Things",
+   "k": 2
+  }
+ },
+ {
+  "id": "v_thi13_f3",
+  "fa": "این ماشین چنده؟",
+  "tr": "in mâshin chande?",
+  "en": "How much is this car?",
+  "frame": {
+   "word": "ماشین",
+   "wid": "v_thi13",
+   "cat": "Things",
+   "k": 3
+  }
+ },
+ {
+  "id": "v_thi13_f4",
+  "fa": "این ماشین مال کیه؟",
+  "tr": "in mâshin mâl-e kiye?",
+  "en": "Whose car is this?",
+  "frame": {
+   "word": "ماشین",
+   "wid": "v_thi13",
+   "cat": "Things",
+   "k": 4
+  }
+ },
+ {
+  "id": "v_thi14_f0",
+  "fa": "اتوبوس کجاست؟",
+  "tr": "otobus kojâst?",
+  "en": "Where is the bus?",
+  "frame": {
+   "word": "اتوبوس",
+   "wid": "v_thi14",
+   "cat": "Things",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_thi14_f1",
+  "fa": "اتوبوس می‌خوام.",
+  "tr": "otobus mikhâm.",
+  "en": "I want a bus.",
+  "frame": {
+   "word": "اتوبوس",
+   "wid": "v_thi14",
+   "cat": "Things",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_thi14_f2",
+  "fa": "اتوبوس دارید؟",
+  "tr": "otobus dârid?",
+  "en": "Do you have a bus?",
+  "frame": {
+   "word": "اتوبوس",
+   "wid": "v_thi14",
+   "cat": "Things",
+   "k": 2
+  }
+ },
+ {
+  "id": "v_thi14_f3",
+  "fa": "این اتوبوس چنده؟",
+  "tr": "in otobus chande?",
+  "en": "How much is this bus?",
+  "frame": {
+   "word": "اتوبوس",
+   "wid": "v_thi14",
+   "cat": "Things",
+   "k": 3
+  }
+ },
+ {
+  "id": "v_thi14_f4",
+  "fa": "این اتوبوس مال کیه؟",
+  "tr": "in otobus mâl-e kiye?",
+  "en": "Whose bus is this?",
+  "frame": {
+   "word": "اتوبوس",
+   "wid": "v_thi14",
+   "cat": "Things",
+   "k": 4
+  }
+ },
+ {
+  "id": "v_thi15_f0",
+  "fa": "تاکسی کجاست؟",
+  "tr": "tâksi kojâst?",
+  "en": "Where is the taxi?",
+  "frame": {
+   "word": "تاکسی",
+   "wid": "v_thi15",
+   "cat": "Things",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_thi15_f1",
+  "fa": "تاکسی می‌خوام.",
+  "tr": "tâksi mikhâm.",
+  "en": "I want a taxi.",
+  "frame": {
+   "word": "تاکسی",
+   "wid": "v_thi15",
+   "cat": "Things",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_thi15_f2",
+  "fa": "تاکسی دارید؟",
+  "tr": "tâksi dârid?",
+  "en": "Do you have a taxi?",
+  "frame": {
+   "word": "تاکسی",
+   "wid": "v_thi15",
+   "cat": "Things",
+   "k": 2
+  }
+ },
+ {
+  "id": "v_thi15_f3",
+  "fa": "این تاکسی چنده؟",
+  "tr": "in tâksi chande?",
+  "en": "How much is this taxi?",
+  "frame": {
+   "word": "تاکسی",
+   "wid": "v_thi15",
+   "cat": "Things",
+   "k": 3
+  }
+ },
+ {
+  "id": "v_thi15_f4",
+  "fa": "این تاکسی مال کیه؟",
+  "tr": "in tâksi mâl-e kiye?",
+  "en": "Whose taxi is this?",
+  "frame": {
+   "word": "تاکسی",
+   "wid": "v_thi15",
+   "cat": "Things",
+   "k": 4
+  }
+ },
+ {
+  "id": "v_thi16_f0",
+  "fa": "بلیط کجاست؟",
+  "tr": "belit kojâst?",
+  "en": "Where is the ticket?",
+  "frame": {
+   "word": "بلیط",
+   "wid": "v_thi16",
+   "cat": "Things",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_thi16_f1",
+  "fa": "بلیط می‌خوام.",
+  "tr": "belit mikhâm.",
+  "en": "I want a ticket.",
+  "frame": {
+   "word": "بلیط",
+   "wid": "v_thi16",
+   "cat": "Things",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_thi16_f2",
+  "fa": "بلیط دارید؟",
+  "tr": "belit dârid?",
+  "en": "Do you have a ticket?",
+  "frame": {
+   "word": "بلیط",
+   "wid": "v_thi16",
+   "cat": "Things",
+   "k": 2
+  }
+ },
+ {
+  "id": "v_thi16_f3",
+  "fa": "این بلیط چنده؟",
+  "tr": "in belit chande?",
+  "en": "How much is this ticket?",
+  "frame": {
+   "word": "بلیط",
+   "wid": "v_thi16",
+   "cat": "Things",
+   "k": 3
+  }
+ },
+ {
+  "id": "v_thi16_f4",
+  "fa": "این بلیط مال کیه؟",
+  "tr": "in belit mâl-e kiye?",
+  "en": "Whose ticket is this?",
+  "frame": {
+   "word": "بلیط",
+   "wid": "v_thi16",
+   "cat": "Things",
+   "k": 4
+  }
+ },
+ {
+  "id": "v_thi17_f0",
+  "fa": "دارو کجاست؟",
+  "tr": "dâru kojâst?",
+  "en": "Where is the medicine?",
+  "frame": {
+   "word": "دارو",
+   "wid": "v_thi17",
+   "cat": "Things",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_thi17_f1",
+  "fa": "دارو می‌خوام.",
+  "tr": "dâru mikhâm.",
+  "en": "I want a medicine.",
+  "frame": {
+   "word": "دارو",
+   "wid": "v_thi17",
+   "cat": "Things",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_thi17_f2",
+  "fa": "دارو دارید؟",
+  "tr": "dâru dârid?",
+  "en": "Do you have a medicine?",
+  "frame": {
+   "word": "دارو",
+   "wid": "v_thi17",
+   "cat": "Things",
+   "k": 2
+  }
+ },
+ {
+  "id": "v_thi17_f3",
+  "fa": "این دارو چنده؟",
+  "tr": "in dâru chande?",
+  "en": "How much is this medicine?",
+  "frame": {
+   "word": "دارو",
+   "wid": "v_thi17",
+   "cat": "Things",
+   "k": 3
+  }
+ },
+ {
+  "id": "v_thi17_f4",
+  "fa": "این دارو مال کیه؟",
+  "tr": "in dâru mâl-e kiye?",
+  "en": "Whose medicine is this?",
+  "frame": {
+   "word": "دارو",
+   "wid": "v_thi17",
+   "cat": "Things",
+   "k": 4
+  }
+ },
+ {
+  "id": "v_thi18_f0",
+  "fa": "قایق کجاست؟",
+  "tr": "ghâyegh kojâst?",
+  "en": "Where is the boat?",
+  "frame": {
+   "word": "قایق",
+   "wid": "v_thi18",
+   "cat": "Things",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_thi18_f1",
+  "fa": "قایق می‌خوام.",
+  "tr": "ghâyegh mikhâm.",
+  "en": "I want a boat.",
+  "frame": {
+   "word": "قایق",
+   "wid": "v_thi18",
+   "cat": "Things",
+   "k": 1
+  }
+ },
+ {
+  "id": "v_thi18_f2",
+  "fa": "قایق دارید؟",
+  "tr": "ghâyegh dârid?",
+  "en": "Do you have a boat?",
+  "frame": {
+   "word": "قایق",
+   "wid": "v_thi18",
+   "cat": "Things",
+   "k": 2
+  }
+ },
+ {
+  "id": "v_thi18_f3",
+  "fa": "این قایق چنده؟",
+  "tr": "in ghâyegh chande?",
+  "en": "How much is this boat?",
+  "frame": {
+   "word": "قایق",
+   "wid": "v_thi18",
+   "cat": "Things",
+   "k": 3
+  }
+ },
+ {
+  "id": "v_thi18_f4",
+  "fa": "این قایق مال کیه؟",
+  "tr": "in ghâyegh mâl-e kiye?",
+  "en": "Whose boat is this?",
+  "frame": {
+   "word": "قایق",
+   "wid": "v_thi18",
+   "cat": "Things",
+   "k": 4
+  }
+ },
+ {
+  "id": "v_bod0_f0",
+  "fa": "سرم درد می‌کنه.",
+  "tr": "sar-am dard mikone.",
+  "en": "My head hurts.",
+  "frame": {
+   "word": "سر",
+   "wid": "v_bod0",
+   "cat": "Body",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_bod1_f0",
+  "fa": "دستم درد می‌کنه.",
+  "tr": "dast-am dard mikone.",
+  "en": "My hand hurts.",
+  "frame": {
+   "word": "دست",
+   "wid": "v_bod1",
+   "cat": "Body",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_bod2_f0",
+  "fa": "پام درد می‌کنه.",
+  "tr": "pâm dard mikone.",
+  "en": "My foot hurts.",
+  "frame": {
+   "word": "پا",
+   "wid": "v_bod2",
+   "cat": "Body",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_bod3_f0",
+  "fa": "چشمم درد می‌کنه.",
+  "tr": "cheshm-am dard mikone.",
+  "en": "My eye hurts.",
+  "frame": {
+   "word": "چشم",
+   "wid": "v_bod3",
+   "cat": "Body",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_bod4_f0",
+  "fa": "گوشم درد می‌کنه.",
+  "tr": "gush-am dard mikone.",
+  "en": "My ear hurts.",
+  "frame": {
+   "word": "گوش",
+   "wid": "v_bod4",
+   "cat": "Body",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_bod5_f0",
+  "fa": "دهنم درد می‌کنه.",
+  "tr": "dahan-am dard mikone.",
+  "en": "My mouth hurts.",
+  "frame": {
+   "word": "دهن",
+   "wid": "v_bod5",
+   "cat": "Body",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_bod6_f0",
+  "fa": "دندونم درد می‌کنه.",
+  "tr": "dandun-am dard mikone.",
+  "en": "My tooth hurts.",
+  "frame": {
+   "word": "دندون",
+   "wid": "v_bod6",
+   "cat": "Body",
+   "k": 0
+  }
+ },
+ {
+  "id": "v_bod7_f0",
+  "fa": "دلم درد می‌کنه.",
+  "tr": "del-am dard mikone.",
+  "en": "My heart hurts.",
+  "frame": {
+   "word": "دل",
+   "wid": "v_bod7",
+   "cat": "Body",
+   "k": 0
+  }
  }
 ]

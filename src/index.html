@@ -88,6 +88,19 @@ button:disabled{opacity:.45;cursor:default}
 .ipa-info-head{display:flex;align-items:baseline;gap:10px}
 .ipa-big{font:500 30px "Charis SIL","Doulos SIL","Noto Sans",var(--f-body);color:var(--accent)}
 .ipa-info .credit{font-size:12px;color:var(--muted)}
+/* recording comparison and speech check */
+.rec-panel{flex-basis:100%;display:flex;flex-direction:column;gap:10px;min-width:0}
+.rec-panel:empty{display:none}
+.compare{display:flex;flex-direction:column;gap:10px}
+.spectro-fig{margin:0;display:flex;flex-direction:column;gap:4px;min-width:0}
+.spectro-fig figcaption{font-size:13px;font-weight:600}
+.spectro-wrap{overflow-x:auto;border-radius:8px}
+.spectro{display:block;border-radius:8px}
+.heard{display:flex;flex-direction:column;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px}
+.heard-line{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.heard-line .fa{font-size:22px}
+.w-ok{color:var(--good)} .w-miss{color:var(--bad);text-decoration:underline}
+.chip.bad{color:var(--bad)}
 .prog{height:6px;background:var(--sunk);border-radius:6px;overflow:hidden}
 .prog i{display:block;height:100%;background:var(--accent);transition:width .3s}
 .grades{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
@@ -366,21 +379,192 @@ function speak(text, rate=0.8, tr, then){
   if(then) setTimeout(then, 400 + text.length * 90);
 }
 function speakSeq(list, rate){ const [first,...rest] = list; if(first) speak(first[0], rate, first[1], rest.length ? ()=>speakSeq(rest, rate) : null); }
-const canRecord = () => !!(window.Capacitor && navigator.mediaDevices?.getUserMedia && window.MediaRecorder);
-function recorderButtons(){
-  let rec = null, url = null;
+const DESKTOP = window.khalijDesktop || null;   // set by the Mac/Windows app; absent on web and Android
+const canRecord = () => !!((window.Capacitor || DESKTOP) && navigator.mediaDevices?.getUserMedia && window.MediaRecorder);
+// target: {fa, tr} of the phrase being practised. Adds a comparison with the model voice and,
+// on the desktop app, an on-device speech recognition check.
+function recorderButtons(target){
+  let rec = null, url = null, blob = null;
+  const panel = h("div",{class:"rec-panel"});
   const mine = h("button",{disabled:true,onclick:()=>url && new Audio(url).play()},"Play mine");
+  const compare = h("button",{disabled:true,onclick:()=>showCompare(panel, blob, target)},"Compare");
+  const check = DESKTOP ? h("button",{disabled:true,onclick:()=>speechCheck(panel, blob, target)},"Check it") : null;
   const btn = h("button",{onclick:async()=>{
     if(rec && rec.state==="recording"){ rec.stop(); return; }
     try{
+      if(DESKTOP && !(await DESKTOP.micAccess())){ toast("Allow the microphone in System Settings, Privacy & Security, Microphone"); return; }
       const stream = await navigator.mediaDevices.getUserMedia({audio:true}); const parts = [];
       rec = new MediaRecorder(stream);
       rec.ondataavailable = e => parts.push(e.data);
-      rec.onstop = () => { stream.getTracks().forEach(t=>t.stop()); url = URL.createObjectURL(new Blob(parts,{type:rec.mimeType})); mine.disabled = false; btn.textContent = "Record again"; };
-      rec.start(); btn.textContent = "Stop"; setTimeout(()=>rec.state==="recording" && rec.stop(), 8000);
+      rec.onstop = () => {
+        stream.getTracks().forEach(t=>t.stop());
+        blob = new Blob(parts,{type:rec.mimeType}); url = URL.createObjectURL(blob);
+        for(const b of [mine, compare, check]) if(b) b.disabled = false;
+        btn.textContent = "Record again";
+        if(DESKTOP) speechCheck(panel, blob, target);
+      };
+      rec.start(); btn.textContent = "Stop"; panel.replaceChildren();
+      setTimeout(()=>rec.state==="recording" && rec.stop(), 8000);
     }catch(e){ toast("Allow microphone access to record yourself"); }
   }},"Record me");
-  return [btn, mine];
+  return [btn, mine, compare, check, panel];
+}
+
+/* ---------- audio analysis (recording comparison) ---------- */
+async function decode16k(src){
+  const data = src instanceof Blob ? await src.arrayBuffer() : await (await fetch(src)).arrayBuffer();
+  const ac = new (window.AudioContext || window.webkitAudioContext)();
+  let audio; try { audio = await ac.decodeAudioData(data); } finally { ac.close?.(); }
+  const off = new OfflineAudioContext(1, Math.max(1, Math.ceil(audio.duration * 16000)), 16000);
+  const node = off.createBufferSource(); node.buffer = audio; node.connect(off.destination); node.start();
+  return (await off.startRendering()).getChannelData(0);
+}
+function wavBytes(pcm, rate=16000){
+  const buf = new ArrayBuffer(44 + pcm.length*2), v = new DataView(buf);
+  const str = (o,t) => { for(let i=0;i<t.length;i++) v.setUint8(o+i, t.charCodeAt(i)); };
+  str(0,"RIFF"); v.setUint32(4, 36 + pcm.length*2, true); str(8,"WAVEfmt "); v.setUint32(16,16,true);
+  v.setUint16(20,1,true); v.setUint16(22,1,true); v.setUint32(24,rate,true); v.setUint32(28,rate*2,true);
+  v.setUint16(32,2,true); v.setUint16(34,16,true); str(36,"data"); v.setUint32(40, pcm.length*2, true);
+  for(let i=0;i<pcm.length;i++) v.setInt16(44+i*2, Math.max(-1, Math.min(1, pcm[i])) * 0x7fff, true);
+  return buf;
+}
+const rms = pcm => Math.sqrt(pcm.reduce((a,x)=>a+x*x,0) / Math.max(1,pcm.length));
+// Keep only the stretch with speech, so silence before and after doesn't stretch the picture.
+function trimSilence(pcm){
+  const win = 320, frames = Math.floor(pcm.length / win), level = [];
+  for(let f=0; f<frames; f++) level.push(rms(pcm.subarray(f*win, (f+1)*win)));
+  const thr = Math.max(0.01, Math.max(...level, 0) * 0.08);
+  const first = level.findIndex(x=>x>thr), last = level.length - 1 - [...level].reverse().findIndex(x=>x>thr);
+  if(first < 0) return pcm;
+  return pcm.subarray(Math.max(0,(first-5)*win), Math.min(pcm.length,(last+6)*win));
+}
+function fft(re, im){
+  const n = re.length;
+  for(let i=1, j=0; i<n; i++){ let bit = n>>1; for(; j & bit; bit >>= 1) j ^= bit; j ^= bit; if(i<j){ [re[i],re[j]]=[re[j],re[i]]; [im[i],im[j]]=[im[j],im[i]]; } }
+  for(let len=2; len<=n; len<<=1){
+    const ang = -2*Math.PI/len, wr = Math.cos(ang), wi = Math.sin(ang);
+    for(let i=0; i<n; i+=len){ let cr=1, ci=0;
+      for(let k=0; k<len/2; k++){ const a=i+k, b=a+len/2, tr=re[b]*cr-im[b]*ci, ti=re[b]*ci+im[b]*cr;
+        re[b]=re[a]-tr; im[b]=im[a]-ti; re[a]+=tr; im[a]+=ti; const t=cr*wr-ci*wi; ci=cr*wi+ci*wr; cr=t; } }
+  }
+}
+// Spectrogram (0–5 kHz, 10 ms steps) and a pitch track from autocorrelation (75–400 Hz).
+function analyse(pcm){
+  const N = 512, hop = 160, bins = 160, frames = Math.max(1, Math.floor((pcm.length - N) / hop));
+  const hann = Float32Array.from({length:N}, (_,i)=>0.5-0.5*Math.cos(2*Math.PI*i/(N-1)));
+  const spec = [], pitch = [];
+  const peak = Math.max(1e-6, ...Array.from({length:frames}, (_,f)=>rms(pcm.subarray(f*hop, f*hop+N))));
+  for(let f=0; f<frames; f++){
+    const re = new Float32Array(N), im = new Float32Array(N), seg = pcm.subarray(f*hop, f*hop+N);
+    for(let i=0;i<seg.length;i++) re[i] = seg[i]*hann[i];
+    fft(re, im);
+    spec.push(Float32Array.from({length:bins}, (_,k)=>10*Math.log10(re[k]*re[k]+im[k]*im[k]+1e-10)));
+    let best = 0, lag = 0;
+    if(rms(seg) > peak*0.15){
+      const e0 = seg.reduce((a,x)=>a+x*x,0);
+      for(let L=40; L<=213; L++){ let c=0; for(let i=0;i+L<seg.length;i++) c += seg[i]*seg[i+L]; c/=e0; if(c>best){ best=c; lag=L; } }
+    }
+    pitch.push(best > 0.45 ? 16000/lag : 0);
+  }
+  return {spec, pitch, seconds: pcm.length/16000};
+}
+function drawAnalysis(a, label){
+  const pxs = 220, W = Math.max(60, Math.round(a.seconds*pxs)), H = 120, P = 46;
+  const css = getComputedStyle(document.documentElement);
+  const ink = css.getPropertyValue("--ink").trim(), accent = css.getPropertyValue("--accent").trim(), bg = css.getPropertyValue("--sunk").trim();
+  const c = h("canvas",{width:W, height:H+P, class:"spectro", "aria-label":`${label}: spectrogram and pitch`});
+  const g = c.getContext("2d"); g.fillStyle = bg; g.fillRect(0,0,W,H+P);
+  const all = a.spec.flatMap(f=>Array.from(f)), max = Math.max(...all), min = max - 60;
+  const fw = W / a.spec.length, bh = H / a.spec[0].length;
+  g.fillStyle = ink;
+  a.spec.forEach((f,x)=>f.forEach((db,k)=>{ const v=(db-min)/(max-min); if(v>0.05){ g.globalAlpha=Math.min(1,v*v); g.fillRect(x*fw, H-(k+1)*bh, fw+0.5, bh+0.5); } }));
+  g.globalAlpha = 1; g.fillStyle = accent;
+  a.pitch.forEach((p,x)=>{ if(p) g.fillRect(x*fw, H + P - 4 - (p-75)/(400-75)*(P-8), Math.max(2,fw), 3); });
+  g.fillStyle = ink; g.font = "11px system-ui, sans-serif"; g.fillText("pitch", 4, H+12);
+  return h("figure",{class:"spectro-fig"}, h("figcaption",{},label, h("span",{class:"tr"},` ${a.seconds.toFixed(2)} s`)), h("div",{class:"spectro-wrap"},c));
+}
+async function showCompare(panel, blob, target){
+  panel.replaceChildren(h("p",{class:"note"},"Analysing…"));
+  try{
+    const src = clipFor(target.fa, target.tr);
+    const mineA = analyse(trimSilence(await decode16k(blob)));
+    const modelA = src ? analyse(trimSilence(await decode16k(src))) : null;
+    panel.replaceChildren(h("div",{class:"compare"},
+      modelA ? drawAnalysis(modelA, "Model voice") : h("p",{class:"note"},"This line has no recorded model voice to compare with."),
+      drawAnalysis(mineA, "You"),
+      h("p",{class:"note"},"Same time scale on both. Dark bands are the vowels' resonances, so look for the same pattern and length. The teal line is your pitch: Persian statements fall at the end, and yes/no questions rise.")));
+  }catch(e){ panel.replaceChildren(h("p",{class:"note"},"Couldn't analyse this recording.")); }
+}
+
+/* ---------- on-device speech recognition check (desktop) ---------- */
+const FORMAL = {"میخواهم":"میخوام","میروم":"میرم","میآیم":"میام","میگویم":"میگم","میدانم":"میدونم","نمیدانم":"نمیدونم","میتوانم":"میتونم","میدهم":"میدم","میشود":"میشه","میکند":"میکنه","آن":"اون","آنها":"اونا","آنجا":"اونجا","نان":"نون","خانه":"خونه","خیابان":"خیابون","داروخانه":"داروخونه","دندان":"دندون","کدام":"کدوم","کوچک":"کوچیک","گران":"گرون","ارزان":"ارزون","دهان":"دهن","چیست":"چیه","یک":"یه","بگویید":"بگید","خانوم":"خانم","مرسی":"مرسی"};
+function normFa(t){
+  return t.replace(/[يى]/g,"ی").replace(/ك/g,"ک").replace(/[ة]/g,"ه").replace(/[ً-ْـ]/g,"")
+    .replace(/‌/g,"").replace(/[.,،؟?!؛:«»"()\-–…]/g," ").replace(/\s+/g," ").trim()
+    .split(" ").filter(Boolean).map(w=>FORMAL[w] || w);
+}
+function lev(a, b){
+  const d = Array.from({length:a.length+1}, (_,i)=>[i, ...Array(b.length).fill(0)]);
+  for(let j=1;j<=b.length;j++) d[0][j] = j;
+  for(let i=1;i<=a.length;i++) for(let j=1;j<=b.length;j++) d[i][j] = Math.min(d[i-1][j]+1, d[i][j-1]+1, d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));
+  return d;
+}
+function wordMatch(target, heard){
+  const d = lev(target, heard), marks = Array(target.length).fill(false);
+  for(let i=target.length, j=heard.length; i>0 && j>0;){
+    if(target[i-1]===heard[j-1] && d[i][j]===d[i-1][j-1]){ marks[i-1]=true; i--; j--; }
+    else if(d[i][j]===d[i-1][j-1]+1){ i--; j--; } else if(d[i][j]===d[i-1][j]+1) i--; else j--;
+  }
+  return marks;
+}
+async function speechCheck(panel, blob, target){
+  const inf = await DESKTOP.info();
+  if(!inf.active){ panel.replaceChildren(h("p",{class:"note"},"To check your pronunciation, download a speech model on the ",h("a",{href:"#today"},"Today")," page. It runs on this computer, and nothing is uploaded.")); return; }
+  panel.replaceChildren(h("p",{class:"note"},`Listening on this computer (${inf.accel})…`));
+  try{
+    const pcm = await decode16k(blob);
+    if(rms(pcm) < 0.004){ panel.replaceChildren(h("p",{class:"note"},"That recording is almost silent. Check the microphone and try again.")); return; }
+    const res = await DESKTOP.transcribe(wavBytes(pcm));
+    const want = normFa(cleanFa(target.fa)), got = normFa(res.text);
+    const marks = wordMatch(want, got), hit = marks.filter(Boolean).length;
+    const chars = (x)=>[...x.join("")], dc = lev(chars(want), chars(got));
+    const close = Math.max(0, 1 - dc[chars(want).length][chars(got).length] / Math.max(1, chars(want).length));
+    const extra = Math.max(0, got.length - hit);
+    const verdict = hit===want.length && !extra ? ["ok","Understood. The recogniser heard exactly this phrase."]
+      : hit===want.length ? ["ok",`Understood, though it also heard ${extra} extra word${extra>1?"s":""}. Background noise or a false start can cause that.`]
+      : close > 0.7 ? ["warn","Close. Compare the words in red with the model and try again."]
+      : ["bad","Not understood yet. Listen again, then say it slowly and clearly."];
+    panel.replaceChildren(h("div",{class:"heard"},
+      h("div",{class:"row"},h("span",{class:"chip "+verdict[0]},`${hit} of ${want.length} words`),h("span",{class:"note"},verdict[1])),
+      h("div",{class:"heard-line"},h("span",{class:"note"},"Expected "),h("span",{class:"fa",dir:"rtl",lang:"fa"},...want.map((w,i)=>h("span",{class:marks[i]?"w-ok":"w-miss"},w+" ")))),
+      h("div",{class:"heard-line"},h("span",{class:"note"},"It heard "),h("span",{class:"fa",dir:"rtl",lang:"fa"},res.text || "(nothing)")),
+      h("p",{class:"note"},`Recognised on this computer in ${(res.ms/1000).toFixed(1)} s with ${res.model}. It's trained mostly on standard Persian, so it measures how easy you are to understand, not how southern you sound, and it sometimes mishears good speech.`)));
+  }catch(e){ panel.replaceChildren(h("p",{class:"note"},"Speech recognition failed: " + (e.message || e))); }
+}
+function speechPanel(){
+  const box = h("div",{class:"panel"});
+  let off = null;
+  async function draw(prog){
+    const inf = await DESKTOP.info();
+    const fmtMB = b => (b/2**20).toFixed(0)+" MB";
+    box.replaceChildren(h("h2",{},"Speech recognition on this computer"),
+      h("p",{},"Record yourself on any card and the app checks whether a speech recogniser understands you. It runs entirely on this computer with whisper.cpp, and your voice never leaves it."),
+      h("div",{class:"row"},h("span",{class:"chip"},inf.accel),h("span",{class:"chip"},`${inf.threads} CPU threads`),h("span",{class:"chip"},`${inf.memoryGB} GB memory`),
+        inf.engine ? null : h("span",{class:"chip warn"},"Speech engine missing from this build")),
+      ...inf.models.map(m=>h("div",{class:"entry"},
+        h("div",{class:"row",style:"justify-content:space-between"},h("b",{},m.label),h("span",{class:"chip"+(inf.active===m.id?" ok":"")},inf.active===m.id?"In use":m.installed?"Downloaded":m.approx)),
+        h("span",{class:"note"},m.note),
+        prog && prog.id===m.id && !prog.done ? h("div",{},h("div",{class:"prog"},h("i",{style:`width:${prog.total?Math.round(prog.got/prog.total*100):5}%`})),h("span",{class:"note"},`${fmtMB(prog.got)}${prog.total?" of "+fmtMB(prog.total):""}`)) : null,
+        h("div",{class:"row"},
+          !m.installed ? h("button",{class:"primary",disabled:!!prog&&!prog.done,onclick:()=>{ DESKTOP.downloadModel(m.id).then(()=>{ toast("Speech model ready"); draw(); }).catch(e=>{ toast(e.message); draw(); }); draw({id:m.id,got:0,total:0}); }},"Download") : null,
+          prog && prog.id===m.id && !prog.done ? h("button",{onclick:()=>DESKTOP.cancelDownload()},"Cancel") : null,
+          m.installed && inf.active!==m.id ? h("button",{onclick:()=>DESKTOP.useModel(m.id).then(()=>draw())},"Use this") : null,
+          m.installed ? h("button",{onclick:()=>DESKTOP.deleteModel(m.id).then(()=>draw())},"Delete") : null))));
+  }
+  off = DESKTOP.onProgress(p=>{ if(!p.done) draw(p); });
+  const prevCleanup = cleanup; cleanup = ()=>{ off?.(); prevCleanup?.(); };
+  draw();
+  return box;
 }
 function deviceSpeak(text, rate=0.8){
   const T = nativeTTS();
@@ -676,7 +860,7 @@ function viewToday(){
       h("div",{class:"strand"},h("a",{href:"#words"},"2 · What is this?, 5 min"),h("p",{},"Picture to word, then the full sentence ",fa("این ... ـه"),".")),
       h("div",{class:"strand"},h("a",{href:"#letters"},"3 · Letters, 5 min"),h("p",{},"Trace two letters by hand. Handwriting helps you recognise a new script better than typing does.")),
       h("div",{class:"strand"},h("a",{href:"#today"},"4 · Real listening, 10 min"),h("p",{},"Children's shows or Bandari music. Log it below. Your accent comes from what you hear."))),
-    inputLog(), transferPanel());
+    DESKTOP ? speechPanel() : null, inputLog(), transferPanel());
   return v;
 }
 function transferPanel(){
@@ -735,7 +919,7 @@ function session(queue, opts){
         (c.note||c.n)?h("div",{class:"note"},c.note||c.n):null);
       if(c.kind!=="south") addIpa(card,[{fa:c.fa,tr:c.tr}, ...(ex?[ex]:[])]);
       const sayAll = r => ex ? speakSeq([[c.fa,c.tr],[ex.fa,ex.tr]], r) : speak(c.fa, r, c.tr);
-      box.append(card, h("div",{class:"row"},h("button",{onclick:()=>sayAll()},"Play"),h("button",{onclick:()=>sayAll(0.55)},"Play slowly"),...(canRecord()?recorderButtons():[]),h("span",{class:"note",style:"color:var(--muted);font-size:14px"},"Repeat it aloud straight after the audio (shadowing).")),
+      box.append(card, h("div",{class:"row"},h("button",{onclick:()=>sayAll()},"Play"),h("button",{onclick:()=>sayAll(0.55)},"Play slowly"),...(canRecord()?recorderButtons({fa:c.fa,tr:c.tr}):[]),h("span",{class:"note",style:"color:var(--muted);font-size:14px"},"Repeat it aloud straight after the audio (shadowing).")),
         h("div",{class:"grades"},
           h("button",{class:"bad",onclick:()=>next(0)},"Missed"),
           h("button",{onclick:()=>next(1)},"Shaky"),
@@ -808,7 +992,7 @@ function viewWords(){
       sel("b-frame","Pattern",FRAMES[builder.cat].map((f,i)=>[i,f[2].replace("___","…")]),builder.frame,v=>builder.frame=+v)),
     sel("b-word","Word",bwords.map((w,i)=>[i,`${w.en} · ${w.tr}`]),builder.word,v=>builder.word=+v),
     (()=>{ const c = h("div",{class:"card",style:"min-height:0"},h("div",{class:"big-fa",lang:"fa",dir:"rtl"},out.fa),h("div",{class:"tr"},out.tr),h("div",{class:"en"},out.en)); addIpa(c,[out]); return c; })(),
-    h("div",{class:"row"},h("button",{class:"primary",onclick:()=>speak(out.fa)},"Play"),h("button",{onclick:()=>{builder.word=(builder.word+1)%bwords.length;render();}},"Next word")));
+    h("div",{class:"row"},h("button",{class:"primary",onclick:()=>speak(out.fa,0.8,out.tr)},"Play"),h("button",{onclick:()=>{builder.word=(builder.word+1)%bwords.length;render();}},"Next word")));
   // Arabic speaker's head start
   const arWords=VOCAB.filter(v=>v.ar), ffs=VOCAB.filter(v=>v.ff);
   const arPanel=h("div",{class:"panel"},h("h2",{},"Your Arabic head start"),
@@ -1009,6 +1193,7 @@ function viewWhy(){
       C("Frequent words first","In spoken English, about 2,000 word families cover roughly 95% of the words in everyday conversation. A small, well-chosen core gets you a long way. This app's list is hand-picked for getting around. The next step is checking it against a Persian frequency dictionary.","Adolphs & Schmitt (2003), Applied Linguistics 24(4); Nation (2006), Canadian Modern Language Review 63(1); Miller & Aghajanian-Stewart (2017), A Frequency Dictionary of Persian, Routledge."),
       C("Cognates","Words shared with a language you already know are learned faster and forgotten less. For an Arabic speaker, Arabic loanwords in Persian are a real shortcut, as long as you watch for meaning shifts.","de Groot & Keijzer (2000), Language Learning 50(1); Perry, 'Arabic elements in Persian', Encyclopaedia Iranica."),
       C("Explicit study helps","Directly studying form (letters, endings like -e for 'is') produces large, lasting gains alongside exposure.","Norris & Ortega (2000), Language Learning 50(3); Spada & Tomita (2010), Language Learning 60(2)."),
+      C("Recognition feedback","Practising with automatic speech recognition improves L2 pronunciation, with a medium overall effect that is larger for individual sounds than for intonation. The desktop app's Check it button uses this, running whisper.cpp on your computer. Standard Whisper still gets a sizeable share of Persian words wrong (published benchmark figures are around 25% or worse), and it was trained mostly on standard speech, so treat it as a rough intelligibility check, not a judge of your accent.","Ngo, Chen & Lai (2024), ReCALL 36(1), meta-analysis of 15 studies; Radford et al. (2023), Whisper, ICML."),
       C("Speaking with people","Conversation with feedback drives acquisition: you notice gaps when you are corrected. An app can't supply this, so a tutor session is part of the plan.","Mackey & Goo (2007), meta-analysis in Conversational Interaction in SLA (Oxford UP); Lyster & Saito (2010), SSLA 32(2), corrective feedback."),
       C("Accent, realistically","Pronunciation instruction works. Perception training with many different voices improves both hearing and producing new sounds. Adults rarely reach a fully native accent, but accent, intelligibility and ease of understanding are separate things, so you can sound clearly southern and be easy to follow.","Lee, Jang & Plonsky (2015), Applied Linguistics 36(3); Uchihara, Karas & Thomson (2024), Applied Psycholinguistics, HVPT meta-analysis; Munro & Derwing (1995), Language Learning 45(1); Flege & Bohn (2021), SLM-r."),
       C("Handwriting","Adults learning new characters recognised them better after handwriting them than after typing them. That is why Letters comes before Type.","Longcamp et al. (2008), Journal of Cognitive Neuroscience 20(5)."),

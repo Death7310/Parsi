@@ -1,0 +1,183 @@
+name: Build apps
+on:
+  push:
+    branches: [main, "claude/**"]
+  workflow_dispatch:
+jobs:
+  # Audio is generated once and shared by every app build.
+  audio:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Export items and check pronunciation spellings
+        run: |
+          pip install piper-tts==1.8.0
+          node scripts/export-items.mjs
+          node scripts/check-ipa.mjs
+          python scripts/check_pronunciation.py
+      - name: Cache voices and generated audio
+        uses: actions/cache@v4
+        with:
+          path: |
+            .voices
+            audio/tts
+            audio/ipa
+          key: tts-v3-${{ hashFiles('audio/items.json', 'audio/say-overrides.json') }}
+          restore-keys: tts-v3-
+      - name: Generate synthetic audio and fetch IPA recordings
+        run: |
+          sudo apt-get update && sudo apt-get install -y ffmpeg
+          python scripts/make_tts.py
+          python scripts/fetch_ipa_audio.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: app-audio
+          path: |
+            audio/tts
+            audio/ipa
+            audio/manifest.json
+
+  android:
+    needs: audio
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: actions/download-artifact@v4
+        with:
+          name: app-audio
+          path: audio
+      - run: npm ci
+      - run: npm run android
+      - run: ./gradlew assembleDebug
+        working-directory: android
+      - run: mkdir -p out && cp android/app/build/outputs/apk/debug/app-debug.apk out/khalij-farsi.apk
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-android
+          path: out/
+
+  desktop:
+    needs: audio
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { os: macos-14, target: mac }
+          - { os: windows-latest, target: win }
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: desktop/package-lock.json
+      - uses: actions/download-artifact@v4
+        with:
+          name: app-audio
+          path: audio
+      - name: Cache whisper.cpp build
+        id: whisper-cache
+        uses: actions/cache@v4
+        with:
+          path: desktop/bin
+          key: whisper-v1.8.7-${{ matrix.target }}-v1
+      # Static builds with portable CPU flags, so the binary runs on any Mac/PC of that architecture.
+      # Mac: Metal GPU acceleration (whisper.cpp's default on Apple). Windows: static C runtime, no OpenMP DLL needed.
+      - name: Build whisper.cpp for Mac (Apple Silicon and Intel)
+        if: matrix.target == 'mac' && steps.whisper-cache.outputs.cache-hit != 'true'
+        run: |
+          git clone --depth 1 --branch v1.8.7 https://github.com/ggml-org/whisper.cpp wc
+          for arch in arm64 x86_64; do
+            cmake -S wc -B wc/build-$arch -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES=$arch \
+              -DCMAKE_OSX_DEPLOYMENT_TARGET=12.0 -DBUILD_SHARED_LIBS=OFF -DGGML_NATIVE=OFF \
+              -DWHISPER_BUILD_TESTS=OFF -DWHISPER_BUILD_SERVER=OFF
+            cmake --build wc/build-$arch --config Release -j 4 --target whisper-cli
+          done
+          mkdir -p desktop/bin/mac-arm64 desktop/bin/mac-x64
+          cp wc/build-arm64/bin/whisper-cli desktop/bin/mac-arm64/
+          cp wc/build-x86_64/bin/whisper-cli desktop/bin/mac-x64/
+      - name: Build whisper.cpp for Windows (x64)
+        if: matrix.target == 'win' && steps.whisper-cache.outputs.cache-hit != 'true'
+        shell: bash
+        run: |
+          git clone --depth 1 --branch v1.8.7 https://github.com/ggml-org/whisper.cpp wc
+          cmake -S wc -B wc/build -A x64 -DBUILD_SHARED_LIBS=OFF -DGGML_NATIVE=OFF -DGGML_OPENMP=OFF \
+            -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded -DCMAKE_POLICY_DEFAULT_CMP0091=NEW \
+            -DWHISPER_BUILD_TESTS=OFF -DWHISPER_BUILD_SERVER=OFF
+          cmake --build wc/build --config Release -j 4 --target whisper-cli
+          mkdir -p desktop/bin/win-x64
+          cp wc/build/bin/Release/whisper-cli.exe desktop/bin/win-x64/
+      # Same call the app makes: audio on stdin, Persian, no timestamps. The tiny model keeps the test quick.
+      - name: Test speech recognition end to end
+        shell: bash
+        run: |
+          case "${{ matrix.target }}" in
+            mac) BIN=desktop/bin/mac-arm64/whisper-cli; file desktop/bin/mac-*/whisper-cli ;;
+            win) BIN=desktop/bin/win-x64/whisper-cli.exe ;;
+          esac
+          curl -sSLf -o ggml-tiny.bin https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-tiny.bin
+          CLIP=$(ls audio/tts/amir/c02.mp3)
+          OUT=$("$BIN" -m ggml-tiny.bin -f - -l fa -nt -np -t 4 < "$CLIP")
+          echo "Recognised: $OUT"
+          test -n "$(echo "$OUT" | tr -d '[:space:]')"
+          for m in large-v3-turbo-q5_0 small base; do
+            code=$(curl -sSIL -o /dev/null -w '%{http_code}' https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-$m.bin)
+            echo "model $m: HTTP $code"; test "$code" = 200
+          done
+      - run: npm ci
+        working-directory: desktop
+      - name: Package the app
+        working-directory: desktop
+        run: npm run dist:${{ matrix.target }}
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: "false"
+      - name: Collect installers
+        shell: bash
+        run: |
+          mkdir -p out
+          shopt -s nullglob
+          files=(desktop/dist/*.dmg desktop/dist/*.exe)
+          test ${#files[@]} -gt 0
+          cp "${files[@]}" out/ && ls -la out
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-${{ matrix.target }}
+          path: out/
+
+  # On main, replace the "latest" release with every app that built.
+  release:
+    if: always() && github.ref == 'refs/heads/main' && needs.android.result == 'success'
+    needs: [android, desktop]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: release-*
+          path: out
+          merge-multiple: true
+      - name: Publish the latest release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          ls -la out
+          gh release delete latest --repo "$GITHUB_REPOSITORY" --yes --cleanup-tag || true
+          gh release create latest out/* --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --latest \
+            --title "Khalij Farsi (latest build)" \
+            --notes "Built from ${GITHUB_SHA::7}. Android: khalij-farsi.apk. Mac: Khalij-Farsi-mac-arm64.dmg (Apple Silicon) or -x64.dmg (Intel). Windows: Khalij-Farsi-windows-setup.exe."
