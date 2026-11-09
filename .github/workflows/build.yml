@@ -160,9 +160,10 @@ jobs:
           name: release-${{ matrix.target }}
           path: out/
 
-  # On main, replace the "latest" release with every app that built.
+  # Every app that built goes to a release: "latest" from main, "preview" (a pre-release) from work branches,
+  # so test builds have a direct download link without replacing the version you normally install.
   release:
-    if: always() && github.ref == 'refs/heads/main' && needs.android.result == 'success'
+    if: always() && needs.android.result == 'success'
     needs: [android, desktop]
     runs-on: ubuntu-latest
     permissions:
@@ -173,12 +174,17 @@ jobs:
           pattern: release-*
           path: out
           merge-multiple: true
-      - name: Publish the latest release
+      - name: Publish the release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           ls -la out
-          gh release delete latest --repo "$GITHUB_REPOSITORY" --yes --cleanup-tag || true
-          gh release create latest out/* --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --latest \
-            --title "Khalij Farsi (latest build)" \
-            --notes "Built from ${GITHUB_SHA::7}. Android: khalij-farsi.apk. Mac: Khalij-Farsi-mac-arm64.dmg (Apple Silicon) or -x64.dmg (Intel). Windows: Khalij-Farsi-windows-setup.exe."
+          if [ "$GITHUB_REF" = "refs/heads/main" ]; then
+            TAG=latest; FLAGS="--latest"; TITLE="Khalij Farsi (latest build)"
+          else
+            TAG=preview; FLAGS="--prerelease"; TITLE="Khalij Farsi (preview, not yet merged)"
+          fi
+          gh release delete "$TAG" --repo "$GITHUB_REPOSITORY" --yes --cleanup-tag || true
+          gh release create "$TAG" out/* --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" $FLAGS \
+            --title "$TITLE" \
+            --notes "Built from ${GITHUB_SHA::7} on ${GITHUB_REF_NAME}. Android: khalij-farsi.apk. Mac: Khalij-Farsi-mac-arm64.dmg (Apple Silicon) or -x64.dmg (Intel). Windows: Khalij-Farsi-windows-setup.exe."

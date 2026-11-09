@@ -18,7 +18,7 @@ Every push to `main` rebuilds all versions and replaces the files on the [latest
 
 Those warnings appear because the apps aren't signed with a paid developer certificate (Apple charges $99 a year; Windows certificates cost more). They're safe to bypass for an app you built yourself. Updating means installing the new version over the old one; progress stays.
 
-Builds from other branches are under **Actions → Build apps**, in each run's Artifacts.
+Test builds from work branches go to the [preview](https://github.com/Death7310/Parsi/releases/tag/preview) pre-release instead, so trying them never replaces the version on `latest`.
 
 ## Desktop app (Mac and Windows)
 
