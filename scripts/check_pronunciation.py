@@ -11,7 +11,9 @@ from piper.phonemize_espeak import EspeakPhonemizer
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 items = json.loads((ROOT / "audio/items.json").read_text())
 cfg = json.loads((ROOT / "audio/say-overrides.json").read_text())
-say, skip, accepted = cfg["say"], set(cfg["skip"]), set(cfg["accepted"])
+accepted = set(cfg["accepted"])
+sys.path.insert(0, str(ROOT / "scripts"))
+from say import is_skipped, say_text, SKIP as skip
 ph = EspeakPhonemizer(pathlib.Path(piper.__file__).parent / "espeak-ng-data")
 
 # Map espeak IPA and our transliteration onto one coarse alphabet; vowel length and stress are ignored.
@@ -28,9 +30,9 @@ def norm(s, table):
 
 bad = 0
 for it in items:
-    if it["id"] in skip or it["id"] in accepted:
+    if is_skipped(it) or it["id"] in accepted or (it.get("frame") and it["frame"]["wid"] in accepted):
         continue
-    text = say.get(it["id"], it["fa"])
+    text = say_text(it)
     got = norm("".join("".join(x) for x in ph.phonemize("fa", text)), IPA)
     want = norm(it["tr"].split("(")[0], TR)
     if got != want:

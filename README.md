@@ -5,13 +5,32 @@ A Farsi learning app for phone and laptop, built on second-language research: re
 - **Web:** the same app runs as a claude.ai artifact, with progress synced to your account.
 - **Android:** this repo builds an APK with Capacitor. Progress stays on the phone; use *Today → Move progress between devices* to carry it over.
 
-## Get the APK
+## Get the app
 
-On your Android phone, open **https://github.com/Death7310/Parsi/releases/latest/download/khalij-farsi.apk** and tap the file when it finishes downloading. Android will ask you to allow installs from your browser the first time. It's a debug build signed with a throwaway key, which is fine for personal use.
+Every push to `main` rebuilds all versions and replaces the files on the [latest release](https://github.com/Death7310/Parsi/releases/latest). The same links always get the newest version.
 
-Every push to `main` rebuilds the app and replaces that file, so the same link always gets the newest version. Install over the old one to update; your progress stays.
+| Device | File | Install |
+|---|---|---|
+| Android phone | [khalij-farsi.apk](https://github.com/Death7310/Parsi/releases/latest/download/khalij-farsi.apk) | Open the link in Chrome itself (not inside another app), tap the file, allow installs from Chrome. |
+| Mac with Apple Silicon (M1 or later) | [Khalij-Farsi-mac-arm64.dmg](https://github.com/Death7310/Parsi/releases/latest/download/Khalij-Farsi-mac-arm64.dmg) | Open the .dmg and drag the app to Applications. The first time, macOS blocks it: open **System Settings → Privacy & Security**, scroll down, click **Open Anyway**. |
+| Mac with Intel | [Khalij-Farsi-mac-x64.dmg](https://github.com/Death7310/Parsi/releases/latest/download/Khalij-Farsi-mac-x64.dmg) | Same as above. |
+| Windows PC | [Khalij-Farsi-windows-setup.exe](https://github.com/Death7310/Parsi/releases/latest/download/Khalij-Farsi-windows-setup.exe) | Run it. If Windows shows "Windows protected your PC", click **More info → Run anyway**. |
 
-Builds from other branches are under **Actions**, in each run's Artifacts (a zip with the APK inside).
+Those warnings appear because the apps aren't signed with a paid developer certificate (Apple charges $99 a year; Windows certificates cost more). They're safe to bypass for an app you built yourself. Updating means installing the new version over the old one; progress stays.
+
+Test builds from work branches go to the [preview](https://github.com/Death7310/Parsi/releases/tag/preview) pre-release instead, so trying them never replaces the version on `latest`.
+
+## Desktop app (Mac and Windows)
+
+The same app as the web and Android versions, plus features that use the computer's power:
+
+- **Check it: on-device speech recognition.** Record yourself on any card. [whisper.cpp](https://github.com/ggml-org/whisper.cpp) transcribes it locally, using the GPU through Metal on Macs and all CPU cores on Windows, and the app shows which words it understood. Your voice never leaves the computer. Download a model once on the Today page: *large-v3-turbo* (about 550 MB) is recommended.
+- **Compare:** a spectrogram and pitch track of your recording next to the model voice, on the same time scale. This also works in the Android app.
+- **Every line has recorded audio,** including all sentence-builder combinations. Macs and Windows PCs usually have no Persian voice of their own.
+
+Speech recognition measures how understandable you are to a recogniser trained mostly on standard Persian. It doesn't judge how southern you sound, and it sometimes mishears good speech.
+
+Development: `cd desktop && npm ci && npm start` (put a whisper-cli build in `desktop/bin/<mac|win|linux>-<arch>/` for speech recognition).
 
 ## Audio, best to worst
 

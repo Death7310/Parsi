@@ -17,8 +17,8 @@ ap.add_argument("--slower", type=float, default=1.1, help="length scale; above 1
 args = ap.parse_args()
 
 items = json.loads((ROOT / "audio/items.json").read_text())
-cfg = json.loads((ROOT / "audio/say-overrides.json").read_text())
-say, skip = cfg["say"], set(cfg["skip"])
+sys.path.insert(0, str(ROOT / "scripts"))
+from say import is_skipped, say_text
 
 voices = args.voices
 if not voices:
@@ -35,11 +35,11 @@ for name in voices:
     made = 0
     for it in items:
         mp3 = out / f'{it["id"]}.mp3'
-        if it["id"] in skip or mp3.exists():
+        if is_skipped(it) or mp3.exists():
             continue
         with tempfile.NamedTemporaryFile(suffix=".wav") as tmp:
             with wave.open(tmp.name, "wb") as wf:
-                voice.synthesize_wav(say.get(it["id"], it["fa"]), wf, syn_config=SynthesisConfig(length_scale=args.slower))
+                voice.synthesize_wav(say_text(it), wf, syn_config=SynthesisConfig(length_scale=args.slower))
             subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-i", tmp.name, "-ac", "1", "-b:a", "48k", str(mp3)], check=True)
         made += 1
     print(f"{name}: {made} new clips")

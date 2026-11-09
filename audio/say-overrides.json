@@ -1,5 +1,5 @@
 {
- "_about": "say: vowel-marked spellings the voice reads instead of the plain text (item id -> text). skip: items the engine cannot read correctly; they need a human recording. accepted: flags reviewed by hand and found to be checker noise (t+sh read as ch, y/i glides, transliteration format).",
+ "_about": "say: vowel-marked spellings the voice reads instead of the plain text (item id -> text). skip: items the engine cannot read correctly; they need a human recording. accepted: flags reviewed by hand and found to be checker noise (t+sh read as ch, y/i glides, transliteration format). frame_say: vowel-marked sentence-builder patterns, keyed '<topic>|<pattern number>'; builder sentences inherit their word's say and skip.",
  "say": {
   "c03": "حالِت چطوره؟",
   "c09": "اِسمِت چیه؟",
@@ -38,5 +38,8 @@
   "c12",
   "w18_s",
   "v_num4"
- ]
+ ],
+ "frame_say": {
+  "Things|4": "این ___ مالِ کیه؟"
+ }
 }

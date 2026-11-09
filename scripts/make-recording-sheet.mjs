@@ -1,6 +1,7 @@
 // Builds docs/recording-sheet.md (what the tutor reads, in order) and audio/sessions.json (the same order, for split_recording.py).
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
-const items = JSON.parse(readFileSync(new URL("../audio/items.json", import.meta.url), "utf8"));
+// builder sentences are generated from words the tutor already records, so they stay off the sheet
+const items = JSON.parse(readFileSync(new URL("../audio/items.json", import.meta.url), "utf8")).filter(x => !x.frame);
 const PER = 40;
 const sessions = [];
 for (let i = 0; i < items.length; i += PER) sessions.push(items.slice(i, i + PER));

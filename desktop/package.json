@@ -1,0 +1,39 @@
+{
+  "name": "khalij-farsi-desktop",
+  "productName": "Khalij Farsi",
+  "version": "0.3.0",
+  "private": true,
+  "description": "Khalij Farsi for Mac and Windows, with on-device speech recognition for pronunciation practice.",
+  "author": "Death7310",
+  "main": "main.js",
+  "scripts": {
+    "app": "node ../scripts/build-www.mjs && node -e \"require('fs').cpSync('../www','app',{recursive:true})\"",
+    "start": "npm run app && electron .",
+    "dist:mac": "npm run app && electron-builder --mac --arm64 --x64 --publish never",
+    "dist:win": "npm run app && electron-builder --win --x64 --publish never"
+  },
+  "devDependencies": {
+    "electron": "44.9.3",
+    "electron-builder": "26.17.0"
+  },
+  "build": {
+    "appId": "app.khalijfarsi.desktop",
+    "productName": "Khalij Farsi",
+    "files": ["main.js", "preload.js", "whisper.js", "app/**"],
+    "extraResources": [{ "from": "bin/${os}-${arch}", "to": "bin" }],
+    "directories": { "output": "dist" },
+    "mac": {
+      "target": "dmg",
+      "category": "public.app-category.education",
+      "identity": null,
+      "hardenedRuntime": false,
+      "artifactName": "Khalij-Farsi-mac-${arch}.${ext}",
+      "extendInfo": {
+        "NSMicrophoneUsageDescription": "Khalij Farsi records your voice so you can compare your pronunciation with the model and check it with on-device speech recognition. Recordings never leave your computer."
+      }
+    },
+    "afterPack": "./adhoc-sign.js",
+    "win": { "target": "nsis", "artifactName": "Khalij-Farsi-windows-setup.${ext}" },
+    "nsis": { "oneClick": false, "allowToChangeInstallationDirectory": true, "perMachine": false }
+  }
+}
