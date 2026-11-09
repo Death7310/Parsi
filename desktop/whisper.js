@@ -97,7 +97,9 @@ function transcribe(wav) {
   if (!id) return Promise.reject(new Error("Download a speech model first"));
   const started = Date.now();
   return new Promise((resolve, reject) => {
-    const child = spawn(binPath(), ["-m", modelPath(id), "-f", "-", "-l", "fa", "-nt", "-np", "-t", String(threads())],
+    // "-of" names the (never written) output: with stdin input whisper-cli otherwise treats output as "-"
+    // and stops printing the transcript.
+    const child = spawn(binPath(), ["-m", modelPath(id), "-f", "-", "-of", "khalij", "-l", "fa", "-nt", "-np", "-t", String(threads())],
       { windowsHide: true });
     const out = [], err = [];
     const timer = setTimeout(() => { child.kill(); reject(new Error("Speech recognition took too long")); }, 120000);

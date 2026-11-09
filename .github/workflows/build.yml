@@ -76,7 +76,7 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - { os: macos-14, target: mac }
+          - { os: macos-15, target: mac }
           - { os: windows-latest, target: win }
     runs-on: ${{ matrix.os }}
     steps:
@@ -132,7 +132,8 @@ jobs:
           esac
           curl -sSLf -o ggml-tiny.bin https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-tiny.bin
           CLIP=$(ls audio/tts/amir/c02.mp3)
-          OUT=$("$BIN" -m ggml-tiny.bin -f - -l fa -nt -np -t 4 < "$CLIP")
+          OUT=$("$BIN" -m ggml-tiny.bin -f - -of khalij -l fa -nt -np -t 4 < "$CLIP")
+          test ! -e khalij.txt
           echo "Recognised: $OUT"
           test -n "$(echo "$OUT" | tr -d '[:space:]')"
           for m in large-v3-turbo-q5_0 small base; do
